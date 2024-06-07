@@ -152,6 +152,7 @@ For example, the data set could include the following columns from the example d
 where sex, ageg, albuming and cholg are the categorized factor variables and event.pfs and timepfs are the variables used to derive the endpoint via the eval_function (in this example the hazard ratio).
 
 <div id='chap212'>
+
 #### 2.1.2. eval_function
 
 The input function eval_function() needs to be defined by the user.
@@ -174,27 +175,38 @@ hazardratio <- function(D) {
 which will add a target variable column named `HR.pfs`.
 
 <div id='chap213'>
+
 #### 2.1.3. factors
+
 The parameter `factors` requires a vector containing the names of all variables that define the subgroups. In the example above `factors = c('sex','ageg','phosg','albuming',...)`.
 
 <div id='chap214'>
+
 #### 2.1.4. max_comb
+
 This parameter determines the maximum number of factor combination levels to define subgroups.
 The default is 3. All combinations between 1 and max_comb will be calculated automatically. With `max_comb = 3` a subgroup could be defined for example as male participant with low age and high albumin values. A high value of max_comb could lead to small or empty combinations of subgroups, which are hard to interpret. So, values of higher than 5 are not recommended. 
 If the maximum number of combination is bigger than the number of factors, then the number of factors is used as value for max_comb. In this case a note will be returned.
 
 <div id='chap215'>
+
 #### 2.1.5. nkernel
+
 To reduce the calculation time, the parameter nkernel can be increased. 
 To use multiple kernels the package parallel needs to be installed. If nkernel > 1 is used, please make sure to use the parameter `par_functions` for all functions within the eval function (see next chapter).
+
 <div id='chap216'>
+
 #### 2.1.6. par_functions
+
 This parameter is only required when multiple kernels are used.
 It requires the name(s) of functions used in eval_function to be exported to the cluster. In the example, the hazardratio function (see 2.1.2)
 uses the functions `coxph` and `Surv`from the survival package. Therefore these functions need to be specified in the parameter `par_functions = c('coxph','Surv')`.
 Otherwise an error appears: Error in checkForRemoteErrors(val) :
 4 nodes produced errors; first error: could not find function 'coxph'.
+
 <div id='chap217'>
+
 #### 2.1.7. verbose
 
 A text of the computational information can be returned with `verbose = TRUE`. Otherwise verbose should be set to FALSE.
@@ -203,17 +215,22 @@ The returned text gives information about the start and end time of calculation 
 <img src='inst/www/subscreencalc_verbose.png'>
 
 <div id='chap218'>
+
 #### 2.1.8. factorial
+
 If (factorial=TRUE) the calculation of factorial contexts is performed, which is required for the ASMUS-tab (see chapter 3.5). The calculation time of subscreencalc increases if the parameter factorial is set to TRUE. A factorial context is defined as the combination of all factor levels of a given subgroup. As an example, for a subgroup with three factor combination sex: f, ageg: High and cholg: Low (all factor variables with 2 levels) the factorial context includes eight subgroups. The concept of factorial contexts will be explained in more detail in <a href='#chap351'> chapter 3.5.1</a>.
 
 <div id='chap219'>
+
 #### 2.1.9. use_complement
+
 To activate the complement-calculation of a subgroup the parameter use_complement has to be set to TRUE. 
 Since the complement of subgroups with more than one factor level is not necessarily a subgroup as well, the calculation of the complement needs to be activated, if the complements are to be included. 
 
 <div id='chap22'>
 
 ### 2.2 `subscreencalc` Output
+
 The calculation performed via subscreencalc returns a list object of class `SubScreenResult`.
 The following list entries are generated in subscreencalc: sge, max_comb, min_comb, subjectid, factors, results_total.
 
@@ -294,6 +311,7 @@ The SubScreenResult object returned by subsreencalc is used as input for subscre
 <div id='chap23'>
 
 ### 2.3 `subscreenvi`
+
 The function subscreenvi performs a variable importance calculation via random forests using the package ranger. The values returned describe the variability of variable importance between treatments. High variability between treatments implies that a subgroup might be more relevant, because the treatment seems to have an influence on how important the variable is for modelling. Low variability implies less relevance as the subgroup is equally important in all treatments.
 
 The following function parameters can be adjusted:
@@ -310,6 +328,7 @@ The following function parameters can be adjusted:
 <div id='chap23'>
 
 ### 2.3 `subscreenshow`
+
 The function subscreenshow starts the Subgroup Explorer application. The following function parameters can be adjusted:
 <pre>
 <b>scresults                     </b> SubScreenResult object with results from a subscreencalc call
@@ -332,11 +351,13 @@ The app itself will be explained in more detailed version in <a href='#chap3'>ch
 <div id='chap3'>
 
 ## 3. Subgroup Explorer
+
 To start the subgroup screening via the Subgroup Explorer application, the subscreenshow-function is used (see also previous subchapter 2.3).
 The application itself consists of five main tabs: Upload, Explorer, Comparer, Mosaic and ASMUS (Automatic/Advanced Screening of one- or Multi-factorial Subgroups). Each tab will be explained in more detail in the next subchapters.
 
-#### 3.1 Upload
 <div id='chap31'>
+
+#### 3.1 Upload
 
 If the data parameter scresults in subscreenshow(scresults = NULL) is null or not specified, the app starts on the upload page.
 On the upload page a demo data set or a already saved SubScreenResult object (.RData file) can be selected. If a saved result data set should be loaded, the file can selected via the 'Browse...'-button and the 'Upload data'-button.
@@ -351,14 +372,17 @@ Since the factorial context calculation changed due to recent versions, the chec
 for 'context calculation performed' also includes a check for the newest package version. 
 For older versions features like the ASMUS-tab are no longer supported.
 
-#### 3.2 Explorer
 <div id='chap32'>
+
+#### 3.2 Explorer
+
 The Explorer-tab is the main part of the Subgroup Explorer. The explanation will be divided into four parts (diagram, lists, interaction plot and options). 
 
 
 <div id='chap321'>
 
 ##### 3.2.1 Diagram
+
 The central part of the Subgroup Explorer is the diagram in the middle, in which each single dot stands for a subgroup. The diagram may show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup (displayed on the horizontal axis) and the statistical measure of the treatment effect (vertical axis) in that subgroup. Furthermore, the diagram shows the line of the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while for larger subgroups on the right side, only small deviations from the study mean can be expected to be chance findings. So, for a study with no conspicuous subgroup effects, the dots in the figure are expected to form a kind of funnel. Any deviations from this funnel shape hint to conspicuous subgroups.
 <img src='inst/www/subscreenshow_Explorer_Plot_red_hover.png'>
 
@@ -392,6 +416,7 @@ By switching this button to on, the subgroup information for all saved subgroups
 <div id='chap323'>
 
 ##### 3.2.3 Interaction Plot
+
 On the right side of the Explorer tab an intercation plot can be displayed. Per default the plot is collapsed. To use it the user needs to click on 'Interaction Plot' and then select a subgroup.
 The interaction can only be displayed for subgroups with an at least pseudo factorial context.If a complete or pseudo complete subgroup is selected, the interaction plot panel opens automatically.
 Furthermore is the interaction plot is only available for subgroups with 1 to 3 subgroup defining factors.
@@ -448,6 +473,7 @@ For an easy visualization about the contingency tables of subgroup sizes and the
 <div id='chap35'>
 
 #### 3.5 ASMUS
+
 ASMUS is a feature which guides the user of the Subgroup Explorer through the screening of tens of thousand of subgroups with the aim to find those which are worth pursuing. 
 The key of ASMUS is to focus on assessable subgroups only. This reduces the number of subgroups to be considered drastically. 
 A fuzzy logic approach is used to select subgroups which have a remarkable treatment effect and which provide reliably information. 
@@ -483,7 +509,9 @@ A subgroup is assessable iff it has good references for comparison.
 A subgroup is a good reference for another subgroup if and only if it belongs to the same factorial context. 
 
 <div id='chap351'> 
+
 ##### 3.5.1 Factorial Context
+
 For a given subgroup, the factor level combinations of the subgroup defining factor(s) are the factorial context of that subgroup.
 A factorial context is complete if 
 <ul>
