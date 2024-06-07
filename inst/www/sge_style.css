@@ -1,0 +1,45 @@
+.navbar-nav > li > a, .navbar-brand {
+padding-top:4px !important;
+padding-bottom:0 !important;
+height: 60px;
+}
+.navbar {min-height:25px !important;}
+
+.navbar-default .navbar-brand:hover {color: #393939; background-color: #a3a3a3;}
+.navbar { background-color: #c7c7c7;}
+.navbar-default .navbar-nav > li > a {color:#999999;}
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:focus,
+.navbar-default .navbar-nav > .active > a:hover {color: #404040; background-color: #f2f2f2;}
+.navbar-default .navbar-nav > li > a:hover {color: #7a7a7a;}
+
+header4{color: #e2b007;}
+
+body {
+  background-color: #f2f2f2;
+  color: #383838;
+}
+.tabbable > .nav > li[class=active]    > a {
+  background-color: #f2f2f2; color:#383838
+}
+
+.well {background-color: #f2f2f2;}
+
+.fa-bug {color:#D30F4B}
+.fa-times-circle{color: #fffb00}
+.fa-th-list {color: grey}
+.fa-circle {color: #DE0043}
+.fa-info-circle {color:#DE0043}
+.fa-filter {color: #89D329}
+.fa-delicious {color:#00aaff}
+.fa-braille {color: grey}
+.fa-list {color:#0350E0}
+.fa-sitemap {color: #ff6c00}
+.fa-clipboard {color: #e2b007}
+.fa-edit {color: #57D48B}
+.fa-object-group {color: grey}
+
+.selectize-dropdown .active {background: #FF3162 !important;}
+
+#dropdown-menu-MyDropDown {background-color:  #a3a3a3 !important;}
+#dropdown-menu-MyDropDown2 {background-color:  #a3a3a3 !important;}
