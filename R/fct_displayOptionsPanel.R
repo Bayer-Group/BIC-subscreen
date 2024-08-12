@@ -2,25 +2,55 @@
 #'
 #' @keywords internal
 
-displayOptionsPanel <- function() {
+displayOptionsPanel <- function(
+    custom_ref_line_at_start,
+    custom_ref_line_value,
+    favour_label_at_start,
+    favour_direction
+  ) {
   shiny::tagList(
-    shiny::div(style = "position:absolute;right:2em;",
-      bsplus::bs_embed_tooltip(
-        tag = bsplus::shiny_iconlink("question"),
-        title = "Maximum distance to the click dot (in pixel).",
-        placement = "top",
-        expanded = TRUE
+    conditionalPanel(condition = "output.funnelenabled == true",
+      shiny::checkboxInput(
+        inputId = "add_funnel",
+        label = "Draw reference funnel",
+        value = FALSE
       )
     ),
-    shiny::sliderInput(
-      inputId = "pickradius",
-      label = "Choose distance to the click point",
-      min = 1,
-      max = 30,
-      value = 5,
-      step = 1 ,
-      ticks = FALSE
+    shiny::conditionalPanel(condition = "input.add_funnel == true",
+      shiny::checkboxInput(
+        inputId = "exclude_funnel",
+        label = "Dots in funnel",
+        value = FALSE
+      )
     ),
+    shiny::conditionalPanel(condition = "input.add_funnel == true",
+      shiny::radioButtons(
+        inputId = "alpha_funnel",
+        label = "Select alpha",
+        choices = c(0.1,0.01),
+        selected = 0.1,
+        inline = TRUE
+      )
+    ),
+    # shiny::div(style = "position:absolute;right:2em;",
+    #   bsplus::bs_embed_tooltip(
+    #     tag = bsplus::shiny_iconlink("question"),
+    #     title = "Maximum distance to the click dot (in pixel).",
+    #     placement = "top",
+    #     expanded = TRUE
+    #   )
+    # ),
+    # shiny::sliderInput(
+    #   inputId = "pickradius",
+    #   label = "Choose distance to the click point",
+    #   min = 1,
+    #   max = 30,
+    #   value = 5,
+    #   step = 1 ,
+    #   ticks = FALSE
+    # ),
+
+
     shiny::div(style = "position:absolute;right:2em;",
       bsplus::bs_embed_tooltip(
         tag = bsplus::shiny_iconlink("question"),
@@ -66,22 +96,22 @@ displayOptionsPanel <- function() {
     #   selected = 19,
     #   inline = TRUE
     # ),
-    shiny::div(style = "position:absolute;right:2em;",
-      bsplus::bs_embed_tooltip(
-        tag = bsplus::shiny_iconlink("question"),
-        title = "Adjust brightness of unmarked dots.",
-        placement = "top",
-        expanded = TRUE
-      )
-    ),
-    shiny::sliderInput(
-      inputId = "point_brightness",
-      label = "Adjust dot brightness",
-      min = 0.5,
-      max = 1,
-      value = 0.95,
-      step = 0.05
-    ),
+    # shiny::div(style = "position:absolute;right:2em;",
+    #   bsplus::bs_embed_tooltip(
+    #     tag = bsplus::shiny_iconlink("question"),
+    #     title = "Adjust brightness of unmarked dots.",
+    #     placement = "top",
+    #     expanded = TRUE
+    #   )
+    # ),
+    # shiny::sliderInput(
+    #   inputId = "point_brightness",
+    #   label = "Adjust dot brightness",
+    #   min = 0.5,
+    #   max = 1,
+    #   value = 0.95,
+    #   step = 0.05
+    # ),
     bsplus::use_bs_popover(),
     bsplus::use_bs_tooltip(),
     shiny::checkboxInput(
@@ -104,7 +134,7 @@ displayOptionsPanel <- function() {
         shiny::checkboxInput(
           inputId ="add_custom_ref_line",
           label ="Add custom reference line",
-          value = FALSE
+          value = custom_ref_line_at_start
         )
       ),
       column(6,
@@ -112,7 +142,7 @@ displayOptionsPanel <- function() {
           shiny::numericInput(
             inputId = "custom_ref_line",
             label = "Value for custom reference line",
-            value = 1
+            value = custom_ref_line_value
           )
         )
       )
@@ -122,7 +152,7 @@ displayOptionsPanel <- function() {
         shiny::checkboxInput(
           inputId = "add_favour_arrows",
           label = "Add favour labels",
-          value = FALSE
+          value = favour_label_at_start
         )
       ),
       shiny::column(6,
@@ -132,7 +162,7 @@ displayOptionsPanel <- function() {
             label_on = "High values favour verum",
             icon_on = icon("arrow-up"),
             status_on = "success",
-            value = TRUE,
+            value = favour_direction,
             status_off = "success",
             label_off = "Smaller values favour verum",
             icon_off = icon("arrow-down")
