@@ -753,7 +753,7 @@ asmus2_module_server <- function(
         results()$sge[, input$asmus2_y],
         pch = 19,
         cex = 1,
-        col = paste0(ColorPoints(),"20")
+        col = ColorPoints()
       )
     }
 
@@ -866,7 +866,7 @@ asmus2_module_server <- function(
         plot_point$y,
         pch = 19,
         cex = 1,
-        col =  paste0(plot_point$col,20)
+        col =  plot_point$col
       )
 
     } else {
@@ -875,7 +875,7 @@ asmus2_module_server <- function(
         plot_point$y,
         pch = 19,
         cex = 1,
-        col = paste0(plot_point$col,99)
+        col = plot_point$col
       )
     }
 
@@ -921,16 +921,20 @@ asmus2_module_server <- function(
 
     if (nrow(point) == 0) return(NULL)
 
-    left_pct <- (hover$coords_img$x - hover$range$left) / (hover$range$right - hover$range$left)
-    top_pct <- (hover$domain$top - ifelse(input$plot_type == "lin", hover$y, log10(hover$y))) / (hover$domain$top - hover$domain$bottom)
+    # left_pct <- (hover$coords_img$x - hover$range$left) / (hover$range$right - hover$range$left)
+    # top_pct <- (hover$domain$top - ifelse(input$plot_type == "lin", hover$y, log10(hover$y))) / (hover$domain$top - hover$domain$bottom)
+    #
+    # left_px <- ifelse(left_pct <= 0.75,
+    #                   20 + hover$range$left + left_pct * (hover$range$right - hover$range$left) / hover$img_css_ratio$x,
+    #                   - 175 + hover$range$left + left_pct * (hover$range$right - hover$range$left) / hover$img_css_ratio$x)
+    #
+    # top_px <- ifelse(top_pct <= 0.5,
+    #                  20 + hover$range$top + top_pct * (hover$range$bottom - hover$range$top),
+    #                  - 115 + hover$range$top + top_pct * (hover$range$bottom - hover$range$top))
 
-    left_px <- ifelse(left_pct <= 0.75,
-                      20 + hover$range$left + left_pct * (hover$range$right - hover$range$left) / hover$img_css_ratio$x,
-                      - 175 + hover$range$left + left_pct * (hover$range$right - hover$range$left) / hover$img_css_ratio$x)
+    left_px <- hover$coords_css$x + 15
+    top_px <- hover$coords_css$y + 150
 
-    top_px <- ifelse(top_pct <= 0.5,
-                     20 + hover$range$top + top_pct * (hover$range$bottom - hover$range$top),
-                     - 115 + hover$range$top + top_pct * (hover$range$bottom - hover$range$top))
     style <- paste0("position:absolute; z-index:100;background-color: rgba(",grDevices::col2rgb(point$col)[1],",",grDevices::col2rgb(point$col)[2],",",grDevices::col2rgb(point$col)[3],",0.85); ",
                     "left:", left_px, "px; top:", top_px, "px; border: 0px;")
     point <- point[1,]
