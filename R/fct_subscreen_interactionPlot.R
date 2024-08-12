@@ -210,7 +210,8 @@ interaction_plot2 <- function (
       dat <- df_data[df_data[fac1] == levels(lev1_values)[i], ]
 
       # reorder dataframe based on levels of lev2_values
-      dat_ordered_lev2 <- dat[order(as.numeric(factor(levels(lev2_values)))),]
+      #dat_ordered_lev2 <- dat[order(as.numeric(factor(levels(lev2_values)))),]
+      dat_ordered_lev2 <- dat[as.numeric(factor(levels(lev2_values))),]
 
       if (i == 1) {
         plot(
