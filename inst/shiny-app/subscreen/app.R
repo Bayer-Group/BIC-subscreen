@@ -37,6 +37,7 @@ suppressMessages(library(colourpicker))
 suppressMessages(library(DT))
 suppressMessages(library(shinyWidgets))
 suppressMessages(library(dplyr))
+suppressMessages(library(plyr))
 
 jscode <- "shinyjs.disableTab = function(name) {
 var tab = $('.nav li a[data-value='+name+']');
@@ -93,7 +94,12 @@ ui <- shiny::navbarPage(
             #### Display options-tab ####
             shiny::tabPanel("Display Options",
               shiny::wellPanel(
-                displayOptionsPanel()
+                displayOptionsPanel(
+                  custom_ref_line_at_start = apppars$reference_line_at_start,
+                  custom_ref_line_value = apppars$reference_value,
+                  favour_label_at_start = apppars$favour_label_at_start,
+                  favour_direction = apppars$favour_direction
+                )
               ),
               icon = icon('eye')
             ),
@@ -109,51 +115,138 @@ ui <- shiny::navbarPage(
           )
         ),
         #### Explorer-graph ####
-        shiny::column(6,
+        shiny::column(9,
           mod_graph_ui("graph1",
             plotHeight = 700,
             plotWidth = "100%"
           )
         ),
+        shiny::uiOutput('interactionPanel'),
         #### Interaction panel ####
-        shiny::column(3,
-          shinyWidgets::prettyToggle(
-            inputId = 'showPanel2',
-            label_off = 'Interaction Plot',
-            label_on = 'Interaction Plot',
-            value = FALSE,
-            outline = TRUE,
-            status_on = "default",
-            status_off = "default",
-            plain = TRUE,
-            icon_off = icon("chart-line"),
-            icon_on = icon ("times")
-          ),
-          shiny::conditionalPanel(
-            condition = 'input.showPanel2',
-            shiny::uiOutput("interaction_panel")
-          ),
-          bsplus::use_bs_popover(),
-          bsplus::use_bs_tooltip(),
-          shinyWidgets::prettyToggle(
-            inputId = 'showPanelLegend',
-            label_off = 'Legend',
-            label_on = 'Legend',
-            value = TRUE,
-            outline = TRUE,
-            status_on = "default",
-            status_off = "default",
-            plain = TRUE,
-            icon_off = icon("list-ul"),
-            icon_on = icon ("times")
-          ),
-          shiny::conditionalPanel(
-            condition = 'input.showPanelLegend',
-             mod_legend_ui("legend1")
-          )
-        )
+        # shiny::column(3,
+        #   shinyWidgets::prettyToggle(
+        #     inputId = 'showPanel2',
+        #     label_off = 'Interaction Plot',
+        #     label_on = 'Interaction Plot',
+        #     value = FALSE,
+        #     outline = TRUE,
+        #     status_on = "default",
+        #     status_off = "default",
+        #     plain = TRUE,
+        #     icon_off = icon("chart-line"),
+        #     icon_on = icon ("times")
+        #   ),
+        #   shiny::conditionalPanel(
+        #     condition = 'input.showPanel2',
+        #     shiny::uiOutput("interaction_panel")
+        #   ),
+        #   bsplus::use_bs_popover(),
+        #   bsplus::use_bs_tooltip(),
+        #   shinyWidgets::prettyToggle(
+        #     inputId = 'showPanelLegend',
+        #     label_off = 'Legend',
+        #     label_on = 'Legend',
+        #     value = TRUE,
+        #     outline = TRUE,
+        #     status_on = "default",
+        #     status_off = "default",
+        #     plain = TRUE,
+        #     icon_off = icon("list-ul"),
+        #     icon_on = icon ("times")
+        #   ),
+        #   shiny::conditionalPanel(
+        #     condition = 'input.showPanelLegend',
+        #      mod_legend_ui("legend1")
+        #   )
+        # )
+        shiny::column(12, offset = 3, mod_legend_ui("legend1"))
       ),
+      # shiny::fluidRow(
+      #   shiny::uiOutput('logo'),
+      #   shiny::column(3,
+      #     #acitvate javascript code to disable/enable tabs
+      #     shinyjs::useShinyjs(debug = TRUE),
+      #     shinyjs::extendShinyjs(
+      #         text = jscode,
+      #         functions = c("disableTab", "enableTab")
+      #       ),
+      #     #### Variable options-tab ####
+      #     shiny::tabsetPanel(type = "tabs",
+      #       shiny::tabPanel("Variable Options",
+      #         shiny::wellPanel(
+      #           variableOptionsPanel()
+      #         ), icon = icon("wrench")
+      #       ),
+      #       #### Importance-tab ####
+      #       shiny::tabPanel("Importance Tab", value = "ImportanceTab",
+      #         mod_variable_importance_ui("vi"),
+      #         icon = icon("exclamation")
+      #       ),
+      #       #### Display options-tab ####
+      #       shiny::tabPanel("Display Options",
+      #         shiny::wellPanel(
+      #           displayOptionsPanel()
+      #         ),
+      #         icon = icon('eye')
+      #       ),
+      #       #### Color options-tab ####
+      #       shiny::tabPanel("Colour Options",
+      #         shiny::wellPanel(
+      #           mod_color_ui("color")
+      #         ),
+      #         bsplus::use_bs_popover(),
+      #         bsplus::use_bs_tooltip(),
+      #         icon = icon("paint-brush")
+      #       )
+      #     )
+      #   ),
+      #   #### Explorer-graph ####
+      #   shiny::column(6,
+      #     mod_graph_ui("graph1",
+      #       plotHeight = 700,
+      #       plotWidth = "100%"
+      #     )
+      #   ),
+      #   #### Interaction panel ####
+      #   shiny::column(3,
+      #     shinyWidgets::prettyToggle(
+      #       inputId = 'showPanel2',
+      #       label_off = 'Interaction Plot',
+      #       label_on = 'Interaction Plot',
+      #       value = FALSE,
+      #       outline = TRUE,
+      #       status_on = "default",
+      #       status_off = "default",
+      #       plain = TRUE,
+      #       icon_off = icon("chart-line"),
+      #       icon_on = icon ("times")
+      #     ),
+      #     shiny::conditionalPanel(
+      #       condition = 'input.showPanel2',
+      #       shiny::uiOutput("interaction_panel")
+      #     ),
+      #     bsplus::use_bs_popover(),
+      #     bsplus::use_bs_tooltip(),
+      #     shinyWidgets::prettyToggle(
+      #       inputId = 'showPanelLegend',
+      #       label_off = 'Legend',
+      #       label_on = 'Legend',
+      #       value = TRUE,
+      #       outline = TRUE,
+      #       status_on = "default",
+      #       status_off = "default",
+      #       plain = TRUE,
+      #       icon_off = icon("list-ul"),
+      #       icon_on = icon ("times")
+      #     ),
+      #     shiny::conditionalPanel(
+      #       condition = 'input.showPanelLegend',
+      #        mod_legend_ui("legend1")
+      #     )
+      #   )
+      # ),
       #### Tables  ####
+      if (apppars$showTables) {
       shiny::fluidRow(
         shiny::column(12,
           shiny::tabsetPanel(
@@ -188,14 +281,14 @@ ui <- shiny::navbarPage(
             ),
             shiny::tabPanel(
               title = "Memorized Subgroups",
-              shiny::column(12,
-                shinyWidgets::prettySwitch(
-                  inputId = "memorized_labels_on_off",
-                  label = "Show labels for memorized subgroups",
-                  value = FALSE,
-                  status = "info"
-                )
-              ),
+              # shiny::column(12,
+              #   shinyWidgets::prettySwitch(
+              #     inputId = "memorized_labels_on_off",
+              #     label = "Show labels for memorized subgroups",
+              #     value = FALSE,
+              #     status = "info"
+              #   )
+              # ),
               shiny::column(12,
                 DT::dataTableOutput("memorizedSG")
               ),
@@ -204,6 +297,7 @@ ui <- shiny::navbarPage(
           )
         )
       )
+      }
     ), fluid = FALSE, position = c("static-top"), inverse = FALSE, icon = icon("braille")
   ),
   #### 2. COMPARER (UI)####
@@ -258,6 +352,7 @@ server <- function(input, output, session) {
 
   #open interaction plot when subgroup is clicked and is (pseudo-)complete
   shiny::observeEvent(new_selected_ids$val, {
+
     if (!is.null(scresults_tmp$dat)) {
       #if factorial context calc was performed
       if(any(startsWith(colnames(scresults_tmp$dat$sge),"FCID_complete_"))) {
@@ -335,12 +430,20 @@ server <- function(input, output, session) {
       inputId = "filter2",
       choices = c("no selection", scresults_tmp$dat$factors)
     )
+    if (is.na(apppars$subgroup_levels_at_start)) {
+      key_value <-  c(1, min(c(3, scresults_tmp$dat$max_comb), na.rm = TRUE))
+    } else {
+      key_value <- c(1, apppars$subgroup_levels_at_start)
+    }
     shiny::updateSliderInput(
       session,
       inputId = "key",
       min = scresults_tmp$dat$min_comb,
       max = scresults_tmp$dat$max_comb,
-      value = c(1, min(c(3, scresults_tmp$dat$max_comb), na.rm = TRUE))
+      value = key_value
+      #value = c(1, min(c(3, scresults_tmp$dat$max_comb), na.rm = TRUE))
+      #value = c(1, min(c(3, scresults_tmp$dat$max_comb), na.rm = TRUE))#,
+      #selected = ifelse(!is.na(apppars$subgroup_level_at_start),apppars$subgroup_level_at_start,)
     )
   })
 
@@ -378,12 +481,12 @@ server <- function(input, output, session) {
         inputId = "plot_type",
         label = "Type",
         choices = c(linear = "lin", log = "log"),
-        selected = "lin",
+        selected = apppars$yaxis_type,
         inline = TRUE
       )
     }
   })
-  # Get click information of the 3 graphs and save the last click
+  # Get %>% click information of the 3 graphs and save the last click
 
   # js$disableTab("ImportanceTab")
   #
@@ -464,6 +567,8 @@ server <- function(input, output, session) {
   }, ignoreNULL = FALSE)
 
   #### ObserveEvent: click_points_data$xy, scresults_tmp$dat, backgroundColor() ####
+
+  if (apppars$showTables) {
   shiny::observeEvent(c(
     new_selected_ids$val,
     scresults_tmp$dat, backgroundColor()), {
@@ -536,6 +641,7 @@ server <- function(input, output, session) {
         backgroundColor = different_hues(backgroundColor()),
         border = paste0('.5px solid ', backgroundColor())
       )
+
     }
 
 
@@ -619,8 +725,8 @@ server <- function(input, output, session) {
       #### Output: selectedSG ####
       output$selectedSG <- DT::renderDataTable(tmp)
     }
-
   })
+  }
 
   #### ObserveEvent: upload_data$parameter1(), mod_color_vars$colthemeCol()$... ####
   shiny::observeEvent(
@@ -632,7 +738,8 @@ server <- function(input, output, session) {
       mod_color_vars$colthemeCol()$ColorImportance,
       mod_color_vars$colthemeCol()$ColorReference,
       mod_color_vars$colthemeCol()$ColorPoints,
-      mod_color_vars$colthemeCol()$ColorMemorized
+      mod_color_vars$colthemeCol()$ColorMemorized,
+      mod_color_vars$colthemeCol()$ColorCustomReference
     ), {
     colthemeCol$ColorSelected <- mod_color_vars$colthemeCol()$ColorSelected
     colthemeCol$ColorFactCont <- mod_color_vars$colthemeCol()$ColorFactCont
@@ -642,6 +749,7 @@ server <- function(input, output, session) {
     colthemeCol$ColorReference <- mod_color_vars$colthemeCol()$ColorReference
     colthemeCol$ColorPoints <- mod_color_vars$colthemeCol()$ColorPoints
     colthemeCol$ColorMemorized <- mod_color_vars$colthemeCol()$ColorMemorized
+    colthemeCol$ColorCustomReference <- mod_color_vars$colthemeCol()$ColorCustomReference
   })
 
   #### Observe: Point color ####
@@ -649,8 +757,8 @@ server <- function(input, output, session) {
     if(!is.null(scresults_tmp$dat)) {
     shiny::req(input$y)
     new_selected_ids$val
-    input$selectedSG_row_last_clicked
-    input$selectedSG_rows_selected
+    # input$selectedSG_row_last_clicked
+    # input$selectedSG_rows_selected
     # update color if number of factor level is changed
     input$key
     create_color_function <- createColorVector(
@@ -668,7 +776,7 @@ server <- function(input, output, session) {
       factorial_context_color = colthemeCol$ColorFactCont,
       importance_values = importance_$val(),
       importance_values_color = colthemeCol$ColorImportance,
-      brightness = input$point_brightness,
+      #brightness = input$point_brightness,
       memorized_data = df_m$data,
       memorized_color = colthemeCol$ColorMemorized,
       key = input$key
@@ -903,8 +1011,41 @@ server <- function(input, output, session) {
     }
   })
 
+   output$interactionPanel <- shiny::renderUI({
+    shiny::absolutePanel(
+      id = "interactionPanel",
+      class = "modal-content",
+      fixed = TRUE,
+      draggable = TRUE,
+      HTML(paste0(
+        "<div style='background-color: #424242'>"
+      )),
+      HTML('
+        <button style =
+        "background: #424242;
+        color:#ffffff",
+        data-toggle="collapse" data-target="#demo" style="color:white;">
+        <i class="fa-solid fa-chart-line"></i> Interaction plot </button>'
+      ),
+      top = 85,
+      left = "auto",
+      right = 100,
+      bottom = "auto",
+      width = 600,
+      height = "auto",
+      shiny::tags$div(
+        id = 'demo',
+        class = "collapse",
+        shiny::fluidRow(
+          shiny::uiOutput("interaction_panel")
+        )
+      ),
+      style = "z-index: 10;"
+    )
+  })
+
   #### ObserveEvent: input$filter, input$filter2, input$VarChosen, input$VarChosen2, scresults_tmp$dat, input$y,backgroundColor() ####
-  # create filtered subgroups table in subgroup explorer-tab
+  #create filtered subgroups table in subgroup explorer-tab
   shiny::observeEvent(c(input$filter, input$filter2, input$VarChosen, input$VarChosen2, scresults_tmp$dat, input$y,backgroundColor()), {
     #requirements
     shiny::req(input$key)
@@ -925,6 +1066,7 @@ server <- function(input, output, session) {
     output$filteredSG <- DT::renderDataTable(tmp)
   })
 
+  if (apppars$showTables) {
    shiny::observeEvent(c(new_selected_ids$val), ignoreNULL = FALSE, {
 
     if (!is.null(scresults_tmp$dat)) {
@@ -1060,9 +1202,14 @@ server <- function(input, output, session) {
       })
     }
   })
-
+}
   #### ObserveEvent: new_selected_ids$val, input$selectedSG_rows_selected, plot_points_data_complement() ####
-  shiny::observeEvent(c(new_selected_ids$val, input$selectedSG_rows_selected, plot_points_data_complement()),{
+
+if (apppars$showTables) {
+  shiny::observeEvent(c(new_selected_ids$val,
+                        # input$selectedSG_rows_selected,
+                        plot_points_data_complement()),{
+
     if(!is.null(scresults_tmp$dat)) {
       if (shiny::req(input$y) != "N.of.subjects" & !is.null(plot_points_data_complement())) {
 
@@ -1139,7 +1286,7 @@ server <- function(input, output, session) {
       output$complement <- DT::renderDataTable(tmp)
     }
   },ignoreNULL = FALSE)
-
+}
   #### ObserveEvent: scresults_tmp$dat ####
   shiny::observeEvent(scresults_tmp$dat, {
     df_m$data <- NULL
@@ -1164,6 +1311,7 @@ server <- function(input, output, session) {
   })
 
   #### ObserveEvent: select_button_reac$val, scresults_tmp$dat ####
+   if (apppars$showTables) {
   shiny::observeEvent(c(select_button_reac$val,scresults_tmp$dat), {
     if (!is.null(shiny::req(select_button_reac$val))){
 
@@ -1187,8 +1335,10 @@ server <- function(input, output, session) {
       df_m$data <- NULL
     }
   })
+   }
 
   #### ObserveEvent: select_button_reac$val, input$remove_button, scresults_tmp$dat ####
+  if (apppars$showTables) {
   shiny::observeEvent(c(select_button_reac$val, input$remove_button, scresults_tmp$dat), {
     if (!is.null(scresults_tmp$dat)) {
       if (dim(df_m$data)[1] == 0) {
@@ -1302,8 +1452,11 @@ server <- function(input, output, session) {
     output$memorizedSG <- DT::renderDataTable(tmp)
     }
   }, ignoreNULL = FALSE)
+  }
 
   #### ObserveEvent: new_selected_ids$val, click_points_data$xy ####
+
+if (apppars$showTables) {
   shiny::observeEvent(c(new_selected_ids$val#, click_points_data$xy
                         ), ignoreNULL = FALSE, {
     SGID_clicked <- new_selected_ids$val
@@ -1328,12 +1481,11 @@ server <- function(input, output, session) {
     #### Output: parents ####
     output$parents<- DT::renderDataTable(tmp)
   })
-
+}
   #### REACTIVES ####
   #### Reactive: plot_points_data_complement() ####
   plot_points_data_complement <- shiny::reactive({
     shiny::req(input$y)
-
     tmp <- createPlot_points_data_complement(
       results_tmp = scresults_tmp$dat,
       y = input$y,
@@ -1382,7 +1534,6 @@ server <- function(input, output, session) {
   #### Reactive: df_factorial() ####
   df_factorial <- shiny::reactive({
     shiny::req(input$y)
-
     SGID_clicked <- new_selected_ids$val
     if (!is.null(SGID_clicked)) {
       if(!is.integer0(SGID_clicked)) {
@@ -1413,6 +1564,7 @@ server <- function(input, output, session) {
         df_factorial <- tmp[tmp[paste0("FCID_pseudo_", input$y)] != "No Pseudo",]
       }
     }
+
     df_factorial
   })
 
@@ -1463,7 +1615,8 @@ server <- function(input, output, session) {
     ColorImportance = "#FA1BDC",
     ColorReference = "#0091DF60",
     ColorFactCont = "#0350E0",
-    ColorPoints = "#FFFFFF"
+    ColorPoints = "#FFFFFF",
+    ColorCustomReference = "#00BCFFFF"
   )
 
   #### ReactiveValues: select_button_reac$val ####
@@ -1520,7 +1673,6 @@ server <- function(input, output, session) {
             height: 60px;
             }
             .navbar {min-height:25px !important;}
-
             .navbar-default .navbar-brand:hover {color: #a3a3a3; background-color: #393939;}
             .navbar { background-color: #363636;}
             .navbar-default .navbar-nav > li > a {color:#7a7a7a;}
@@ -1534,6 +1686,7 @@ server <- function(input, output, session) {
             body {
               background-color: #383838;
               color: #ffffff;
+              overflow-y: scroll;
             }
             .tabbable > .nav > li[class=active]    > a {
               background-color: #383838; color:#ffffff
@@ -1756,7 +1909,7 @@ server <- function(input, output, session) {
         min = mini_20percent,
         max = maxi_20percent,
         value = c(mini, maxi),
-        step = roundUpNice(diff(c(mini,maxi))/100,nice = apppars$NiceNumbers)
+        step = 1#roundUpNice(diff(c(mini,maxi))/100,nice = apppars$NiceNumbers)
       )
   })
 
@@ -1775,6 +1928,31 @@ server <- function(input, output, session) {
   })
   outputOptions(output, "importanceenabled", suspendWhenHidden = FALSE)
 
+  #### Output: Funnel Availability ####
+  output$funnelenabled <- shiny::reactive({
+    !is.null(scresults_tmp$dat$funnel_quantiles)
+  })
+  outputOptions(output, "funnelenabled", suspendWhenHidden = FALSE)
+
+  shiny::observeEvent(scresults_tmp$dat, {
+    if (!is.null(scresults_tmp$dat$funnel_quantiles)) {
+      val <- sort(2*unique(scresults_tmp$dat$funnel_quantiles[,"alpha"][scresults_tmp$dat$funnel_quantiles[,"alpha"] < 0.5]))
+
+      shiny::updateCheckboxInput(
+        inputId = "add_funnel",
+        label = "Draw reference funnel",
+        value = apppars$add_funnel_at_start
+      )
+
+      shiny::updateRadioButtons(
+        session,
+        inputId = "alpha_funnel",
+        choices = val,
+        selected = val[1],
+        inline = TRUE
+      )
+    }
+  })
 
   #### MODULES ####
   #### Module call: graph_server ####
@@ -1794,18 +1972,24 @@ server <- function(input, output, session) {
       plot_type = shiny::reactive({input$plot_type}),
       point_size = shiny::reactive({input$pointsize}),
       #pch_value = shiny::reactive({input$pch_value}),
+      LabelParent = shiny::reactive({mod_color_vars$LabelParent()}),
+      LabelMemorized = shiny::reactive({mod_color_vars$LabelMemorized()}),
+      LabelTabClicked = shiny::reactive({mod_color_vars$LabelTabClicked()}),
+      LabelFactCont = shiny::reactive({mod_color_vars$LabelFactCont()}),
       color = shiny::reactive({plot_color$val}),
       ColorBGplot = shiny::reactive({backgroundColor()}),
       ColorTabClicked = shiny::reactive({colthemeCol$ColorTabClicked}),
       ColorPoints = shiny::reactive({colthemeCol$ColorPoints}),
       ColorReference = shiny::reactive({colthemeCol$ColorReference}),
+      ColorCustomReference = shiny::reactive({colthemeCol$ColorCustomReference}),
       ColorMemorized = shiny::reactive({colthemeCol$ColorMemorized}),
+      ColorFactorial = shiny::reactive({colthemeCol$ColorFactCont}),
+      ColorParents = shiny::reactive({colthemeCol$ColorParents}),
       x = shiny::reactive({input$x}),
       y = shiny::reactive({input$y}),
       plot_points_data_complement = shiny::reactive({plot_points_data_complement()}),
       key = shiny::reactive({input$key}),
       nice_Numbers = apppars$NiceNumbers,
-      pickradius = shiny::reactive({input$pickradius}),
       xlabel = shiny::reactive({input$xlabel}),
       grid = shiny::reactive({input$grid}),
       circlestyle = shiny::reactive({input$circlestyle}),
@@ -1819,18 +2003,21 @@ server <- function(input, output, session) {
       show_favour_arrows = shiny::reactive({input$add_favour_arrows}),
       favour_direction = shiny::reactive({input$favour_direction}),
       favour_verum_name = favour_label_verum_name,
-      favour_comparator_name = favour_label_comparator_name
+      favour_comparator_name = favour_label_comparator_name,
+      add_funnel = shiny::reactive({input$add_funnel}),
+      exclude_funnel = shiny::reactive({input$exclude_funnel}),
+      alpha_funnel = shiny::reactive({input$alpha_funnel})
   )
+
   #### Module call: legend_server ####
   shiny::observe({
     shiny::callModule(
       mod_legend_server,
       "legend1",
       plot_color = shiny::reactive({plot_color$val}),
-      rowwise = FALSE,
+      rowwise = TRUE,
       colthemeCol = shiny::reactive({colthemeCol}),
-      complement = shiny::reactive({ifelse(!is.null(plot_points_data_complement()),TRUE,FALSE)}),
-      point_brightness = shiny::reactive({input$point_brightness})
+      complement = shiny::reactive({ifelse(!is.null(plot_points_data_complement()),TRUE,FALSE)})
     )
   })
 
@@ -1860,30 +2047,39 @@ server <- function(input, output, session) {
     point_size = shiny::reactive({input$pointsize}),
     #pch_value = shiny::reactive({input$pch_value}),
     color = shiny::reactive({plot_color$val}),
+    ColorFactorial = shiny::reactive({colthemeCol$ColorFactCont}),
+    LabelParent = shiny::reactive({mod_color_vars$LabelParent()}),
+    LabelMemorized = shiny::reactive({mod_color_vars$LabelMemorized()}),
+    LabelTabClicked = shiny::reactive({mod_color_vars$LabelTabClicked()}),
+    LabelFactCont = shiny::reactive({mod_color_vars$LabelFactCont()}),
+    ColorParents = shiny::reactive({colthemeCol$ColorParents}),
     colthemeCol = shiny::reactive({colthemeCol}),
     ColorBGplot = shiny::reactive({backgroundColor()}),
     ColorTabClicked = shiny::reactive({colthemeCol$ColorTabClicked}),
     ColorReference = shiny::reactive({colthemeCol$ColorReference}),
+    ColorCustomReference = shiny::reactive({colthemeCol$ColorCustomReference}),
     ColorPoints = shiny::reactive({colthemeCol$ColorPoints}),
     ColorMemorized = shiny::reactive({colthemeCol$ColorMemorized}),
     x = shiny::reactive({input$x}),
     y = shiny::reactive({input$y}),
     plot_points_data_complement = shiny::reactive({plot_points_data_complement()}),
     key = shiny::reactive({input$key}),
-    pickradius = shiny::reactive({input$pickradius}),
     nice_Numbers = apppars$NiceNumbers,
     xlabel = shiny::reactive({input$xlabel}),
     grid = shiny::reactive({input$grid}),
     circlestyle = shiny::reactive({input$circlestyle}),
     memorized_Data = shiny::reactive({df_m$data}),
-    point_brightness = shiny::reactive({input$point_brightness}),
+    #point_brightness = shiny::reactive({input$point_brightness}),
     show_ref_line = shiny::reactive({input$add_ref_line}),
     add_custom_ref_line  = shiny::reactive({add_custom_line$val}),
     value_custom_ref_line  = shiny::reactive({input$custom_ref_line}),
     show_favour_arrows = shiny::reactive({input$add_favour_arrows}),
     favour_direction = shiny::reactive({input$favour_direction}),
     favour_verum_name = favour_label_verum_name,
-    favour_comparator_name = favour_label_comparator_name
+    favour_comparator_name = favour_label_comparator_name,
+    add_funnel = shiny::reactive({input$add_funnel}),
+    exclude_funnel = shiny::reactive({input$exclude_funnel}),
+    alpha_funnel = shiny::reactive({input$alpha_funnel})
   )
 
   #### Module call: mosaic_server ####
