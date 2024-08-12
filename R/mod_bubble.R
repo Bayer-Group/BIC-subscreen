@@ -54,7 +54,6 @@ mod_bubble_ui <- function(id, plotHeight, plotWidth) {
 #' @param y2 Endpoint for second y-axis 2.
 #' @param plot_points_data_complement Complement information.
 #' @param key Number factors displayed.
-#' @param pickradius Radius for point click.
 #' @param nice_Numbers list of numbers used for a 'nice' scale.
 #' @param xlabel Label for the x-axis.
 #' @param grid Grid used in plot background.
@@ -82,8 +81,7 @@ mod_bubble_server <- function(input, output, session,
     nice_Numbers,
     xlabel = input$xlabel,
     circlestyle = input$circlestyle,
-    grid = input$grid,
-    pickradius = input$pickradius
+    grid = input$grid
   ) {
 
   SGID <- font.col <- NULL
@@ -335,14 +333,12 @@ mod_bubble_server <- function(input, output, session,
 
   shiny::observeEvent(c(input$plot_click), {
     curr_x <- shiny::req(x())
-    start_radius <- pickradius()
 
     clicked <- shiny::nearPoints(
       results()$sge[which(results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]),],
       input$plot_click,
       xvar = y(),
       yvar = y2(),
-      threshold = start_radius,
       maxpoints = NULL
     )
 
@@ -370,13 +366,13 @@ mod_bubble_server <- function(input, output, session,
     point <- nearPoints(colored_points, hover)
 
     if (nrow(point) == 0) return(NULL)
-
-      left_pct <- (hover$coords_img$x - hover$range$left) / (hover$range$right - hover$range$left)
-
-      top_pct <- (hover$domain$top - ifelse(plot_type() == "lin", hover$y, log10(hover$y))) / (hover$domain$top - hover$domain$bottom)
-
-      left_px <- (hover$range$left + left_pct * (hover$range$right - hover$range$left) / hover$img_css_ratio$x) + 3
-      top_px <- (hover$range$top + top_pct * (hover$range$bottom - hover$range$top) / hover$img_css_ratio$y) + 3
+      # left_pct <- (hover$coords_img$x - hover$range$left) / (hover$range$right - hover$range$left)
+      # top_pct <- (hover$domain$top - ifelse(plot_type() == "lin", hover$y, log10(hover$y))) / (hover$domain$top - hover$domain$bottom)
+      # left_px <- (hover$range$left + left_pct * (hover$range$right - hover$range$left) / hover$img_css_ratio$x) + 3
+      # top_px <- (hover$range$top + top_pct * (hover$range$bottom - hover$range$top) / hover$img_css_ratio$y) + 3
+      #
+      left_px <- hover$coords_css$x
+      top_px <- hover$coords_css$y
 
 
     # style <- paste0("position:absolute; z-index:100;background-color: rgba(",
@@ -525,12 +521,14 @@ mod_bubble_server <- function(input, output, session,
       NULL
     })
   } else {
-    left_pct <- (click$coords_img$x - click$range$left) / (click$range$right - click$range$left)
-    top_pct <- (click$domain$top - ifelse(plot_type() == "lin", click$y, log10(click$y))) / (click$domain$top - click$domain$bottom)
+    # left_pct <- (click$coords_img$x - click$range$left) / (click$range$right - click$range$left)
+    # top_pct <- (click$domain$top - ifelse(plot_type() == "lin", click$y, log10(click$y))) / (click$domain$top - click$domain$bottom)
+    #
+    # left_px <- (click$range$left + left_pct * (click$range$right - click$range$left) / click$img_css_ratio$x) + 3
+    # top_px <- (click$range$top + top_pct * (click$range$bottom - click$range$top) / click$img_css_ratio$y) - 47
 
-    left_px <- (click$range$left + left_pct * (click$range$right - click$range$left) / click$img_css_ratio$x) + 3
-    top_px <- (click$range$top + top_pct * (click$range$bottom - click$range$top) / click$img_css_ratio$y) - 47
-
+    left_px <- click$coords_css$x
+    top_px <- click$coords_css$y
     style <- paste0(
       "position:absolute;
        z-index:110;background-color: rgba(",
@@ -542,12 +540,15 @@ mod_bubble_server <- function(input, output, session,
 
     tmp <- results()$sge[results()$sge$SGID %in% point$ID, ]
 
-    tmp$text <- apply(
-      tmp[, results()$factors],
-      1,
-      function(x){paste(paste0(names(which(x != "Not used")),":", x[which(x != "Not used")]), collapse = ", ")}
-    )
-
+    if (length(results()$factors) == 1){
+      tmp$text <- paste0(results()$factors,":",tmp[,results()$factors])
+    } else {
+      tmp$text <- apply(
+        tmp[, results()$factors],
+        1,
+        function(x){paste(paste0(names(which(x != "Not used")),":", x[which(x != "Not used")]), collapse = ", ")}
+      )
+    }
     tmp <- tmp %>%
       dplyr::mutate(text2 = paste0("SGID:", SGID,", ", text))
 
