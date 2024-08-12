@@ -140,18 +140,17 @@ mod_comparer_ui <- function(id) {
 #' @param ColorPoints circle color.
 #' @param colthemeCol theme color.
 #' @param ColorReference reference color.
+#' @param ColorCustomReference custom reference color.
 #' @param ColorMemorized memorized circle/label color.
 #' @param x x variable
 #' @param y y variable
 #' @param plot_points_data_complement complement results.
 #' @param key number factors.
-#' @param pickradius radius size.
 #' @param nice_Numbers nice numbers.
 #' @param xlabel x label.
 #' @param grid grid displayed (TRUE/FALSE)
 #' @param circlestyle circle style.
 #' @param memorized_Data memorized data.
-#' @param point_brightness brigthness of circles.
 #' @noRd
 mod_comparer_server <- function(input, output, session,
     results,
@@ -165,25 +164,34 @@ mod_comparer_server <- function(input, output, session,
     ColorPoints,
     colthemeCol,
     ColorReference,
+    ColorCustomReference,
     ColorMemorized,
+      ColorFactorial,
+      LabelParent,
+      LabelMemorized,
+      LabelTabClicked,
+      LabelFactCont,
+      ColorParents,
     x,
     y,
     plot_points_data_complement,
     key,
-    pickradius,
     nice_Numbers,
     xlabel,
     grid,
     circlestyle,
     memorized_Data,
-    point_brightness,
+    # point_brightness,
     show_ref_line,
     add_custom_ref_line,
     value_custom_ref_line,
     show_favour_arrows,
     favour_direction,
     favour_comparator_name,
-    favour_verum_name
+    favour_verum_name,
+    add_funnel,
+    exclude_funnel,
+    alpha_funnel
 ) {
 
   ns <- session$ns
@@ -424,8 +432,8 @@ mod_comparer_server <- function(input, output, session,
     plot_color = color,
     colthemeCol = colthemeCol,
     rowwise = TRUE,
-    complement = shiny::reactive({ifelse(!is.null(plot_points_data_complement()), TRUE, FALSE)}),
-    point_brightness = point_brightness
+    complement = shiny::reactive({ifelse(!is.null(plot_points_data_complement()), TRUE, FALSE)})#,
+    # point_brightness = point_brightness
   )
 
   shiny::callModule(
@@ -434,8 +442,8 @@ mod_comparer_server <- function(input, output, session,
     plot_color = color,
     colthemeCol = colthemeCol,
     rowwise = TRUE,
-    complement = shiny::reactive({FALSE}),
-    point_brightness = point_brightness
+    complement = shiny::reactive({FALSE})#,
+    #point_brightness = point_brightness
   )
 
   mod_graph_vars2 <- shiny::callModule(
@@ -448,16 +456,22 @@ mod_comparer_server <- function(input, output, session,
     plot_type = shiny::reactive({shiny::req(input$plot_type2)}),
     point_size = point_size,
     #pch_value = pch_value,
+      LabelParent = LabelParent,
+      LabelMemorized = LabelMemorized,
+      LabelTabClicked = LabelTabClicked,
+      LabelFactCont = LabelFactCont,
+      ColorParents = ColorParents,
     color = color,
     ColorBGplot = ColorBGplot,
     ColorTabClicked = ColorTabClicked,
     ColorReference = ColorReference,
+    ColorCustomReference = ColorCustomReference,
     ColorPoints = ColorPoints,
     ColorMemorized = ColorMemorized,
+    ColorFactorial = ColorFactorial,
     x = shiny::reactive({shiny::req(input$x2)}),
     y = shiny::reactive({shiny::req(input$y1)}),
     plot_points_data_complement = plot_points_data_complement,
-    pickradius = pickradius,
     key = key,
     nice_Numbers = nice_Numbers,
     xlabel = xlabel,
@@ -470,7 +484,10 @@ mod_comparer_server <- function(input, output, session,
     show_favour_arrows = show_favour_arrows,
     favour_direction = favour_direction,
     favour_verum_name = favour_verum_name,
-    favour_comparator_name = favour_comparator_name
+    favour_comparator_name = favour_comparator_name,
+    add_funnel = add_funnel,
+    exclude_funnel = exclude_funnel,
+    alpha_funnel = alpha_funnel
   )
 
   mod_graph_vars3 <- shiny::callModule(
@@ -487,13 +504,19 @@ mod_comparer_server <- function(input, output, session,
     ColorBGplot = ColorBGplot,
     ColorTabClicked = ColorTabClicked,
     ColorReference = ColorReference,
+    ColorCustomReference = ColorCustomReference,
     ColorPoints = ColorPoints,
     ColorMemorized = ColorMemorized,
+    ColorFactorial = ColorFactorial,
+      LabelParent = LabelParent,
+      LabelMemorized = LabelMemorized,
+      LabelTabClicked = LabelTabClicked,
+      LabelFactCont = LabelFactCont,
+      ColorParents = ColorParents,
     x = shiny::reactive({shiny::req(input$x2)}),
     y = shiny::reactive({shiny::req(input$y2)}),
     plot_points_data_complement = plot_points_data_complement,
     key = key,
-    pickradius = pickradius,
     nice_Numbers = nice_Numbers,
     xlabel = xlabel,
     grid = grid,
@@ -505,7 +528,10 @@ mod_comparer_server <- function(input, output, session,
     show_favour_arrows = show_favour_arrows,
     favour_direction = favour_direction,
     favour_verum_name = favour_verum_name,
-    favour_comparator_name = favour_comparator_name
+    favour_comparator_name = favour_comparator_name,
+    add_funnel = add_funnel,
+    exclude_funnel = exclude_funnel,
+    alpha_funnel = alpha_funnel
   )
 
 
@@ -530,7 +556,6 @@ mod_comparer_server <- function(input, output, session,
     y2 = shiny::reactive({shiny::req(input$y2)}),
     plot_points_data_complement = plot_points_data_complement,
     key = key,
-    pickradius = pickradius,
     nice_Numbers = nice_Numbers,
     xlabel = xlabel,
     grid = grid,
