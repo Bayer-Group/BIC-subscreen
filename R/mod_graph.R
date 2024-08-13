@@ -646,7 +646,6 @@ mod_graph_server <- function(
       NULL
     })
   } else {
-    # Thu Apr 11 13:28:57 2024 ------------------------------
     # left_pct <- (click$coords_img$x - click$range$left) / (click$range$right - click$range$left)
     # top_pct <- (click$domain$top - ifelse(plot_type() == "lin", click$y, log10(click$y))) / (click$domain$top - click$domain$bottom)
     # left_px <- (click$range$left + left_pct * (click$range$right - click$range$left) / click$img_css_ratio$x) + 3
@@ -737,7 +736,6 @@ mod_graph_server <- function(
     point <- nearPoints(colored_points, hover)
 
     if (nrow(point) == 0) return(NULL)
-      # Thu Apr 11 12:55:16 2024 ------------------------------
       # left_pct <- (hover$coords_img$x - hover$range$left) / (hover$range$right - hover$range$left)
       # top_pct <- (hover$domain$top - ifelse(plot_type() == "lin", hover$y, log10(hover$y))) / (hover$domain$top - hover$domain$bottom)
       # left_px <- (hover$range$left + left_pct * (hover$range$right - hover$range$left) / hover$img_css_ratio$x) + 3
