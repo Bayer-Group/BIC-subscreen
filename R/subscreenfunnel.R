@@ -1,4 +1,4 @@
-#' Calculation of funnel shape for the subgroups explorer (version 2)
+#' Calculation of funnel shape for the subgroups explorer
 #'
 #' @param data dataframe with study data
 #' @param H
