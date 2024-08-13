@@ -13,7 +13,15 @@ subscreenshow(
   windowTitle = "Subgroup Explorer",
   graphSubtitle = NULL,
   favour_label_verum_name = NULL,
-  favour_label_comparator_name = NULL
+  favour_label_comparator_name = NULL,
+  showTables = FALSE,
+  reference_line_at_start = FALSE,
+  reference_value = 1,
+  favour_label_at_start = FALSE,
+  favour_direction = TRUE,
+  subgroup_levels_at_start = NA,
+  yaxis_type = "lin",
+  add_funnel_at_start = FALSE
 )
 }
 \arguments{
@@ -35,6 +43,23 @@ subscreenshow(
 \item{favour_label_verum_name}{verum name for label use in explorer graph}
 
 \item{favour_label_comparator_name}{comparator name for label use in explorer graph}
+
+\item{showTables}{logical for display tables in 'Explorer tab'}
+
+\item{reference_line_at_start}{logical for reference line appearance at start (TRUE/FALSE)}
+
+\item{reference_value}{numeric value of horizontal reference line}
+
+\item{favour_label_at_start}{logical for favour labels appearance at start (TRUE/FALSE)}
+
+\item{favour_direction}{logical for favor label direction (TRUE/FALSE) where TRUE means
+favour_label_verum_name is on top}
+
+\item{subgroup_levels_at_start}{integer value for subgroup level slider at start}
+
+\item{yaxis_type}{character ("lin"/"log") for yaxis type}
+
+\item{add_funnel_at_start}{logical for funnel appearance at start (TRUE/FALSE)}
 }
 \description{
 Start the Shiny based interactive visualization tool to show the subgroup results

@@ -19,7 +19,6 @@ createColorVector(
   factorial_context_color,
   importance_values,
   importance_values_color,
-  brightness,
   memorized_data,
   memorized_color,
   key
@@ -53,8 +52,6 @@ createColorVector(
 \item{importance_values}{subgroup ids with importance values.}
 
 \item{importance_values_color}{importance values color.}
-
-\item{brightness}{brightness of circles.}
 
 \item{memorized_data}{subgroup ids which are memorized.}
 

@@ -1,22 +1,21 @@
 #' Calculation of funnel shape for the subgroups explorer
 #'
-#' @param data dataframe with study data
-#' @param H
-#' @param eval_function
-#' @param min_start
-#' @param n_support_points
-#' @param nperm
-#' @param alpha
-#' @param stratified
-#' @param treat
-#' @param endpoints
-#' @param verbose
-#' @param nkernel
+#' @param data data frame with study data
+#' @param H results file from subscreencalc
+#' @param eval_function eval function used in subscreencalc
+#' @param min_start integer value for minimal subgroup size value for permutation
+#' @param n_support_points integer value for number of supportive points
+#' @param nperm integer value for number of permutations
+#' @param alpha numerical value 
+#' @param stratified logical value (TRUE/FALSE) for stratification
+#' @param treat character value of treatment variabale name
+#' @param endpoints character vector of endpoints
+#' @param verbose logical value to switch on/off output of computational information (defaults to TRUE)
+#' @param nkernel integer value for number of kernel used
 #' @param ... further parameters which where outdated used for notes and errors.
 #' @return an object of type SubScreenResult of the form
 #' @keywords subgroup analysis
 #' @export subscreenfunnel
-#' @examples
 #'
 
 subscreenfunnel <- function(

@@ -12,7 +12,7 @@ subscreen_mosaicPlot(
   mos.z,
   col.bg = c("#424242"),
   col.txt = c("#ffffff"),
-  colrange.z = c("#00BCFF", "gray89", "#89D329"),
+  colrange.z = c("#10384FFF", "#00BCFFFF", "white", "#89D329FF", "#004422FF"),
   scale = "lin"
 )
 }

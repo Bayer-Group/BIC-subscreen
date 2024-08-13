@@ -175,7 +175,17 @@
 * changes in DESCRIPTION
 
 
+# subscreen 4.0.3
 
+## subscreencalc
+* fixing sample size calculations for data with multiple rows for subjects
+
+## subscreenshow 
+* adding multiple new parameter to define settings
+at app start
+
+## subscreenfunnel
+* adding new function subscreenfunnel
 
 
 
