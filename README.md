@@ -85,17 +85,17 @@ The fourth function starts the shiny application Subgroup Explorer. In the curre
 
 The function `subscreencalc` returns a list object of class `SubScreenResult`. This list object contains all subgroup information required in the shiny application. All function parameters are explained in detail in the subsections of this chapter.The following table gives an overview of all parameters which can be adjusted:
 <pre>
-<b>[data](#chap211)               </b> data frame with study data
-<b>[eval_function](#chap212)      </b> name of the evaluation function for data analysis
-<b>subjectid          </b> character of variable name in data that contains the subject identifier, defaults to 'subjid'
-<b>[factors](#chap213)            </b> character vector containing the names of variables that define the subgroups (required)
-<b>[max_comb](#chap214)           </b> maximum number of factor combination levels to define subgroups, defaults to 3
-<b>[nkernel](#chap215)            </b> number of kernels for parallelization (defaults to 1)
-<b>[par_functions](#chap216)      </b> character vector of names of functions used in eval_function to be exported
-                      to cluster (needed only if nkernel > 1)
-<b>[verbose](#chap217)            </b> logical value to switch on/off output of computational information (defaults to TRUE)
-<b>[factorial](#chap218)          </b> logical value to switch on/off calculation of factorial contexts (defaults to FALSE)
-<b>[use_complement](#chap219)     </b> logical value to switch on/off calculation of complement subgroups (defaults to FALSE)
+<b> <a href='#chap211'>data</a>               </b> data frame with study data
+<b> <a href='#chap212'>eval_function</a>      </b> name of the evaluation function for data analysis
+<b> subjectid          </b> character of variable name in data that contains the subject identifier, defaults to 'subjid'
+<b> <a href='#chap213'>factors</a>            </b> character vector containing the names of variables that define the subgroups (required)
+<b> <a href='#chap214'>max_comb</a>           </b> maximum number of factor combination levels to define subgroups, defaults to 3
+<b> <a href='#chap215'>nkernel</a>            </b> number of kernels for parallelization (defaults to 1)
+<b> <a href='#chap216'>par_functions</a>      </b> character vector of names of functions used in eval_function to be exported
+                     to cluster (needed only if nkernel > 1)
+<b> <a href='#chap217'>verbose</a>            </b> logical value to switch on/off output of computational information (defaults to TRUE)
+<b> <a href='#chap218'>factorial</a>          </b> logical value to switch on/off calculation of factorial contexts (defaults to FALSE)
+<b> <a href='#chap219'>use_complement</a>     </b> logical value to switch on/off calculation of complement subgroups (defaults to FALSE)
 </pre>
 
 <div id='chap211'>
