@@ -1,7 +1,5 @@
-
 # Subscreen <img src='inst/www/SubgroupExplorer_Logo_final.png' align='right' height='100'>
 
-#### June 21, 2023 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/subscreen)](https://cran.r-project.org/package=subscreen)
 [![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/subscreen)](https://cranlogs.r-pkg.org/badges/grand-total/subscreen)
@@ -11,35 +9,53 @@
 ***subscreen*** (***sub***group ***screen***ing) package has been developed to systematically analyze data, e.g., from clinical trials, for subgroup effects and visualize the outcome for all evaluated subgroups simultaneously.
 The visualization is done by a shiny application called Subgroup Explorer. Typically, shiny applications are hosted on a dedicated shiny server, but due to the sensitivity of patient data in clinical trials, which are usually protected by informed consents, the upload of this data to an external server is prohibited. Therefore, we provide our tool as a stand-alone application that can be launched from any local machine on which the data is stored. 
 
-Table of content (click on topic to jump to a specific chapter):
-<ul>
-  <li> <a href='#chap1'> 1. Introduction </a></li>
-  <li> <a href='#chap2'> 2. Package Functions </a></li>
-    <li style='padding-left:2em'> <a href='#chap21'> 2.1 `subscreencalc` Input </a></li>
-    <li style='padding-left:4em'> <a href='#chap211'> 2.1.1 data </a></li>
-    <li style='padding-left:4em'> <a href='#chap212'> 2.1.2 eval_function </a></li>
-    <li style='padding-left:4em'> <a href='#chap213'> 2.1.3 factors </a></li>
-    <li style='padding-left:4em'> <a href='#chap214'> 2.1.4 max_comb </a></li>
-    <li style='padding-left:4em'> <a href='#chap215'> 2.1.5 nkernel </a></li>
-    <li style='padding-left:4em'> <a href='#chap216'> 2.1.6 par_functions </a></li>
-    <li style='padding-left:4em'> <a href='#chap217'> 2.1.7 verbose </a></li>
-    <li style='padding-left:4em'> <a href='#chap218'> 2.1.8 factorial </a></li>
-    <li style='padding-left:4em'> <a href='#chap219'> 2.1.9 use_complement </a></li>
-    <li style='padding-left:2em'> <a href='#chap22'> 2.2 `subscreencalc` Output </a></li>
-    <li style='padding-left:2em'> <a href='#chap23'> 2.3 `subscreenvi` </a></li>
-    <li style='padding-left:2em'> <a href='#chap24'> 2.4 `subscreenshow` </a></li>
-  <li> <a href='#chap3'> 3. Subgroup Explorer </a></li>
-    <li style='padding-left:2em'> <a href='#chap32'> 3.1 Upload </a></li>
-    <li style='padding-left:2em'> <a href='#chap32'> 3.2 Explorer </a></li>
-    <li style='padding-left:4em'> <a href='#chap321'> 3.2.1 Diagram </a></li>
-    <li style='padding-left:4em'> <a href='#chap322'> 3.2.2 Lists </a></li>
-    <li style='padding-left:4em'> <a href='#chap323'> 3.2.3 Interaction Plot </a></li>
-    <li style='padding-left:4em'> <a href='#chap324'> 3.2.4 Options </a></li>
-    <li style='padding-left:2em'> <a href='#chap33'> 3.3 Comparer </a></li>
-    <li style='padding-left:2em'> <a href='#chap34'> 3.4 Mosaic </a></li>
-    <li style='padding-left:2em'> <a href='#chap34'> 3.5 ASMUS </a></li>
-    <li style='padding-left:4em'> <a href='#chap351'> 3.5.1 Factorial Contexts </a></li>
-</ul>
+**Table of contents**
+<div id="user-content-toc">
+  <ul>
+    <li> <a href='#chap1'> 1. Introduction </a> </li>
+    <li> <a href='#chap2'> 2. Package Functions </a>
+      <ul> 
+        <li> <a href='#chap21'> 2.1 `subscreencalc` Input </a>
+          <ul>
+            <li><a href='#chap211'> 2.1.1 data </a></li>
+            <li><a href='#chap212'> 2.1.2 eval_function </a></li>
+            <li><a href='#chap213'> 2.1.3 factors </a></li>
+            <li><a href='#chap214'> 2.1.4 max_comb </a></li>
+            <li><a href='#chap215'> 2.1.5 nkernel </a></li>
+            <li><a href='#chap216'> 2.1.6 par_functions </a></li>
+            <li><a href='#chap217'> 2.1.7 verbose </a></li>
+            <li><a href='#chap218'> 2.1.8 factorial </a></li>
+            <li><a href='#chap219'> 2.1.9 use_complement </a></li>
+          </ul>
+        </li> 
+        <li> <a href='#chap22'> 2.2 `subscreencalc` Output </a> </li> 
+        <li> <a href='#chap23'> 2.3 `subscreenvi` </a> </li> 
+        <li> <a href='#chap24'> 2.4 `subscreenfunnel` </a> </li> 
+        <li> <a href='#chap25'> 2.5 `subscreenshow` </a> </li>
+      </ul>
+    </li>
+    <li> <a href='#chap3'> 3. Subgroup Explorer </a>
+      <ul> 
+        <li> <a href='#chap31'> 3.1 Upload </a> </li>  
+        <li> <a href='#chap32'> 3.2 Explorer </a>
+          <ul>
+            <li> <a href='#chap321'> 3.2.1 Diagram </a> </li>
+            <li> <a href='#chap322'> 3.2.2 Lists </a> </li>
+            <li> <a href='#chap323'> 3.2.3 Interaction Plot </a> </li>
+            <li> <a href='#chap324'> 3.2.4 Options </a> </li>
+          </ul>
+        </li>  
+        <li> <a href='#chap33'> 3.3 Comparer </a> </li>  
+        <li> <a href='#chap34'> 3.4 Mosaic </a> </li>  
+        <li> <a href='#chap35'> 3.5 ASMUS </a>
+          <ul>
+            <li> <a href='#chap351'> 3.5.1 Factorial Contexts </a> </li>
+          </ul>
+        </li> 
+      </ul> 
+    </li>
+  </ul>
+</div>
 
 <div id='chap1'>
 
@@ -53,12 +69,14 @@ Identifying outcome relevant subgroups has now become as simple as possible! The
 The central result of a subgroup screening is a diagram, in which each dot stands for a subgroup. The diagram can show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup and the statistical measure of the treatment effect in the respective subgroup. The sample size is shown on the horizontal axis while the treatment effect is displayed on the vertical axis. Furthermore, the diagram shows the line of the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while the deviation from the study mean for larger subgroups tends to be smaller. Therefore, the dots in the figure are expected to form a funnel for studies with no conspicuous subgroup effects. Any deviations from this funnel shape may hint towards conspicuous subgroups.
 
 <div id='chap2'>
+
 ## 2. Package Functions
 
-The subscreen package consists of three major functions: `subscreencalc`, `subscreenvi` and `subscreenshow`.
+The subscreen package consists of four major functions: [`subscreencalc`](#chap21), [`subscreenvi`](#chap23), [`subscreenfunnel`](#chap24) and [`subscreenshow`](#chap25).
 The first function generates an object of class `SubScreenResult`, which is required for the shiny application.
 The second function performs a variable importance calculation via random forests. This calculation is optional and will unlock the *Variable importance*-tab in the Subgroup Explorer. 
-The third function starts the shiny application Subgroup Explorer. In the recent version of the app, subscreenshow can be accessed without data. In this case, demo data can be selected in the ‘upload data’-tab. To upload own data, either the SubScreenResult object is called in subscreenshow or in the Upload Page the SubScreenResult object is uploaded. In the next sections, all three functions are explained in more detail.
+The third function creates a reference funnel based on non-parametric confidence intervals.
+The fourth function starts the shiny application Subgroup Explorer. In the current version of the app, subscreenshow can be accessed without data. In this case, demo data can be selected in the ‘upload data’-tab. To upload own data, either the SubScreenResult object is called in subscreenshow or in the Upload Page the SubScreenResult object is uploaded. In the next sections, all three functions are explained in more detail.
 
 
 <div id='chap21'>
@@ -67,17 +85,17 @@ The third function starts the shiny application Subgroup Explorer. In the recent
 
 The function `subscreencalc` returns a list object of class `SubScreenResult`. This list object contains all subgroup information required in the shiny application. All function parameters are explained in detail in the subsections of this chapter.The following table gives an overview of all parameters which can be adjusted:
 <pre>
-<b>data               </b> data frame with study data
-<b>eval_function      </b> name of the evaluation function for data analysis
+<b>[data](#chap211)               </b> data frame with study data
+<b>[eval_function](#chap212)      </b> name of the evaluation function for data analysis
 <b>subjectid          </b> character of variable name in data that contains the subject identifier, defaults to 'subjid'
-<b>factors            </b> character vector containing the names of variables that define the subgroups (required)
-<b>max_comb           </b> maximum number of factor combination levels to define subgroups, defaults to 3
-<b>nkernel            </b> number of kernels for parallelization (defaults to 1)
-<b>par_functions      </b> character vector of names of functions used in eval_function to be exported
+<b>[factors](#chap213)            </b> character vector containing the names of variables that define the subgroups (required)
+<b>[max_comb](#chap214)           </b> maximum number of factor combination levels to define subgroups, defaults to 3
+<b>[nkernel](#chap215)            </b> number of kernels for parallelization (defaults to 1)
+<b>[par_functions](#chap216)      </b> character vector of names of functions used in eval_function to be exported
                       to cluster (needed only if nkernel > 1)
-<b>verbose            </b> logical value to switch on/off output of computational information (defaults to TRUE)
-<b>factorial          </b> logical value to switch on/off calculation of factorial contexts (defaults to FALSE)
-<b>use_complement     </b> logical value to switch on/off calculation of complement subgroups (defaults to FALSE)
+<b>[verbose](#chap217)            </b> logical value to switch on/off output of computational information (defaults to TRUE)
+<b>[factorial](#chap218)          </b> logical value to switch on/off calculation of factorial contexts (defaults to FALSE)
+<b>[use_complement](#chap219)     </b> logical value to switch on/off calculation of complement subgroups (defaults to FALSE)
 </pre>
 
 <div id='chap211'>
@@ -190,7 +208,7 @@ If the maximum number of combination is bigger than the number of factors, then 
 #### 2.1.5. nkernel
 
 To reduce the calculation time, the parameter nkernel can be increased. 
-To use multiple kernels the package parallel needs to be installed. If nkernel > 1 is used, please make sure to use the parameter `par_functions` for all functions within the eval function (see next chapter).
+To use multiple kernels the package parallel needs to be installed. If nkernel > 1 is used, please make sure to use the parameter `par_functions` for all functions within the eval function (see [next chapter](#chap216)).
 
 <div id='chap216'>
 
@@ -215,7 +233,7 @@ The returned text gives information about the start and end time of calculation 
 
 #### 2.1.8. factorial
 
-If (factorial=TRUE) the calculation of factorial contexts is performed, which is required for the ASMUS-tab (see chapter 3.5). The calculation time of subscreencalc increases if the parameter factorial is set to TRUE. A factorial context is defined as the combination of all factor levels of a given subgroup. As an example, for a subgroup with three factor combination sex: f, ageg: High and cholg: Low (all factor variables with 2 levels) the factorial context includes eight subgroups. The concept of factorial contexts will be explained in more detail in <a href='#chap351'> chapter 3.5.1</a>.
+If (factorial=TRUE) the calculation of factorial contexts is performed, which is required for the ASMUS-tab (see [chapter 3.5](#chap35)). The calculation time of subscreencalc increases if the parameter factorial is set to TRUE. A factorial context is defined as the combination of all factor levels of a given subgroup. As an example, for a subgroup with three factor combination sex: f, ageg: High and cholg: Low (all factor variables with 2 levels) the factorial context includes eight subgroups. The concept of factorial contexts will be explained in more detail in [chapter 3.5.1](#chap351).
 
 <div id='chap219'>
 
@@ -303,7 +321,7 @@ The list entry results_total includes the overall results of all subjects. So in
     </tr>
   </table>
 
-The SubScreenResult object returned by subsreencalc is used as input for subscreenshow (see <a href='#chap23'>chapter 2.3.</a>)
+The SubScreenResult object returned by subsreencalc is used as input for subscreenshow (see [chapter 2.3](#chap23))
 
 <div id='chap23'>
 
@@ -322,9 +340,15 @@ The following function parameters can be adjusted:
                       variables (default=NULL, i.e. all remaining variables)
 </pre>
 
-<div id='chap23'>
+<div id='chap24'>
 
-### 2.3 `subscreenshow`
+### 2.4 `subscreenfunnel`
+
+To be described.
+
+<div id='chap25'>
+
+### 2.5 `subscreenshow`
 
 The function subscreenshow starts the Subgroup Explorer application. The following function parameters can be adjusted:
 <pre>
@@ -343,13 +367,13 @@ The function subscreenshow starts the Subgroup Explorer application. The followi
 
 None of the parameter is required to start the app. 
 By entering subscreenshow() to the R console, the app starts on the upload screen.
-The app itself will be explained in more detailed version in <a href='#chap3'>chapter 3</a>.
+The app itself will be explained in more detailed version in [chapter 3](#chap3).
 
 <div id='chap3'>
 
 ## 3. Subgroup Explorer
 
-To start the subgroup screening via the Subgroup Explorer application, the subscreenshow-function is used (see also previous subchapter 2.3).
+To start the subgroup screening via the Subgroup Explorer application, the subscreenshow-function is used (see also previous [subchapter 2.3](#chap23)).
 The application itself consists of five main tabs: Upload, Explorer, Comparer, Mosaic and ASMUS (Automatic/Advanced Screening of one- or Multi-factorial Subgroups). Each tab will be explained in more detail in the next subchapters.
 
 <div id='chap31'>
@@ -390,9 +414,9 @@ By clicking on a single dot, a subgroup is selected and appears in red. If multi
 By selecting a subgroup several lists, which include more information about the selected subgroup, appear below the plot.
 
 An interaction plot appears on the right side of the main plot, if a subgroup has a complete (or pseudo-complete) factorial context.
-For more details about the concept of a factorial context see chapter 3.5.1. 
+For more details about the concept of a factorial context see [chapter 3.5.1](#chap351). 
 
-Several options for the appearance of the diagram are available and explained in chapter 3.2.4. 
+Several options for the appearance of the diagram are available and explained in [chapter 3.2.4](#chap324). 
 
 <div id='chap322'>
 
