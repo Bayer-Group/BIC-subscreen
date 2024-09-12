@@ -61,10 +61,10 @@ The visualization is done by a shiny application called Subgroup Explorer. Typic
 
 ## 1. Introduction
 
+Identifying outcome relevant subgroups has now become as simple as possible! The formerly lengthy and tedious search for the needle in a haystack is replaced by a single, comprehensive and coherent presentation.
+
 <img style ='float: right;' src='inst/www/subscreenshow_Explorer_Graph.png'
 width = '55%'>
-
-Identifying outcome relevant subgroups has now become as simple as possible! The formerly lengthy and tedious search for the needle in a haystack is replaced by a single, comprehensive and coherent presentation.
 
 The central result of a subgroup screening is a diagram, in which each dot stands for a subgroup. The diagram can show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup and the statistical measure of the treatment effect in the respective subgroup. The sample size is shown on the horizontal axis while the treatment effect is displayed on the vertical axis. Furthermore, the diagram shows the line of the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while the deviation from the study mean for larger subgroups tends to be smaller. Therefore, the dots in the figure are expected to form a funnel for studies with no conspicuous subgroup effects. Any deviations from this funnel shape may hint towards conspicuous subgroups.
 
@@ -91,8 +91,7 @@ The function `subscreencalc` returns a list object of class `SubScreenResult`. T
 <b> <a href='#chap213'>factors</a>            </b> character vector containing the names of variables that define the subgroups (required)
 <b> <a href='#chap214'>max_comb</a>           </b> maximum number of factor combination levels to define subgroups, defaults to 3
 <b> <a href='#chap215'>nkernel</a>            </b> number of kernels for parallelization (defaults to 1)
-<b> <a href='#chap216'>par_functions</a>      </b> character vector of names of functions used in eval_function to be exported
-                     to cluster (needed only if nkernel > 1)
+<b> <a href='#chap216'>par_functions</a>      </b> character vector of names of functions used in eval_function to be exported to cluster (needed only if nkernel > 1)
 <b> <a href='#chap217'>verbose</a>            </b> logical value to switch on/off output of computational information (defaults to TRUE)
 <b> <a href='#chap218'>factorial</a>          </b> logical value to switch on/off calculation of factorial contexts (defaults to FALSE)
 <b> <a href='#chap219'>use_complement</a>     </b> logical value to switch on/off calculation of complement subgroups (defaults to FALSE)
@@ -112,58 +111,13 @@ The following columns are required:
 
 For example, the data set could include the following columns from the example data set:
 
-<table>
-  <tr>
-    <th> id &nbsp;    </th> 
-    <th> trt &nbsp;        </th> 
-    <th> sex &nbsp;         </th> 
-    <th> ageg &nbsp;        </th> 
-    <th> albuming &nbsp;        </th> 
-    <th> cholg &nbsp;         </th> 
-    <th> event.pfs &nbsp;        </th>
-    <th> timepfs &nbsp;         </th>
-  </tr>
-  <tr>
-    <th> 1 </th> 
-    <th> 1 </th> 
-    <th> f </th> 
-    <th> high </th> 
-    <th> Low </th> 
-    <th> Low </th> 
-    <th> 1 </th>
-    <th> 3029 </th>
-  </tr>
-  <tr>
-    <th> 2 </th> 
-    <th> 1 </th> 
-    <th> f </th> 
-    <th> High </th> 
-    <th> High </th> 
-    <th> Low </th> 
-    <th> 1 </th>
-    <th> 391 </th>
-  </tr>
-  <tr>
-    <th> 3 </th> 
-    <th> 1 </th> 
-    <th> m </th> 
-    <th> Low </th> 
-    <th> High </th> 
-    <th> Low </th> 
-    <th> 0 </th>
-    <th> 299 </th>
-  </tr>
-  <tr>
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th>
-    <th> ... </th>
-  </tr>
-</table>
+| id | trt  | sex | ageg | albuming | cholg | event.pfs | timepfs |
+|:-------:|:-------:|:-------:|:-------:|:-------:|:---------:|:--------:|:------:|
+| 1 | 1 | f | high | low | low | 1 | 3029 |
+| 2 | 1 | f | high | high | low | 1 |391  |
+| 3 | 1 | m | low | high | low | 0 | 299 |
+| ... | ... | ... | ... | ... | ... | ... | ... |
+
 where sex, ageg, albuming and cholg are the categorized factor variables and event.pfs and timepfs are the variables used to derive the endpoint via the eval_function (in this example the hazard ratio).
 
 <div id='chap212'>
@@ -171,22 +125,22 @@ where sex, ageg, albuming and cholg are the categorized factor variables and eve
 #### 2.1.2. eval_function
 
 The input function eval_function() needs to be defined by the user.
-This function calculates the endpoint(s) for each subgroup, e.g. number, rate, mean, odds ratio, hazard ratio, confidence limit, p-value, ...
+This function calculates the endpoint(s) for each subgroup (e.g. number, rate, mean, odds ratio, hazard ratio, confidence limit, p-value, ...).
 The results have to be returned as a numerical vector. Each element of the vector represents an endpoint (outcome/treatment effect/result).
 
 In our example, we calculate the hazard ratio for progression free survival:
-<pre>
-hazardratio <- function(D) {
 
- HRpfs <- tryCatch(exp(coxph(Surv(D$timepfs, D$event.pfs) ~ D$trt )$coefficients[[1]]),
-  warning=function(w) {NA})
- HRpfs <- 1/HRpfs
- HR.pfs <- round(HRpfs, 2)
- HR.pfs[HR.pfs > 10]      <- 10
- HR.pfs[HR.pfs < 0.00001] <- 0.00001
- data.frame( HR.pfs)
-}
-</pre>
+    hazardratio <- function(D) {
+    
+     HRpfs <- tryCatch(exp(coxph(Surv(D$timepfs, D$event.pfs) ~ D$trt )$coefficients[[1]]),
+      warning=function(w) {NA})
+     HRpfs <- 1/HRpfs
+     HR.pfs <- round(HRpfs, 2)
+     HR.pfs[HR.pfs > 10]      <- 10
+     HR.pfs[HR.pfs < 0.00001] <- 0.00001
+     data.frame( HR.pfs)
+    }
+
 which will add a target variable column named `HR.pfs`.
 
 <div id='chap213'>
@@ -215,17 +169,16 @@ To use multiple kernels the package parallel needs to be installed. If nkernel >
 #### 2.1.6. par_functions
 
 This parameter is only required when multiple kernels are used.
-It requires the name(s) of functions used in eval_function to be exported to the cluster. In the example, the hazardratio function (see 2.1.2)
-uses the functions `coxph` and `Surv`from the survival package. Therefore these functions need to be specified in the parameter `par_functions = c('coxph','Surv')`.
-Otherwise an error appears: Error in checkForRemoteErrors(val) :
-4 nodes produced errors; first error: could not find function 'coxph'.
+It requires the name(s) of functions used in eval_function to be exported to the cluster. In the example, the hazardratio function (see [chapter 2.1.2](#chap212)) uses the functions `coxph` and `Surv`from the survival package. Therefore, these functions need to be specified in the parameter `par_functions = c('coxph','Surv')`.
+Otherwise an error appears: 
+<pre>Error in checkForRemoteErrors(val) : 4 nodes produced errors; first error: could not find function 'coxph'.</pre>
 
 <div id='chap217'>
 
 #### 2.1.7. verbose
 
-A text of the computational information can be returned with `verbose = TRUE`. Otherwise verbose should be set to FALSE.
-The returned text gives information about the start and end time of calculation as well the calculation time of the several steps within the function. Furthermore, the number of subjects, number of subgroup factors, and number of subgroups are returned.
+A text of the computational information can be returned with `verbose = TRUE`. Otherwise, verbose should be set to FALSE.
+The returned text gives information about the start and end time of calculation as well the calculation time of the steps within the function. Furthermore, the number of subjects, number of subgroup factors, and number of subgroups are returned.
 
 <img src='inst/www/subscreencalc_verbose.png'>
 
@@ -233,7 +186,7 @@ The returned text gives information about the start and end time of calculation 
 
 #### 2.1.8. factorial
 
-If (factorial=TRUE) the calculation of factorial contexts is performed, which is required for the ASMUS-tab (see [chapter 3.5](#chap35)). The calculation time of subscreencalc increases if the parameter factorial is set to TRUE. A factorial context is defined as the combination of all factor levels of a given subgroup. As an example, for a subgroup with three factor combination sex: f, ageg: High and cholg: Low (all factor variables with 2 levels) the factorial context includes eight subgroups. The concept of factorial contexts will be explained in more detail in [chapter 3.5.1](#chap351).
+If `factorial=TRUE`, the calculation of factorial contexts is performed, which is required for the ASMUS-tab (see [chapter 3.5](#chap35)). The calculation time of subscreencalc increases if the parameter factorial is set to TRUE. A factorial context is defined as the combination of all factor levels of a given subgroup. As an example, for a subgroup with three factor combination sex: f, ageg: High and cholg: Low (all factor variables with 2 levels respectively) the factorial context includes eight subgroups. The concept of factorial contexts will be explained in more detail in [chapter 3.5.1](#chap351).
 
 <div id='chap219'>
 
@@ -246,80 +199,29 @@ Since the complement of subgroups with more than one factor level is not necessa
 
 ### 2.2 `subscreencalc` Output
 
-The calculation performed via subscreencalc returns a list object of class `SubScreenResult`.
+The calculation performed via `subscreencalc` returns a list object of class `SubScreenResult`.
 The following list entries are generated in subscreencalc: sge, max_comb, min_comb, subjectid, factors, results_total.
 
 The main result data set is saved in the sge (short for Subgroup Explorer) entry. This can, for example, have the following structure:
-<table>
-  <tr>
-    <th> SGID &nbsp;    </th> 
-    <th> nfactors &nbsp;        </th> 
-    <th> HR.pfs &nbsp;         </th> 
-    <th> N.of.subjects &nbsp;        </th> 
-    <th> sex &nbsp;        </th> 
-    <th> ageg &nbsp;        </th> 
-    <th> cholg &nbsp;         </th> 
-    <th> albuming &nbsp;        </th>
-  </tr>
-  <tr>
-    <th> 1 </th> 
-    <th> 1 </th> 
-    <th> 1.06 </th> 
-    <th> 36 </th> 
-    <th> m </th> 
-    <th> Not used  </th> 
-    <th> Not used  </th> 
-    <th> Not used  </th>
-  </tr>
-  <tr>
-    <th> 2 </th> 
-    <th> 1 </th> 
-    <th> 2.45 </th> 
-    <th> 276 </th> 
-    <th> f </th> 
-    <th> Not used  </th> 
-    <th> Not used  </th> 
-    <th> Not used  </th>
-  </tr>
-  <tr>
-    <th> 3 </th> 
-    <th> 1 </th> 
-    <th> 0.89  </th> 
-    <th> 101 </th> 
-    <th> Not used </th> 
-    <th> High </th> 
-    <th> Not used  </th> 
-    <th> Not used  used </th>
-  </tr>
-  <tr>
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th> 
-    <th> ... </th>
-  </tr>
-</table>
-where every subgroup gets its own subgroup id (column SGID). Also, the number of factor levels in this subgroup is shown in the column nfactors. If a factor variable is not used in the subgroup definition, the specific column entry is coded with 'Not used'.
+
+| SGID | nfactors  | HR.pfs | N.of.subjects | sex | ageg | cholg | albuming |
+|:-------:|:-------:|:-------:|:-------:|:-------:|:---------:|:--------:|:------:|
+| 1 | 1 | 1.06 | 36 | m | Not used | Not used | Not used |
+| 2 | 1 | 2.45 | 276 | f | Not used | Not used |Not used |
+| 3 | 1 | 0.89 | 101 | Not used | high | Not used | Not used |
+| ... | ... | ... | ... | ... | ... | ... | ... |
+
+where each subgroup gets its own subgroup id (column SGID). Also, the number of factor levels in this subgroup is shown in the column nfactors. If a factor variable is not used in the subgroup definition, the specific column entry is coded with 'Not used'.
 If the factorial context calculation is activated, a column FCID_all is generated in addition, where subgroups related to the same context are condensed.
-Since for every target variable the factorial context is checked for completeness and pseudo completeness, three columns for every target variable are created and saved in results$sge. In the example of hazard ratio of progression free survival (HR.pfs), the columns FCID_complete_HR.pfs, FCID_incomplete_HR.pfs and FCID_pseudo_HR.pfs are generated. If the parameter use_complement is set to TRUE, the column Complement_HR.pfs is also available in the results data set.
+Since for every target variable the factorial context is checked for completeness and pseudo completeness, three columns for every target variable are created and saved in results$sge. In the example of hazard ratio of progression free survival (HR.pfs), the columns `FCID_complete_HR.pfs`, `FCID_incomplete_HR.pfs` and `FCID_pseudo_HR.pfs` are generated. If the parameter use_complement is set to TRUE, the column `Complement_HR.pfs` is also available in the results data set.
 
 The other list entries (max_comb, min_comb, subjectid, treat, and factors) include the parameter values given in the function call. 
 
 The list entry results_total includes the overall results of all subjects. So in the example above, we get the entry results$results_total:
 
-  <table>
-    <tr>
-      <th> HR.pfs </th>
-      <th> N.of.subjects </th>
-    </tr>
-    <tr>
-      <th> 1.11 </th>
-      <th> 312 </th>
-    </tr>
-  </table>
+| HR.pfs        | N.of.subjects |
+|:-------------:|:-------------:|
+| 1.11          | 312           |
 
 The SubScreenResult object returned by subsreencalc is used as input for subscreenshow (see [chapter 2.3](#chap23))
 
@@ -327,17 +229,15 @@ The SubScreenResult object returned by subsreencalc is used as input for subscre
 
 ### 2.3 `subscreenvi`
 
-The function subscreenvi performs a variable importance calculation via random forests using the package ranger. The values returned describe the variability of variable importance between treatments. High variability between treatments implies that a subgroup might be more relevant, because the treatment seems to have an influence on how important the variable is for modelling. Low variability implies less relevance as the subgroup is equally important in all treatments.
+The function `subscreenvi` performs a variable importance calculation via random forests using the package ranger. The values returned describe the variability of variable importance between treatments. High variability between treatments implies that a subgroup might be more relevant, because the treatment seems to have an influence on how important the variable is for modelling. Low variability implies less relevance as the subgroup is equally important in all treatments.
 
 The following function parameters can be adjusted:
 <pre>
 <b>data               </b> data frame containing the dependent and independent variables.
 <b>y                  </b> name of the column in data that contains the dependent variable.
-<b>cens               </b> name of the column in data that contains the censoring variable,
-                      if y is an event time (default=NULL).
+<b>cens               </b> name of the column in data that contains the censoring variable, if y is an event time (default=NULL).
 <b>trt                </b> name of the column in data that contains the treatment variable (default=NULL).
-<b>x                  </b> vector that contains the names of the columns in data with the independent
-                      variables (default=NULL, i.e. all remaining variables)
+<b>x                  </b> vector that contains the names of the columns in data with the independent variables (default=NULL, i.e. all remaining variables)
 </pre>
 
 <div id='chap24'>
@@ -350,11 +250,11 @@ To be described.
 
 ### 2.5 `subscreenshow`
 
-The function subscreenshow starts the Subgroup Explorer application. The following function parameters can be adjusted:
+The function `subscreenshow` starts the Subgroup Explorer application. The following function parameters can be adjusted:
+
 <pre>
 <b>scresults                     </b> SubScreenResult object with results from a subscreencalc call
-<b>variable_importance           </b> variable importance object calculated via subscreenvi to unlock 
-                                  'variable importance'-tab in the app
+<b>variable_importance           </b> variable importance object calculated via subscreenvi to unlock 'variable importance'-tab in the app
 <b>host                          </b> host name or IP address for shiny display
 <b>port                          </b> port number for shiny display
 <b>NiceNumbers                   </b> list of numbers used for a 'nice' scale
@@ -362,77 +262,84 @@ The function subscreenshow starts the Subgroup Explorer application. The followi
 <b>graphSubtitle                 </b> subtitle for explorer graph
 <b>favour_label_verum_name       </b> verum name for label use in explorer graph
 <b>favour_label_comparator_name  </b> comparator name for label use in explorer graph
-
+<b>showTables                    </b> logical for display tables in 'Explorer tab' (defaults to FALSE)
+<b>reference_line_at_start       </b> logical for reference line appearance at start (defaults to FALSE)
+<b>reference_value               </b> numeric value of horizontal reference line (defaults to 1)
+<b>favour_label_at_start         </b> logical for favour labels appearance at start (defaults to FALSE)
+<b>favour_direction              </b> logical for favour label direction, where TRUE means favour_label_verum_name is on top (defaults to TRUE)
+<b>subgroup_levels_at_start      </b> integer value for subgroup level slider at start
+<b>yaxis_type                    </b> character ('lin' vs. 'log') for y-axis type (defaults to 'lin')
+<b>add_funnel_at_start           </b> logical for funnel appearance at start (defaults to FALSE)
 </pre>
 
-None of the parameter is required to start the app. 
-By entering subscreenshow() to the R console, the app starts on the upload screen.
+None of the parameters are required to start the app. 
+By entering `subscreenshow()` to the R console, the app starts on the upload screen.
 The app itself will be explained in more detailed version in [chapter 3](#chap3).
 
 <div id='chap3'>
 
 ## 3. Subgroup Explorer
 
-To start the subgroup screening via the Subgroup Explorer application, the subscreenshow-function is used (see also previous [subchapter 2.3](#chap23)).
-The application itself consists of five main tabs: Upload, Explorer, Comparer, Mosaic and ASMUS (Automatic/Advanced Screening of one- or Multi-factorial Subgroups). Each tab will be explained in more detail in the next subchapters.
+To start the subgroup screening via the Subgroup Explorer application, the `subscreenshow`-function is used (see also [chapter 2.3](#chap23)).
+The application itself consists of five main tabs: [Upload](#chap31), [Explorer](#chap32), [Comparer](#chap33), [Mosaic](#chap34) and [ASMUS](#chap35) (Automatic/Advanced Screening of one- or Multi-factorial Subgroups). Each tab will be explained in more detail in the next subchapters.
 
 <div id='chap31'>
 
 #### 3.1 Upload
 
-If the data parameter scresults in subscreenshow(scresults = NULL) is null or not specified, the app starts on the upload page.
-On the upload page a demo data set or a already saved SubScreenResult object (.RData file) can be selected. If a saved result data set should be loaded, the file can selected via the 'Browse...'-button and the 'Upload data'-button.
+If the data parameter `scresults` in `subscreenshow(scresults = NULL)` is set to `NULL` or not specified, the app starts on the upload page.
+On the upload page a demo data set or an already saved `SubScreenResult` object (.RData file) can be selected. If a saved result data set should be loaded, the file can be selected via the 'Browse...'-button and the 'Upload data'-button.
 For the demo data set the 'demo data' box has to be checked and submitted via the 'Use demo data'-button.
-After a data set is selected, the data set information and some checks appear on the right side of the screen. After clicking the 'Upload data'-button all other tabs are unlocked and the Explorer-tab appears.
+After a data set is selected, the data set information and some checks appear on the right side of the screen.
+Factors can then be manually de- and re-selected using the drop-down menu.
+After clicking the 'Upload data'-button all other tabs are unlocked and the Explorer-tab appears.
 
 <img style ='float: right;' src='inst/www/subscreenshow_Upload_start.png' width='100%'>
 
-If the SubScreenResult object is already entered via the 'scresults' parameter in subscreenshow, the app starts directly on the Explorer page. In this case a third input mode called 'Uploaded data via function call' appears on the upload page. Since it is possible to use different data sets in the same session, you can use this option the re-upload the data set used in the original function call or just to see the data set information.
+If the `SubScreenResult` object is already entered via the `scresults` parameter in `subscreenshow`, the app starts directly on the Explorer page. In this case a third input mode called 'Uploaded data via function call' appears on the upload page. Since it is possible to use different data sets in the same session, you can use this option the re-upload the data set used in the original function call or just to see the data set information.
 
-Since the factorial context calculation changed due to recent versions, the check 
+Since the factorial context calculation changed in recent versions, the check 
 for 'context calculation performed' also includes a check for the newest package version. 
-For older versions features like the ASMUS-tab are no longer supported.
+For older versions, features like the ASMUS-tab are no longer supported.
 
 <div id='chap32'>
 
 #### 3.2 Explorer
 
-The Explorer-tab is the main part of the Subgroup Explorer. The explanation will be divided into four parts (diagram, lists, interaction plot and options). 
-
+The Explorer-tab is the main part of the Subgroup Explorer. The following subchapters will explain the four parts within the Explorer-tab: [diagram](#chap321), [tables](#chap322), [interaction plot](#chap323) and [options](#chap324). 
 
 <div id='chap321'>
 
 ##### 3.2.1 Diagram
 
 The central part of the Subgroup Explorer is the diagram in the middle, in which each single dot stands for a subgroup. The diagram may show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup (displayed on the horizontal axis) and the statistical measure of the treatment effect (vertical axis) in that subgroup. Furthermore, the diagram shows the line of the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while for larger subgroups on the right side, only small deviations from the study mean can be expected to be chance findings. So, for a study with no conspicuous subgroup effects, the dots in the figure are expected to form a kind of funnel. Any deviations from this funnel shape hint to conspicuous subgroups.
-<img src='inst/www/subscreenshow_Explorer_Plot_red_hover.png'>
 
-It is important to note that the subgroup screening does not only consider subgroups, which are defined by one single factor, e.g., sex or age-group. The strength of the Subgroup Explorer is that it considers combinations, e.g., 'old' men from Europe or 'young' Asian women. It is possible to analyze all combinations of two factors, three factors, four factors, etc. Typically it make sense to limit this to a maximum of five factors, since combinations of more than five factors define subgroups which are often empty, extremely small in size, or difficult to interpret.
+<img src='inst/www/subscreenshow_Explorer_Plot_red_hover.png'> 
 
-By clicking on a single dot, a subgroup is selected and appears in red. If multiple points are close to each other, a small area around the mouse click is detected and a list of selected subgroups appears. In here one specific subgroup can be selected and apperas in red. For all points an information box can be shown by using mouse hover.
+It is important to note that the subgroup screening does not only consider subgroups, which are defined by one single factor, e.g., sex or age-group. The strength of the Subgroup Explorer is that it considers combinations, e.g., 'old' men from Europe or 'young' Asian women. It is possible to analyze all combinations of two factors, three factors, four factors, etc. Usually, it make sense to limit this to a maximum of five factors, since combinations of more than five factors define subgroups which are often empty, extremely small in size, or difficult to interpret.
 
-By selecting a subgroup several lists, which include more information about the selected subgroup, appear below the plot.
+By clicking on a single dot, a subgroup is selected and appears in red. If multiple points are close to each other, a small area around the mouse click is detected and a list of selected subgroups appears. One specific subgroup can then be selected from this list. For all points an information box can be shown by using mouse hover or the labels-option can be used to easily see which subgroups are selected (see [chapter 3.2.4](#chap324)). 
 
-An interaction plot appears on the right side of the main plot, if a subgroup has a complete (or pseudo-complete) factorial context.
+If the option `showTables=TRUE` is used while opening the app (see [subscreenshow()](#chap25)) By selecting a subgroup, several lists, which include more information about the selected subgroup, appear below the plot.
+
+An interaction plot can be opened using the button on top of the plot, if a subgroup has a complete (or pseudo-complete) factorial context.
 For more details about the concept of a factorial context see [chapter 3.5.1](#chap351). 
 
 Several options for the appearance of the diagram are available and explained in [chapter 3.2.4](#chap324). 
 
 <div id='chap322'>
 
-##### 3.2.2 Lists
+##### 3.2.2 Tables
 
-By clicking on a dot, at the bottom a table will be displayed under the tab called 'Selected Subgroup' listing the selected subgroup. The second tab, called 'Filtered Subgroups', lists all subgroups which are chosen by the drop-down combo-box filtered subgroups in the menu on the left side of the graph. 
-Under the tab 'Parent subgroups' the list of all subgroups with one number of factor combination less than the selected subgroup appear. For example if the subgroup with 2 subgroup defining factors ageg: Low and phosg: Low, is selected, the parent subgroups are the two 1-factorial subgroups ageg:Low and phosg:Low.
-This allows the comparison with the parent subgroup as a reference.
-The Factorial Context and the subgroup complement for selected subgroups are displayed as well in seperated tabs.
+If the option `showTables=TRUE` is used while opening the app (see [subscreenshow()](#chap25)) six tabs containing subgroup listings can be shown.
+
+By clicking on a dot, a table that gives more information on the selected subgroup will be displayed below the diagram in the tab called 'Selected Subgroup'. 
+The second tab, called 'Filtered Subgroups', lists all subgroups which are chosen by the drop-down combo-box filtered subgroups in the menu on the left side of the graph. 
+Under the tab 'Parent subgroups' the list of all subgroups with one number of factor combination less than the selected subgroup appear. For example, if the subgroup with two subgroup defining factors `ageg='Low'` and `phosg='Low'` is selected, the parent subgroups are the two one-factorial subgroups `ageg='Low'` and `phosg='Low'`. This allows the comparison with the parent subgroup as a reference.
+The Factorial Context and the subgroup complement for selected subgroups are displayed as well in separate tabs.
+To save/memorize a subgroup the 'Memorize'-button in the table of the 'Selected Subgroups'-tab can be used. All memorized subgroups appear in green in the Subgroup Explorer graph and are listed in the 'Memorized Subgroups' tab.
 
 <img src='inst/www/subscreenshow_Explorer_table_selected.png'>
-
-To save/memorize a subgroup the 'Memorize'-button in the table of the 'Selected Subgroups'-tab can be used. All memorized subgroups appear in green in the Subgroup Explorer graph.
-With the switch button above the list of memorized subgroups the label of the memorized subgroups can be in or excluded in the graph.
-<img src='inst/www/subscreenshow_Explorer_Plot_green.png'>
-By switching this button to on, the subgroup information for all saved subgroups are drawn into the diagram. Since their might be a space limitation for the information texts for too many subgroups, it could help to increase the axes sizes via 'Display Options'.
 
 <div id='chap323'>
 
