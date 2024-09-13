@@ -294,7 +294,7 @@ After a data set is selected, the data set information and some checks appear on
 Factors can then be manually de- and re-selected using the drop-down menu.
 After clicking the 'Upload data'-button all other tabs are unlocked and the Explorer-tab appears.
 
-<img style ='float: right;' src='inst/www/subscreenshow_Upload_start.png' width='100%'>
+<img style ='float: right;' src='inst/www/sge_upload.png' width='100%'>
 
 If the `SubScreenResult` object is already entered via the `scresults` parameter in `subscreenshow`, the app starts directly on the Explorer page. In this case a third input mode called 'Uploaded data via function call' appears on the upload page. Since it is possible to use different data sets in the same session, you can use this option the re-upload the data set used in the original function call or just to see the data set information.
 
@@ -314,16 +314,13 @@ The Explorer-tab is the main part of the Subgroup Explorer. The following subcha
 
 The central part of the Subgroup Explorer is the diagram in the middle, in which each single dot stands for a subgroup. The diagram may show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup (displayed on the horizontal axis) and the statistical measure of the treatment effect (vertical axis) in that subgroup. Furthermore, the diagram shows the line of the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while for larger subgroups on the right side, only small deviations from the study mean can be expected to be chance findings. So, for a study with no conspicuous subgroup effects, the dots in the figure are expected to form a kind of funnel. Any deviations from this funnel shape hint to conspicuous subgroups.
 
-<img src='inst/www/subscreenshow_Explorer_Plot_red_hover.png'> 
+<img src='inst/www/sge_diagram.png'> 
 
 It is important to note that the subgroup screening does not only consider subgroups, which are defined by one single factor, e.g., sex or age-group. The strength of the Subgroup Explorer is that it considers combinations, e.g., 'old' men from Europe or 'young' Asian women. It is possible to analyze all combinations of two factors, three factors, four factors, etc. Usually, it make sense to limit this to a maximum of five factors, since combinations of more than five factors define subgroups which are often empty, extremely small in size, or difficult to interpret.
 
 By clicking on a single dot, a subgroup is selected and appears in red. If multiple points are close to each other, a small area around the mouse click is detected and a list of selected subgroups appears. One specific subgroup can then be selected from this list. For all points an information box can be shown by using mouse hover or the labels-option can be used to easily see which subgroups are selected (see [chapter 3.2.4](#chap324)). 
 
-If the option `showTables=TRUE` is used while opening the app (see [subscreenshow()](#chap25)) By selecting a subgroup, several lists, which include more information about the selected subgroup, appear below the plot.
-
-An interaction plot can be opened using the button on top of the plot, if a subgroup has a complete (or pseudo-complete) factorial context.
-For more details about the concept of a factorial context see [chapter 3.5.1](#chap351). 
+A panel containing an interaction plot can be opened using the button on top of the diagram, if a subgroup has a complete (or pseudo-complete) factorial context. For more details about the concept of a factorial context see [chapter 3.5.1](#chap351). 
 
 Several options for the appearance of the diagram are available and explained in [chapter 3.2.4](#chap324). 
 
@@ -345,39 +342,36 @@ To save/memorize a subgroup the 'Memorize'-button in the table of the 'Selected 
 
 ##### 3.2.3 Interaction Plot
 
-On the right side of the Explorer tab an intercation plot can be displayed. Per default the plot is collapsed. To use it the user needs to click on 'Interaction Plot' and then select a subgroup.
-The interaction can only be displayed for subgroups with an at least pseudo factorial context.If a complete or pseudo complete subgroup is selected, the interaction plot panel opens automatically.
-Furthermore is the interaction plot is only available for subgroups with 1 to 3 subgroup defining factors.
+The interaction plot can be displayed using the 'interaction plot'-button on top of the diagram. Per default the plot is collapsed. A subgroup with an at least pseudo factorial context needs to be selected. Furthermore, the interaction plot is only available for subgroups with up to 3 subgroup defining factors.
 The vertical axis of the interaction plot can be synchronized with the diagram (default) or automatically fitted to the values of the context.
+
+<img src='inst/www/sge_interaction.png'>
 
 <div id='chap324'>
 
 ##### 3.2.4 Options
 
-There are several display options within the Explorer tab, which are categorized in the four party 'Variable options', 'Importance Tab', 'Display options', Colour options'.
+There are multiple display options available within the Explorer tab, which are categorized into four tabs: '*Variable Options*', '*Importance Tab*', '*Display Options*' and '*Colour Options*'.
+Small help texts are provided for all options within the tabs and can be shown by hovering the question mark symbol next to them.
 
-<img src='inst/www/subscreenshow_variableOptions.png' align = 'left' width = '40%'>
+The drop-down combo boxes in the '*Variable Options*'-tab allow switching between different 'Target variables' (y-axis), changing the 'Reference variable' (x-axis, usually the number of subjects/observations), as well as selecting a specific subgroup factor and a corresponding value to be highlighted in the plot ('Subgroup Filter').
 
-The drop-down combo boxes in the Variable options allow switching between different target variables (y-axis), changing the reference variable (x-axis, in general the number of subjects/observations), or selecting a specific subgroup factor and a corresponding value to be highlighted in the plot ('Subgroup Filter').
-Which level of detail with regard to the subgroup factor combinations should be displayed can be chosen via the 'Subgroup level(s)'-slider.
-The maximum of this slider can be changed with the parameter `max_comb` in `subscreencalc()`.
-The brightness of the gray dots corresponds to the number of factors in the graph. Dots with more factors are brighter than those with less factors.
+Using the 'Subgroup level(s)'-slider, the level of detail regarding the displayed subgroup factor combinations can be adjusted.
+The maximum of this slider is determined by the parameter [`max_comb`](#chap214) in [`subscreencalc()`](#chap21).
+The brightness of the dots in the diagram corresponds to the number of factors of the respective subgroup. Dots with more factors are displayed with a brighter colour than those with fewer factors.
 
-It is also possible to change the limits of the axes and if possible (only if all values of the target variable are positive) change the y-axis to logarithmic scale.
+It is also possible to change the limits of the axes and, if possible, change the y-axis to a logarithmic scale (only if all values of the target variable are positive).
 
-All options are provided with small help texts, which can be shown by hovering the question mark symbol next to them.
+Further information on the '*Importance Tab*' can be found in [chapter 2.3](#chap23).
 
-Within the Display options the user can change dot size and click/select radius.
-The dot size can be changed to be related to the number of subjects for each subgroup.
-The colour brigthness is also adjustable.
+Within the '*Display Options*'-tab the user can change the dot size.
+The dot size can either be chosen on a scale or selected to correspond to the number of subjects for each subgroup.
 
-<img src='inst/www/subscreenshow_displayOptions.png' width = '40%'>
+By checking or un-checking the boxes, the user can choose to 'Show percentages on x-axis' next to the number displayed, 'Display a grid' on the diagram for better readability, 'Show reference line' of the overall value, 'Add custom reference line' and choose its value, as well as 'Add favour labels' and choose which direction (up or down) favours verum, i.e. whether higher or lower values correspond to a better value in the verum group.
 
-A high amount of colors can be individualized by the user. Beside the dot colors the overall app appearance can be changed to a 'print'-version where the background appears in light gray. 
+The '*Colour Options*'-tab allows for changes in the colour design of the app. The overall theme can be changed to a 'print'-version where the background appears in light gray instead of the usual dark grey. The colours of the selected subgroup(s), filtered subgroup(s), parent subgroup(s), memorized subgroup(s), subgroup(s) with important variable(s), as well as of the reference line, custom reference line, of the dots and the factorial context, can be selected individually. Additionally, it is possible to add labels for selected subgroup(s), parent subgroup(s), memorized subgroup(s) and the factorial context that appear in the plot when a subgroup has been selected.
 
-
-<img src='inst/www/subscreenshow_colourOptions.png' width = '40%'>
-
+<img src='inst/www/sge_all_options.png' width = '100%'>
 
 <div id='chap33'>
 
@@ -387,7 +381,7 @@ The next tab is similar to the Explorer tab, but allows the quick comparison bet
 By selecting two target variables two diagrams appear on top of each other. By clicking a subgroup the same subgroup is displayed in both plots. With this approach all conspicuous subgroups in one endpoint can easily be be checked for another endpoint. 
 It is also possible to display two target variables directly against each other via the integrated 'Bubble plot'.
 The information about the number of subjects is then displayed through the subgroup size. 
-Subgroups which are conspicuous in both target variables then shown up in the corners, while unconspicuous subgroups appear in the middle of the graph.
+Subgroups which are conspicuous in both target variables then shown up in the corners, while non-conspicuous subgroups appear in the middle of the graph.
 
 <div id='chap34'>
 
