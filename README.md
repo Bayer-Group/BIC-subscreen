@@ -377,20 +377,23 @@ The '*Colour Options*'-tab allows for changes in the colour design of the app. T
 
 #### 3.3 Comparer
 
-The next tab is similar to the Explorer tab, but allows the quick comparison between two endpoints.
-By selecting two target variables two diagrams appear on top of each other. By clicking a subgroup the same subgroup is displayed in both plots. With this approach all conspicuous subgroups in one endpoint can easily be be checked for another endpoint. 
-It is also possible to display two target variables directly against each other via the integrated 'Bubble plot'.
-The information about the number of subjects is then displayed through the subgroup size. 
-Subgroups which are conspicuous in both target variables then shown up in the corners, while non-conspicuous subgroups appear in the middle of the graph.
+The 'Comparer'-tab displays similar diagrams as the 'Explorer'-tab, but allows the quick comparison between two endpoints.
+Two target variables can be selected. These are then displayed in two diagrams on top of each other. Subgroups that are selected in one plot will be displayed in both plots. With this approach all conspicuous subgroups in one endpoint can easily be be checked for another endpoint. 
+
+<img src='inst/www/sge_comparer_compare.png' width = '100%'>
+
+It is also possible to directly compare the values of the two target variables via the integrated 'Bubble plot'.
+The subgroups are displayed as 'bubbles' (dots of different sizes) in a type of scatter plot. X- and y-axis represent the two target variables. The size of each bubble corresponds to the number of subjects in the displayed subgroup. Subgroups that are conspicuous in both target variables then shown up in the corners, while non-conspicuous subgroups appear in the middle of the graph.
+
+<img src='inst/www/sge_comparer_bubble.png' width = '100%'>
 
 <div id='chap34'>
 
 #### 3.4 Mosaic
 
-For an easy visualization about the contingency tables of subgroup sizes and their target variable values, the display of a mosaic plot can be beneficial. The user can select up to 3 factor variables, different target variables for the mosaic display. By using the mouse hover the user can get more information about the subgroups.
+To easily visualize the contingency tables of subgroup sizes and their target variable values, the display of a mosaic plot can be beneficial. In the 'Mosaic'-tab, the user can select up to 3 factor variables and choose the target variable ('Reference Variable') to be displayed in the mosaic plot. The size of the tiles relate to the relative frequency of each selected subgroup in the population. The colour of each tile represents the value of the target variable with a legend of the scale shown on the right side of the plot. More detailed information on each tile and the subgroup it represents can be shown by hovering over the respective part of the plot.
 
 <img src='inst/www/subscreenshow_mosaic_3factors.png' width = '100%'>
-
 
 <div id='chap35'>
 
