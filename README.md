@@ -70,16 +70,9 @@ width = '55%'>
 
 The central result of a subgroup screening is a diagram, in which each dot stands for a subgroup. The diagram can show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup and the statistical measure of the treatment effect in the respective subgroup. The sample size is shown on the horizontal axis while the treatment effect is displayed on the vertical axis. Furthermore, the diagram shows the line of the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while the deviation from the study mean for larger subgroups tends to be smaller. Therefore, the dots in the figure are expected to form a funnel for studies with no conspicuous subgroup effects. Any deviations from this funnel shape may hint towards conspicuous subgroups.
 
-To get started the R-package `subscreen` needs to be installed. 
-It is available on CRAN as well as on Github and may be installed using
-
-    install.packages("subscreen")
-
-or
+To get started, the R-package `subscreen` needs to be installed using
 
     install_github("Bayer-Group/BIC-subscreen")
-    
-respectively.
 
 After installation it is possible to open the app with demo data by using
 
