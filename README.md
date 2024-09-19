@@ -88,7 +88,7 @@ After installation it is possible to open the app with demo data by using
     
 and choosing 'Demo data' as Input mode.
 
-To prepare and use real data, please refer to [`chapter 2`](#chap2) and [`chapter 3`](#chap2) where the relevant functions and the app in general are described in more detail.
+To prepare and use real data, please refer to [chapter 2](#chap2) and [chapter 3](#chap2) where the relevant functions and the app in general are described in more detail.
 
 <div id='chap2'>
 
