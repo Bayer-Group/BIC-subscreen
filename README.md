@@ -401,37 +401,29 @@ To easily visualize the contingency tables of subgroup sizes and their target va
 
 ASMUS is a feature which guides the user of the Subgroup Explorer through the screening of tens of thousand of subgroups with the aim to find those which are worth pursuing. 
 The key of ASMUS is to focus on assessable subgroups only. This reduces the number of subgroups to be considered drastically. 
-A fuzzy logic approach is used to select subgroups which have a remarkable treatment effect and which provide reliably information. 
+A fuzzy logic approach is used to select subgroups which have a remarkable treatment effect and which provide reliable information. 
 An expert in pharmacology can then decide whether the subgroup defining factors explain the treatment effect reasonably.
 
-The challenge to the user has been to find subgroups which are worth pursuing. 
-There was no feature, which guided the user through the process of finding worth pursuing subgroups.
-The newly implemented feature ASMUS helps to find all worth pursuing subgroups semi-automatically.
-Subgroup analyses are performed to assess the heterogeneity of treatment effects across different groups of patients. There are always subgroups with a treatment effect which differs from the study treatment effect. The fundamental question is whether this observed treatment effect is reproducible or an incidental finding.
+Previously, the challenge to the user was to find subgroups which are worth pursuing. 
+There was no feature, which guided the user through the process of finding such subgroups.
+The newly implemented feature ASMUS helps to find all subgroups worth pursuing in a semi-automatic way.
+Subgroup analyses are performed to assess the heterogeneity of treatment effects across different groups of patients. There are always subgroups with a treatment effect which differs from the study treatment effect. The fundamental question is whether this observed difference is reproducible or an incidental finding.
 This is a matter of the causal influence of the subgroup-defining factors. Theoretical knowledge or experience can provide evidence. Ultimately, only another clinical trial can answer the question.
-This is neither a matter of the size of the treatment effect nor the number of patients in the subgroup. Consequently, statistical tests cannot answer the question.
-Screening a data set from a clinical trial can only mean to identify subgroups that are worth pursuing in terms of reproducibility.
+This is neither a matter of the size of the treatment effect nor of the number of patients in the subgroup. Consequently, statistical tests cannot answer the question.
+Screening a data set from a clinical trial can only be done to identify subgroups that are worth pursuing in terms of reproducibility.
 A subgroup is worth pursuing if and only if
 <ul>
-<li>
-it is assessable,
-</li>
-<li>
-its treatment effect is remarkable,
-</li>
-<li>
-the provided information is reliable 
-</li>
-<li>
-its subgroup-defining factors explain the treatment effect reasonably.
-</li>
+<li>it is assessable</li>
+<li>its treatment effect is remarkable</li>
+<li>the provided information is reliable</li>
+<li>its subgroup-defining factors explain the treatment effect reasonably</li>
 </ul>
 
 The assessability of a subgroup is indispensable in a subgroup analysis.  
 If a subgroup is not assessable, its discovery is not helpful, no matter how big the treatment effect and how big the subgroup is.
 Hence, ASMUS considers only those subgroups as worth pursuing which are assessable.
-A subgroup is assessable iff it has good references for comparison. 
-A subgroup is a good reference for another subgroup if and only if it belongs to the same factorial context. 
+A subgroup is assessable if it has good references for comparison. 
+A subgroup is a good reference for another subgroup if, and only if, it belongs to the same factorial context. 
 
 <div id='chap351'> 
 
@@ -440,29 +432,64 @@ A subgroup is a good reference for another subgroup if and only if it belongs to
 For a given subgroup, the factor level combinations of the subgroup defining factor(s) are the factorial context of that subgroup.
 A factorial context is complete if 
 <ul>
-<li>
-all its subgroups exist in the data set and they 
-</li>
-<li>
-all have a non-missing treatment-effect.
-</li>
+<li>all its subgroups exist in the data set and they </li>
+<li>all have a non-missing treatment-effect.</li>
 </ul>
 In all other cases the factorial context is incomplete. If a factorial context is complete, then its subgroups are  assessable.
-An incomplete factorial context causes problems, since the treatment effect for a subgroup is not evaluable if we can not see whether its value is driven one specific factor or the  interaction of two or more factors.
-To allow a more flexible definition on completeness of factorial contexts, we call/define an incomplete factorial context as pseudo-complete, if the following criterion are met:
+An incomplete factorial context causes problems, since the treatment effect for a subgroup is not evaluable if we cannot see whether its value is driven by one specific factor or by the interaction of two or more factors.
+To allow for a more flexible definition on completeness of factorial contexts, we call/define an incomplete factorial context as pseudo-complete, if the following criteria are met:
 <ul>
-  <li>
-  the factorial context would be complete by removing one single level in one factor
-  </li>
-  <li>
-  we have at least a multi-factorial context (two or more factors)
-  </li>
-  <li>
-  the factor in which the level is removed contains at least 3 levels.
-  </li>
+  <li>there is a multi-factorial context (two or more factors)  </li>
+  <li>the factorial context would be complete if one single level in one factor was removed</li>
+  <li>the factor in which the level is removed consists of at least 3 levels.</li>
 </ul>
 The following tables provide examples of the different completeness-definitions for 
 a factorial context with two factors (sex and age group).
+
+Complete:
+
+| subgroup      | sex           | age           | target variable |
+|:-------------:|:-------------:|:-------------:|:---------------:|
+| 1             | male          | <65           | 1.7             |
+| 2             | male          | 65-75         | 1.3             |
+| 3             | male          | >=75          | 2.1             |
+| 4             | female        | <65           | 1.5             |
+| 5             | female        | 65-75         | 1.6             |
+| 6             | female        | >=75          | 3.6             |
+Table 3.5.1.1: *Complete factorial context with factors sex and age.*
+
+Pseudo-complete:
+
+| subgroup      | sex           | age           | target variable |
+|:-------------:|:-------------:|:-------------:|:---------------:|
+| 1             | male          | <65           | 1.7             |
+| 2             | male          | 65-75         | 1.3             |
+| ~~3~~         | ~~male~~      | ~~>=75~~      | ~~2.1~~         |
+| 4             | female        | <65           | 1.5             |
+| 5             | female        | 65-75         | 1.6             |
+| ~~6~~         | ~~female~~    | ~~>=75~~      | ~~NA~~          |
+Table 3.5.1.2: *Pseudo-complete factorial context with factors sex and age after removing level age >= 75.*
+
+Incomplete:
+
+````markdown
+| subgroup      | sex           | age           | target variable |
+|:-------------:|:-------------:|:-------------:|:---------------:|
+| 1             | male          | <65           | 1.7             |
+| 2             | male          | 65-75         | NA              |
+| 3             | male          | >=75          | 2.1             |
+| 4             | female        | <65           | 1.5             |
+| 5             | female        | 65-75         | 1.6             |
+| 6             | female        | >=75          | NA              |
+Table: Incomplete factorial context with factors sex and age.
+````
+
+
+
+
+
+
+
 <br>
 Complete:
 <table>
