@@ -50,6 +50,8 @@ The visualization is done by a shiny application called Subgroup Explorer. Typic
         <li> <a href='#chap35'> 3.5 ASMUS </a>
           <ul>
             <li> <a href='#chap351'> 3.5.1 Factorial Contexts </a> </li>
+            <li> <a href='#chap352'> 3.5.2 Methodology </a> </li>
+            <li> <a href='#chap353'> 3.5.3 Application </a> </li>
           </ul>
         </li> 
       </ul> 
@@ -446,7 +448,7 @@ To allow for a more flexible definition on completeness of factorial contexts, w
 The following tables provide examples of the different completeness-definitions for 
 a factorial context with two factors (sex and age group).
 
-Complete:
+**Complete:**
 
 | subgroup      | sex           | age           | target variable |
 |:-------------:|:-------------:|:-------------:|:---------------:|
@@ -459,7 +461,7 @@ Complete:
 
 Table 3.5.1.1: *Complete factorial context with factors sex and age.*
 
-Pseudo-complete:
+**Pseudo-complete:**
 
 | subgroup      | sex           | age           | target variable |
 |:-------------:|:-------------:|:-------------:|:---------------:|
@@ -472,7 +474,7 @@ Pseudo-complete:
 
 Table 3.5.1.2: *Pseudo-complete factorial context with factors sex and age after removing level age >= 75.*
 
-Incomplete:
+**Incomplete:**
 
 | subgroup      | sex           | age           | target variable |
 |:-------------:|:-------------:|:-------------:|:---------------:|
@@ -482,366 +484,52 @@ Incomplete:
 | 4             | female        | <65           | 1.5             |
 | 5             | female        | 65-75         | 1.6             |
 | 6             | female        | >=75          | NA              |
-Table: Incomplete factorial context with factors sex and age.
 
+Table 3.5.1.3: *Incomplete factorial context with factors sex and age.*
 
+<div id='chap352'> 
 
+##### 3.5.2 Methodology
 
-
-
-
-
-<br>
-Complete:
-<table>
-    <tr>
-      <th>
- 	      subgroup
- 	    </th>
- 	    <th>
- 	      sex	
-      </th>
-      <th>
-      age
-      </th>
-       <th>
-        target variable
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      1
- 	    </th>
- 	    <th>
- 	      male	
-      </th>
-      <th>
-      <65
-      </th>
-       <th>
-        1.7
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      2
- 	    </th>
- 	    <th>
- 	      male	
-      </th>
-      <th>
-      65-75
-      </th>
-       <th>
-        1.3
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      3
- 	    </th>
- 	    <th>
- 	      male	
-      </th>
-      <th>
-      =>75
-      </th>
-       <th>
-        2.1
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      4
- 	    </th>
- 	    <th>
- 	      female	
-      </th>
-      <th>
-      <65
-      </th>
-       <th>
-        1.5
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      5
- 	    </th>
- 	    <th>
- 	      female	
-      </th>
-      <th>
-      65-75
-      </th>
-       <th>
-        1.6
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      6
- 	    </th>
- 	    <th>
- 	      female	
-      </th>
-      <th>
-      =>75
-      </th>
-       <th>
-        3.6
-      </th>
-    </tr>
-</table>      
-Table 3.5.1.1 Complete factorial context with factors sex and age.
-
-Pseudo-complete:
- 	<table>
-    <tr>
-      <th>
- 	      subgroup
- 	    </th>
- 	    <th>
- 	      sex	
-      </th>
-      <th>
-      age	
-      </th>
-       <th>
-        target variable
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      1
- 	    </th>
- 	    <th>
- 	      male	
-      </th>
-      <th>
-      <65
-      </th>
-       <th>
-        1.7
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      2
- 	    </th>
- 	    <th>
- 	      male	
-      </th>
-      <th>
-      65-75
-      </th>
-       <th>
-        1.3
-      </th>
-    </tr>
-    <tr>
-      <th style ='color:grey;'>
- 	      <s>3</s>
- 	    </th>
- 	    <th style ='color:grey;'>
- 	      <s>male	</s>
-      </th>
-      <th style ='color:grey;'>
-      <s>=>75</s>
-      </th>
-       <th style ='color:grey;'>
-        <s>2.1</s>
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      4
- 	    </th>
- 	    <th>
- 	      female	
-      </th>
-      <th>
-      <65
-      </th>
-       <th>
-        1.5
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      5
- 	    </th>
- 	    <th>
- 	      female	
-      </th>
-      <th>
-      65-75
-      </th>
-       <th>
-        1.6
-      </th>
-    </tr>
-    <tr>
-      <th style ='color:grey;'>
- 	     <s> 6 </s>
- 	    </th>
- 	    <th style ='color:grey;'>
- 	      <s>female	</s>
-      </th>
-      <th style ='color:grey;'>
-      <s>=>75</s>
-      </th>
-       <th style ='color:red;'>
-        <s>NA</s>
-      </th>
-    </tr>
-</table>    
-Table 3.5.1.2 Pseudo-complete factorial context with factors sex and age after removing level age >= 75.
-
-Incomplete:
- <table>
-    <tr>
-      <th>
- 	      subgroup
- 	    </th>
- 	    <th>
- 	      sex	
-      </th>
-      <th>
-      age	
-      </th>
-       <th>
-        target variable
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      1
- 	    </th>
- 	    <th>
- 	      male	
-      </th>
-      <th>
-      <65
-      </th>
-       <th>
-        1.7
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      2
- 	    </th>
- 	    <th>
- 	      male	
-      </th>
-      <th>
-      65-75
-      </th>
-       <th style ='color:red;'>
-        NA
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      3
- 	    </th>
- 	    <th>
- 	      male	
-      </th>
-      <th>
-      =>75
-      </th>
-       <th>
-        2.1
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      4
- 	    </th>
- 	    <th>
- 	      female	
-      </th>
-      <th>
-      <65
-      </th>
-       <th>
-        1.5
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      5
- 	    </th>
- 	    <th>
- 	      female	
-      </th>
-      <th>
-      65-75
-      </th>
-       <th>
-        1.6
-      </th>
-    </tr>
-    <tr>
-      <th>
- 	      6
- 	    </th>
- 	    <th>
- 	      female	
-      </th>
-      <th>
-      =>75
-      </th>
-       <th style ='color:red;'>
-        NA
-      </th>
-    </tr>
-</table>    
-Table 3.5.1.3 Incomplete factorial context with factors sex and age.
- 
-This question whether a subgroup is remarkable can only be answered for the drug currently under development and in comparison to the study treatment effect. Medical knowledge is needed to answer the question.
-Although the size of the treatment effect of a given subgroup does not say anything about the reproducibility, it makes sense to include it into the screening strategy since finding a reproducible but neglectable treatment effect is not useful.
-To identify remarkable treatment effects it is difficult to define a crisp cut point between the remarkable and the non-remarkable treatment effect.
-It is much easier to define two numbers, rem1 and rem2, such that treatment effects 
-less than a are truly not remarkable greater than rem2 are truly remarkable
-between rem1 and rem2 are remarkable with a certain degree of truth.
+Whether a subgroup is remarkable or not can only be defined for the drug currently under development and in comparison to the study treatment effect. Medical knowledge is needed to answer this question.
+Although the size of the treatment effect of a given subgroup does not say anything about the reproducibility, it makes sense to include it into the screening strategy since finding a reproducible but negligible treatment effect is not useful.
+Trying to define a clear cut point between remarkable and non-remarkable treatment effects is difficult.
+It is much easier to define two cut points, `rem1` and `rem2`, in such a way that treatment effects 
+less than `rem1` are truly not remarkable, those greater than `rem2` are truly remarkable and those
+between `rem1` and `rem2` are remarkable with a certain degree of truth.
 ASMUS is based on this fuzzy logic approach utilizing a linear truth-function.
-<img style ='float: right;' src='inst/www/subscreenshow_ASMUS_w_text.png'
-width = '70%'>
-The provided information is reliable when the sizes of the subgroups of a factorial context play an important role, but this is not the only criterion. The relation of the treatment group sizes within the subgroups play role as well.
-A big subgroup with drastically imbalanced treatment groups may not considered to provide less reliable information than a smaller subgroup with nearly balanced treatment groups. 
-However, ASMUS is based on the size of subgroups only for simplicity reasons.
-Although the reliability of information does not say anything about the reproducibility of the treatment effect it makes sense to include it into the screening strategy.
-Even if a treatment effect is remarkable and the subgroup-defining factors explain the treatment effect reasonably the subgroup is not worth pursuing because the reliability of the provided information is poor.
-Again it is difficult to define a crisp cut point between subgroup sizes sufficiently big to provide reliable information and those which do not.
-It is much easier to define two numbers, rel1 and rel2, such that subgroup sizes
-less than rel1 are truly too small greater than rel2 are truly big enough
-between rel1 and rel2 are big enough with a certain degree of truth.
+
+<img style ='float: right;' src='inst/www/subscreenshow_ASMUS_w_text.png' width = '70%'>
+
+Even though the subgroup size is an important criterion concerning the reliability of information in a factorial context, one could argue that the allocation of treatment groups is almost as important. A drastically imbalanced large subgroup could, for example, provide less reliable information than a smaller subgroup with a balanced treatment allocation. However, for simplicity reasons, ASMUS is based on the size of subgroups only.
+Although the reliability of information and the reproducibility of treatment effects are not necessarily connected, it still makes sense to include the subgroup size in the screening strategy, because even if a subgroup has a remarkable treatment effect and there is a reasonable explanation why the treatment effect is remarkable, the subgroup might still not be worth pursuing if the provided information is not reliable.
+As before, finding a clear cut point for when a subgroup is large enough to provide reliable information is difficult. Using the same strategy as before, defining two cut points, `rel1` and `rel2`, in such a way that subgroup sizes below `rel1` are truly too small, those greater than `rel2` truly large enough and those between `rel1` and `rel2` large enough with a certain degree of truth to provide reliable information is much easier.
 
 The truth value for the remarkability of the treatment effect and the truth value for the reliability of the provided information are combined with a logical “and”.
-From the many proposal, which can be found in the literature, to calculate a logical “and” in fuzzy logic (minimum, algebraic product, drastic product, etc. ), we selected the algebraic product because it is simple and convex.
-The convexity is appreciated because a lower truth-value for the remarkability requires a compensation with a  higher truth-value for the reliability and vice versa.
-The central question is when do the subgroup-defining factors explain the treatment effect reasonably.
-It can only be answered by experts in pharmacology.
+From the many proposals, which can be found in the literature, to calculate a logical “and” in fuzzy logic (minimum, algebraic product, drastic product, etc. ), we selected the algebraic product because it is simple and convex.
+The convexity is appreciated, because a lower truth-value for the remarkability requires a compensation with a  higher truth-value for the reliability and vice versa.
 
-So in ASMUS, the user selects whether the assessability is based on the 
-complete factorial context only or complete and pseudo-complete factorial contexts.
-<img style ='float: right;' src='inst/www/subscreenshow_ASMUS_include_option.png'
-width = '30%'>
-The user also specifies the numbers a and b for the remarkability and the reliability criterion.
-For a given subgroup it is determined if it is assessable.  
-<img style ='float: left;' src='inst/www/subscreenshow_ASMUS_rel_rem_options.png'
-width = '100%'>
-The truth values for the treatment effect and the size of the subgroup
-are calculated and multiplied (algebraic product for a fuzzy logical “and”).
-If the subgroup is assessable and the product of the truth values exceeds a user defined threshold the subgroup is proposed to be evaluated whether its subgroup defining factors explain the treatment effect reasonably.
-The direction of remarkability can be changed via tickbox.
-The multiplicity value requires a value between 0 and 1 and influence the steepness and shape of the curve.
+The remaining question is: "When do the subgroup-defining factors explain the treatment effect reasonably?", which can only be answered by experts in pharmacology.
+
+<div id='chap353'> 
+
+##### 3.5.3 Application
+
+In ASMUS, the user selects whether the assessability is based on the complete factorial context only or on complete and pseudo-complete factorial contexts.
+
+<img style ='float: left;' src='inst/www/subscreenshow_ASMUS_include_option.png' width = '30%'>
+
+The user also specifies the upper and lower limits for the remarkability and the reliability criterion respectively (see [chapter 3.5.2](#chap352)). The direction of remarkability can be changed using the arrow button beneath the lower- and upper value fields. 
+The multiplicity value needs to be between 0 and 1 and influences the steepness and shape of the curve.
+
+<img style ='float: left;' src='inst/www/subscreenshow_ASMUS_rel_rem_options.png' width = '100%'>
+
+The truth values for the treatment effect and the size of the subgroup are calculated and multiplied (algebraic product for a fuzzy logical “and”).
+If the subgroup is assessable and the product of the truth values exceeds a user defined threshold, it is proposed to be included in the next step of the process to find out whether the subgroup defining factors explain the treatment effect reasonably.
+
 When all settings have been made, the number of subgroups which are remarkable and reliable regarding the selection are displayed and the 'Continue'-button appears in green.
 
 After clicking continue, the second page of ASMUS opens where the remarkable and reliable subgroups can be analysed in more detail.
-<img style ='float: left;' src='inst/www/subscreenshow_ASMUS_page2.png'
-width = '100%'>
+
+<img style ='float: left;' src='inst/www/subscreenshow_ASMUS_page2.png' width = '100%'>
 
