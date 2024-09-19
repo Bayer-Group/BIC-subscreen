@@ -12,7 +12,7 @@ The visualization is done by a shiny application called Subgroup Explorer. Typic
 **Table of contents**
 <div id="user-content-toc">
   <ul>
-    <li> <a href='#chap1'> 1. Introduction </a> </li>
+    <li> <a href='#chap1'> 1. Getting Started </a> </li>
     <li> <a href='#chap2'> 2. Package Functions </a>
       <ul> 
         <li> <a href='#chap21'> 2.1 `subscreencalc` Input </a>
@@ -61,7 +61,7 @@ The visualization is done by a shiny application called Subgroup Explorer. Typic
 
 <div id='chap1'>
 
-## 1. Introduction
+## 1. Getting Started
 
 Identifying outcome relevant subgroups has now become as simple as possible! The formerly lengthy and tedious search for the needle in a haystack is replaced by a single, comprehensive and coherent presentation.
 
@@ -69,6 +69,26 @@ Identifying outcome relevant subgroups has now become as simple as possible! The
 width = '55%'>
 
 The central result of a subgroup screening is a diagram, in which each dot stands for a subgroup. The diagram can show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup and the statistical measure of the treatment effect in the respective subgroup. The sample size is shown on the horizontal axis while the treatment effect is displayed on the vertical axis. Furthermore, the diagram shows the line of the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while the deviation from the study mean for larger subgroups tends to be smaller. Therefore, the dots in the figure are expected to form a funnel for studies with no conspicuous subgroup effects. Any deviations from this funnel shape may hint towards conspicuous subgroups.
+
+To get started the R-package `subscreen` needs to be installed. 
+It is available on CRAN as well as on Github and may be installed using
+
+    install.packages("subscreen")
+
+or
+
+    install_github("Bayer-Group/BIC-subscreen")
+    
+respectively.
+
+After installation it is possible to open the app with demo data by using
+
+    library("subscreen")
+    subscreenshow()
+    
+and choosing 'Demo data' as Input mode.
+
+To prepare and use real data, please refer to [`chapter 2`](#chap2) and [`chapter 3`](#chap2) where the relevant functions and the app in general are described in more detail.
 
 <div id='chap2'>
 
