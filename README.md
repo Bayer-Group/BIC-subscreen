@@ -456,6 +456,7 @@ Complete:
 | 4             | female        | <65           | 1.5             |
 | 5             | female        | 65-75         | 1.6             |
 | 6             | female        | >=75          | 3.6             |
+
 Table 3.5.1.1: *Complete factorial context with factors sex and age.*
 
 Pseudo-complete:
@@ -468,11 +469,11 @@ Pseudo-complete:
 | 4             | female        | <65           | 1.5             |
 | 5             | female        | 65-75         | 1.6             |
 | ~~6~~         | ~~female~~    | ~~>=75~~      | ~~NA~~          |
+
 Table 3.5.1.2: *Pseudo-complete factorial context with factors sex and age after removing level age >= 75.*
 
 Incomplete:
 
-````markdown
 | subgroup      | sex           | age           | target variable |
 |:-------------:|:-------------:|:-------------:|:---------------:|
 | 1             | male          | <65           | 1.7             |
@@ -482,7 +483,7 @@ Incomplete:
 | 5             | female        | 65-75         | 1.6             |
 | 6             | female        | >=75          | NA              |
 Table: Incomplete factorial context with factors sex and age.
-````
+
 
 
 
