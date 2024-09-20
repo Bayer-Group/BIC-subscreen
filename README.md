@@ -65,8 +65,7 @@ The visualization is done by a shiny application called Subgroup Explorer. Typic
 
 Identifying outcome relevant subgroups has now become as simple as possible! The formerly lengthy and tedious search for the needle in a haystack is replaced by a single, comprehensive and coherent presentation.
 
-<img style ='float: right;' src='inst/www/subscreenshow_Explorer_Graph.png'
-width = '55%'>
+<img src='inst/www/subscreenshow_Explorer_Graph.png' width = '55%'>
 
 The central result of a subgroup screening is a diagram, in which each dot stands for a subgroup. The diagram can show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup and the statistical measure of the treatment effect in the respective subgroup. The sample size is shown on the horizontal axis while the treatment effect is displayed on the vertical axis. Furthermore, the diagram shows the line of the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while the deviation from the study mean for larger subgroups tends to be smaller. Therefore, the dots in the figure are expected to form a funnel for studies with no conspicuous subgroup effects. Any deviations from this funnel shape may hint towards conspicuous subgroups.
 
@@ -255,11 +254,44 @@ The following function parameters can be adjusted:
 <b>x                  </b> vector that contains the names of the columns in data with the independent variables (default=NULL, i.e. all remaining variables)
 </pre>
 
+Using the `subscreenvi`-function is optional. It is not required to be able to start the app.
+
 <div id='chap24'>
 
 ### 2.4 `subscreenfunnel`
 
-To be described.
+The function `subscreenfunnel` adds a `funnel_quantiles` data frame to the `SubScreenResult` object created by [`subscreencalc`](#chap21). It enables the user to add a reference funnel in the main diagram of the app.
+The funnel can help in the search for conspicuous subgroups as it gives a reference for the area in the plot where `(1-alpha)*100`% of the subgroups are supposed to be. 
+
+<img src='inst/www/sge_funnel.png' width='100%'>
+
+The algorithm used for the calculates the funnel shape separately for each `alpha` and factor combination level.
+It uses the following steps:
+
+<ul>
+<li>create `nperm` permutations of subgroups for each of `n_support_points` different subgroup sizes ranging from `min_start` to the total number of subjects in equidistant steps </li>
+<li>perform subgroup analysis for each permutation</li>
+<li>calculate the (`alpha`/2)- and (1-`alpha`/2)-quantile for each of the `n_support_points` equidistant support points</li>
+<li>use loess regression to smooth the upper and lower limits of the funnel</li>
+</ul>
+
+The following function parameters can be adjusted:
+<pre>
+<b>data               </b> data frame with study data
+<b>H                  </b> results file from subscreencalc
+<b>eval_function      </b> eval function used in subscreencalc
+<b>min_start          </b> integer value for minimal subgroup size value for permutation
+<b>n_support_points   </b> integer value for number of supportive points
+<b>nperm              </b> integer value for number of permutations
+<b>alpha              </b> numerical vector
+<b>stratified         </b> logical value (TRUE/FALSE) for stratification
+<b>treat              </b> character value of treatment variabale name
+<b>endpoints          </b> character vector of endpoints
+<b>verbose            </b> logical value to switch on/off output of computational information (defaults to TRUE)
+<b>nkernel            </b> integer value for number of kernel used
+</pre>
+
+Using the `subscreenfunnel`-function is optional. It is not required to be able to start the app.
 
 <div id='chap25'>
 
