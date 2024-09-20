@@ -270,8 +270,8 @@ It uses the following steps:
 
 * create `nperm` permutations of subgroups for each of `n_support_points` different subgroup sizes ranging from `min_start` to the total number of subjects in equidistant steps
 * perform subgroup analysis for each permutation
-* calculate the (`alpha`/2)- and (1-`alpha`/2)-quantile for each of the `n_support_points` equidistant support points
-* use loess regression to smooth the upper and lower limits of the funnel
+* calculate the (`alpha`/2)- and (1-`alpha`/2)-quantile for each of the `n_support_points` subgroup sizes
+* use Loess regression to smooth the upper and lower limits of the funnel
 
 The following function parameters can be adjusted:
 <pre>
