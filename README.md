@@ -117,11 +117,10 @@ The function `subscreencalc` returns a list object of class `SubScreenResult`. T
 
 The input data frame should have one row per subject/patient/observation.
 The following columns are required:
-<ol>
-  <li> treatment/group/reference variable (only if comparison will be performed) </li>
-  <li> subgroup factors, i.e. categorized baseline/demographic variables </li>
-  <li> variable(s) needed to derive the endpoint/outcome/target variable(s) </li>
-</ol>
+
+* treatment/group/reference variable (only if comparison will be performed)
+* subgroup factors, i.e. categorized baseline/demographic variables
+* variable(s) needed to derive the endpoint/outcome/target variable(s)
 
 For example, the data set could include the following columns from the example data set:
 
@@ -268,12 +267,11 @@ The funnel can help in the search for conspicuous subgroups as it gives a refere
 The algorithm used for the calculates the funnel shape separately for each `alpha` and factor combination level.
 It uses the following steps:
 
-<ul>
-<li>create `nperm` permutations of subgroups for each of `n_support_points` different subgroup sizes ranging from `min_start` to the total number of subjects in equidistant steps </li>
-<li>perform subgroup analysis for each permutation</li>
-<li>calculate the (`alpha`/2)- and (1-`alpha`/2)-quantile for each of the `n_support_points` equidistant support points</li>
-<li>use loess regression to smooth the upper and lower limits of the funnel</li>
-</ul>
+
+* create `nperm` permutations of subgroups for each of `n_support_points` different subgroup sizes ranging from `min_start` to the total number of subjects in equidistant steps
+* perform subgroup analysis for each permutation
+* calculate the (`alpha`/2)- and (1-`alpha`/2)-quantile for each of the `n_support_points` equidistant support points
+* use loess regression to smooth the upper and lower limits of the funnel
 
 The following function parameters can be adjusted:
 <pre>
@@ -478,18 +476,18 @@ A subgroup is a good reference for another subgroup if, and only if, it belongs 
 
 For a given subgroup, the factor level combinations of the subgroup defining factor(s) are the factorial context of that subgroup.
 A factorial context is complete if 
-<ul>
-<li>all its subgroups exist in the data set and they </li>
-<li>all have a non-missing treatment-effect.</li>
-</ul>
+
+* all its subgroups exist in the data set and they
+* all have a non-missing treatment-effect.
+
 In all other cases the factorial context is incomplete. If a factorial context is complete, then its subgroups are  assessable.
 An incomplete factorial context causes problems, since the treatment effect for a subgroup is not evaluable if we cannot see whether its value is driven by one specific factor or by the interaction of two or more factors.
 To allow for a more flexible definition on completeness of factorial contexts, we call/define an incomplete factorial context as pseudo-complete, if the following criteria are met:
-<ul>
-  <li>there is a multi-factorial context (two or more factors)  </li>
-  <li>the factorial context would be complete if one single level in one factor was removed</li>
-  <li>the factor in which the level is removed consists of at least 3 levels.</li>
-</ul>
+
+* there is a multi-factorial context (two or more factors) 
+* the factorial context would be complete if one single level in one factor was removed
+* the factor in which the level is removed consists of at least 3 levels.
+
 The following tables provide examples of the different completeness-definitions for 
 a factorial context with two factors (sex and age group).
 
