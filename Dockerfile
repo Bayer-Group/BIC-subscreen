@@ -19,5 +19,5 @@ RUN R -e "devtools::install_github('Bayer-Group/BIC-subscreen', ref = 'api')"
 # Set entrypoint and pass runtime arguments to the CMD
 ENTRYPOINT ["R", "-e"]
 # Modifiy this line to match your startup command
-CMD ["library('subscreen'); subscreenshow()"]
+CMD ["library('subscreen'); subscreenshow(host = '0.0.0.0', port = 3838)"]
 # END DOCKERFILE
