@@ -15,7 +15,7 @@ RUN apt-get update && apt upgrade -y && DEBIAN_FRONTEND=noninteractive apt-get i
 RUN R -e "install.packages('devtools')"
 # Install the specified package from the given GitHub repository
 # Modify this to match your repo
-RUN R -e "devtools::install_github('Bayer-Group/BIC-subscreen', ref = 'main')"
+RUN R -e "devtools::install_github('Bayer-Group/BIC-subscreen', ref = 'api')"
 # Set entrypoint and pass runtime arguments to the CMD
 ENTRYPOINT ["R", "-e"]
 # Modifiy this line to match your startup command
