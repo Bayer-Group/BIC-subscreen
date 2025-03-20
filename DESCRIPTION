@@ -2,8 +2,28 @@ Package: subscreen
 Type: Package
 Title: Systematic Screening of Study Data for Subgroup Effects
 Version: 4.0.1
-Author: Bodo Kirsch, Steffen Jeske, Julia Eichhorn, Susanne Lippert, Thomas Schmelter, Christoph Muysers, Hermann Kulmann
-Maintainer: Bodo Kirsch <kirschbodo@gmail.com>
+Authors@R: c(person(given = "Bodo",
+                   family = "Kirsch",
+                     role = c("aut", "cre"),
+                    email = "kirschbodo@gmail.com"),
+             person(given = "Steffen",
+                   family = "Jeske",
+                     role = "aut"),
+             person(given = "Julia",
+                   family = "Eichhorn",
+                     role = "aut"),
+             person(given = "Susanne",
+                   family = "Lippert",
+                     role = "aut"),
+             person(given = "Thomas",
+                   family = "Schmelter",
+                     role = "aut"),
+             person(given = "Christoph",
+                   family = "Muysers",
+                     role = "aut"),
+             person(given = "Hermann",
+                   family = "Kulmann",
+                     role = "aut"))
 Description: Identifying outcome relevant subgroups has now become as simple as possible!
  The formerly lengthy and tedious search for the needle in a haystack will be replaced by a single, comprehensive and coherent presentation.
  The central result of a subgroup screening is a diagram in which each single dot stands for a subgroup. The diagram may show thousands of them. The position of the dot in the diagram is determined by the
