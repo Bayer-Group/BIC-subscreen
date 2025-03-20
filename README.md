@@ -1,14 +1,10 @@
----
-title: README
----
 
 # Subscreen <img src='inst/www/SubgroupExplorer_Logo_final.png' align='right' height='100'>
 
-#### June 21, 2023 
 <!-- badges: start -->
-
-<!--[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental) -->
-
+[![CRAN status](https://www.r-pkg.org/badges/version/subscreen)](https://cran.r-project.org/package=subscreen)
+[![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/subscreen)](https://cranlogs.r-pkg.org/badges/grand-total/subscreen)
+[![status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
 <!-- badges: end -->
 
 ***subscreen*** (***sub***group ***screen***ing) package has been developed to systematically analyze data, e.g., from clinical trials, for subgroup effects and visualize the outcome for all evaluated subgroups simultaneously.
