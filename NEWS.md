@@ -174,7 +174,10 @@
 * new vignette/readme
 * changes in DESCRIPTION
 
+# subscreen 4.0.1
 
+## Bug fix non-availability of createColorVector()
+* function createColorVector() included
 
 
 
