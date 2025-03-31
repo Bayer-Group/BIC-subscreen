@@ -78,16 +78,21 @@ subscreenshow <- function (
     NiceNumbers = NiceNumbers
   )
 
-  ui <- server <- NULL
-
-  source(appDir, local=TRUE)
-  server_env <- environment(server)
-
-  server_env$apppars <- apppars
-
-  app <- shiny::shinyApp(ui, server)
-
-  shiny::runApp(app, display.mode = "normal", host = host, port = port)
+    ui <- server <- NULL
+    
+    source(appDir, local = TRUE)
+    server_env <- environment(server)
+    server_env$apppars <- apppars
+    
+    app <- shiny::shinyApp(ui, server)
+    
+    # Wenn lokal: runApp verwenden
+    if (interactive()) {
+      shiny::runApp(app, display.mode = "normal", host = host, port = port)
+    } else {
+      # Für Shiny Server: App-Objekt zurückgeben
+      app
+    }
 
 }
 
