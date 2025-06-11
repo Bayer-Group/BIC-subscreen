@@ -271,7 +271,6 @@ It uses the following steps:
 * create `nperm` permutations of subgroups for each of `n_support_points` different subgroup sizes ranging from `min_start` to the total number of subjects in equidistant steps
 * perform subgroup analysis for each permutation
 * calculate the (`alpha`/2)- and (1-`alpha`/2)-quantile for each of the `n_support_points` subgroup sizes
-* use Loess regression to smooth the upper and lower limits of the funnel
 
 The following function parameters can be adjusted:
 <pre>
@@ -283,13 +282,14 @@ The following function parameters can be adjusted:
 <b>nperm              </b> integer value for number of permutations
 <b>alpha              </b> numerical vector
 <b>stratified         </b> logical value (TRUE/FALSE) for stratification
-<b>treat              </b> character value of treatment variabale name
+<b>treat              </b> character value of treatment variable name
 <b>endpoints          </b> character vector of endpoints
 <b>verbose            </b> logical value to switch on/off output of computational information (defaults to TRUE)
 <b>nkernel            </b> integer value for number of kernel used
 </pre>
 
 Using the `subscreenfunnel`-function is optional. It is not required to be able to start the app.
+The funnel is currently only available for treatment comparisons of exactly two treatments.
 
 <div id='chap25'>
 
