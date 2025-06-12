@@ -776,7 +776,6 @@ server <- function(input, output, session) {
       factorial_context_color = colthemeCol$ColorFactCont,
       importance_values = importance_$val(),
       importance_values_color = colthemeCol$ColorImportance,
-      #brightness = input$point_brightness,
       memorized_data = df_m$data,
       memorized_color = colthemeCol$ColorMemorized,
       key = input$key

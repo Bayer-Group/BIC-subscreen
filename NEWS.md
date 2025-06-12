@@ -174,8 +174,12 @@
 * new vignette/readme
 * changes in DESCRIPTION
 
+# subscreen 4.0.1
 
-# subscreen 4.0.3
+## Bug fix non-availability of createColorVector()
+* function createColorVector() included
+
+# subscreen 4.1.0
 
 ## subscreencalc
 * fixing sample size calculations for data with multiple rows for subjects
@@ -186,6 +190,7 @@ at app start
 
 ## subscreenfunnel
 * adding new function subscreenfunnel
+
 
 
 
