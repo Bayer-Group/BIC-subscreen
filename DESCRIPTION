@@ -1,7 +1,6 @@
 Package: subscreen
 Type: Package
 Title: Systematic Screening of Study Data for Subgroup Effects
-
 Version: 4.1.0
 Authors@R: c(person(given = "Bodo",
                    family = "Kirsch",
@@ -25,7 +24,6 @@ Authors@R: c(person(given = "Bodo",
              person(given = "Hermann",
                    family = "Kulmann",
                      role = "aut"))
-
 Description: Identifying outcome relevant subgroups has now become as simple as possible!
  The formerly lengthy and tedious search for the needle in a haystack will be replaced by a single, comprehensive and coherent presentation.
  The central result of a subgroup screening is a diagram in which each single dot stands for a subgroup. The diagram may show thousands of them. The position of the dot in the diagram is determined by the
