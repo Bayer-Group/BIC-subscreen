@@ -1,7 +1,7 @@
 Package: subscreen
 Type: Package
 Title: Systematic Screening of Study Data for Subgroup Effects
-Version: 4.0.3
+Version: 4.1.0
 Author: Bodo Kirsch, Steffen Jeske, Julia Eichhorn, Susanne Lippert, Thomas Schmelter, Christoph Muysers, Hermann Kulmann
 Maintainer: Bodo Kirsch <bodo.kirsch@bayer.com>
 Description: Identifying outcome relevant subgroups has now become as simple as possible!
