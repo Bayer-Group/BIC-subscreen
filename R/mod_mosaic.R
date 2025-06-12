@@ -320,42 +320,14 @@ mod_mosaic_server <- function(
       }
 
         if (!is.null(mos.y2)) {
-         val.z <- matrix(dplyr::arrange(tmp_y, !!!rlang::syms(c(mos.x, mos.y, mos.y2))) %>%
-               dplyr::pull(mos.z),dim(mid.y)[1] ,length(mid.x)
-              )
-         colnames(val.z) <- names(mid.x)
-         rownames(val.z) <- rownames(mid.y)
          tmp <- results()$sge[results()$sge$nfactors == 3 & !results()$sge[, mos.x] %in% not.used &
                               !results()$sge[, mos.y] %in% not.used & !results()$sge[, mos.y2] %in% not.used, ]
          tmp <- dplyr::arrange(tmp, !!!rlang::syms(c(mos.x,mos.y,mos.y2)))
         } else if (!is.null(mos.y)) {
-          val.z <- data.frame(matrix(NA, nrow = dim(mid.y)[1], ncol = length(mid.x)))
-          colnames(val.z) <- names(mid.x)
-          rownames(val.z) <- rownames(mid.y)
-
-          for (i in 1:length(mid.x)) {
-            tmp <- tmp_2factors %>% dplyr::filter(!! rlang::sym(mos.x) == tmp_x2[i, mos.x])
-            for (j in 1:dim(mid.y)[1]) {
-              level <- tmp_y[j, mos.y]
-              if (dim(dplyr::filter(tmp,!! rlang::sym(mos.y) == level))[1] > 0) {
-                tmp1 <- dplyr::filter(tmp,!! rlang::sym(mos.y) == level)
-                tmp1 <- ifelse("lin" == "lin", tmp1[, mos.z], log(tmp1[, mos.z]))
-                val.z [j,i] <- tmp1
-              } else {
-                val.z [j,i] <- NA
-              }
-            }
-          }
-
           tmp <- res[res$nfactors == 2 & !res[, mos.x] %in% not.used & !res[, mos.y] %in% not.used,]
 
         } else {
           tmp <- res[res$nfactors == 1 & !res[, mos.x] %in% not.used, ]
-          if(shiny::req(input$logmosaic) == "lin") {
-              val.z <- matrix(tmp_x2[, mos.z], ncol = length(prop.x) - 1, byrow = FALSE)
-          } else if (shiny::req(input$logmosaic) == "log") {
-             val.z <- matrix(log(tmp_x2[, mos.z]), ncol = length(prop.x) - 1, byrow = FALSE)
-          }
         }
 
       if (!rg.z[1] < results()$results_total[,mos.z]) {
