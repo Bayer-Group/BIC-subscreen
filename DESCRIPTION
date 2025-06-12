@@ -1,7 +1,7 @@
 Package: subscreen
 Type: Package
 Title: Systematic Screening of Study Data for Subgroup Effects
-Version: 4.0.1
+Version: 4.1.0
 Authors@R: c(person(given = "Bodo",
                    family = "Kirsch",
                      role = c("aut", "cre"),
@@ -29,7 +29,7 @@ Description: Identifying outcome relevant subgroups has now become as simple as 
  The central result of a subgroup screening is a diagram in which each single dot stands for a subgroup. The diagram may show thousands of them. The position of the dot in the diagram is determined by the
  sample size of the subgroup and the statistical measure of the treatment effect in that subgroup. The sample size is shown on the horizontal axis while the treatment effect is displayed on the vertical axis. Furthermore, the diagram shows the line of no effect and the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while for larger subgroups only small deviations from the study mean can be expected to be chance findings.
  So for a study with no conspicuous subgroup effects, the dots in the figure are expected to form a kind of funnel. Any deviations from this funnel shape hint to conspicuous subgroups.
-License: GPL-3
+License: GPL-3 + file LICENSE
 Depends: R (>= 3.5.0)
 Encoding: UTF-8
 LazyData: TRUE

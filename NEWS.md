@@ -179,6 +179,18 @@
 ## Bug fix non-availability of createColorVector()
 * function createColorVector() included
 
+# subscreen 4.1.0
+
+## subscreencalc
+* fixing sample size calculations for data with multiple rows for subjects
+
+## subscreenshow 
+* adding multiple new parameter to define settings
+at app start
+
+## subscreenfunnel
+* adding new function subscreenfunnel
+
 
 
 

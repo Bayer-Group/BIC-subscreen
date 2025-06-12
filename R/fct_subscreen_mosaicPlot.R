@@ -20,7 +20,8 @@ subscreen_mosaicPlot <- function(
   mos.z,
   col.bg = c("#424242"),
   col.txt = c("#ffffff"),
-  colrange.z = c('#00BCFF','gray89','#89D329'),
+  colrange.z = c("#10384FFF","#00BCFFFF","white","#89D329FF","#004422FF"),
+  #colrange.z = c("#443247FF","#00BCFFFF","white","#fad56eFF","#004422FF"),
   scale = "lin"
 ) {
 
@@ -72,7 +73,7 @@ subscreen_mosaicPlot <- function(
             nfactors = unique(tmp_y$nfactors)
           )
         tmp_y <- tmp_y %>% dplyr::right_join(expected_tmp_2, by = c(colnames(expected_tmp_y),"FCID_all","max_level","nfactors"))
-
+        tmp_y <- dplyr::arrange(tmp_y, !!!rlang::syms(c(mos.x, mos.y)))
       }
 
       prop.y <- plyr::ddply(tmp_y,mos.y,function(x){x$N.of.subjects})[,-1]

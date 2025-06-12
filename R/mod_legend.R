@@ -24,8 +24,7 @@ mod_legend_server <- function(
   rowwise = FALSE,
   plot_color,
   colthemeCol,
-  complement = FALSE,
-  point_brightness
+  complement = FALSE
   ) {
 
   ns <- session$ns
@@ -33,17 +32,16 @@ mod_legend_server <- function(
   output$legend <- shiny::renderUI({
 
       p.col <- colthemeCol()$ColorPoints
-      bright <- point_brightness()
       colour <- as.character(
         c(
-          grDevices::adjustcolor(p.col, alpha = 1 * bright),
-          grDevices::adjustcolor(p.col, alpha = 0.75 * bright),
-          grDevices::adjustcolor(p.col, alpha = 0.5 * bright),
-          grDevices::adjustcolor(p.col, alpha = 0.25 * bright),
-          grDevices::adjustcolor(p.col, alpha = 0.1 * bright),
-          grDevices::adjustcolor(p.col, alpha = 0.1 * bright),
-          grDevices::adjustcolor(p.col, alpha = 0.1 * bright),
-          grDevices::adjustcolor(p.col, alpha = 0.1 * bright)
+          grDevices::adjustcolor(p.col, alpha = 1 ),
+          grDevices::adjustcolor(p.col, alpha = 0.75 ),
+          grDevices::adjustcolor(p.col, alpha = 0.5 ),
+          grDevices::adjustcolor(p.col, alpha = 0.25 ),
+          grDevices::adjustcolor(p.col, alpha = 0.1 ),
+          grDevices::adjustcolor(p.col, alpha = 0.1 ),
+          grDevices::adjustcolor(p.col, alpha = 0.1 ),
+          grDevices::adjustcolor(p.col, alpha = 0.1 )
         )
       )
     if (rowwise == FALSE) {
@@ -55,7 +53,7 @@ mod_legend_server <- function(
             shiny::tagList(
               tags$i(class = "fa-solid fa-circle",
                 style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[2])[1],",", grDevices::col2rgb(colour[2])[2],",",grDevices::col2rgb(colour[2])[3],",", 0.75 * bright,")"
+                  grDevices::col2rgb(colour[2])[1],",", grDevices::col2rgb(colour[2])[2],",",grDevices::col2rgb(colour[2])[3],",", 0.75 ,")"
                 )
               ),
               "1-factor level subgroups"
@@ -69,7 +67,7 @@ mod_legend_server <- function(
             shiny::tagList(
               tags$i(class = "fa-solid fa-circle",
                  style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[2])[1],",", grDevices::col2rgb(colour[2])[2],",",grDevices::col2rgb(colour[2])[3],",", 0.75 * bright,")"
+                  grDevices::col2rgb(colour[2])[1],",", grDevices::col2rgb(colour[2])[2],",",grDevices::col2rgb(colour[2])[3],",", 0.75 ,")"
                 )
               ),"2-factor level subgroups"
             )
@@ -83,7 +81,7 @@ mod_legend_server <- function(
               shiny::tags$i(
                 class = "fa-solid fa-circle",
                  style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[3])[1],",", grDevices::col2rgb(colour[3])[2],",",grDevices::col2rgb(colour[3])[3],",", 0.5 * bright,")"
+                  grDevices::col2rgb(colour[3])[1],",", grDevices::col2rgb(colour[3])[2],",",grDevices::col2rgb(colour[3])[3],",", 0.5 ,")"
                 )
               ),"3-factor level subgroups"
             )
@@ -97,7 +95,7 @@ mod_legend_server <- function(
               shiny::tags$i(
                 class = "fa-solid fa-circle",
                  style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[4])[1],",", grDevices::col2rgb(colour[4])[2],",",grDevices::col2rgb(colour[4])[3],",", 0.25 * bright,")"
+                  grDevices::col2rgb(colour[4])[1],",", grDevices::col2rgb(colour[4])[2],",",grDevices::col2rgb(colour[4])[3],",", 0.25 ,")"
                 )
               ),"4-factor level subgroups"
             )
@@ -111,7 +109,7 @@ mod_legend_server <- function(
               shiny::tags$i(
                 class = "fa-solid fa-circle",
                  style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[5])[1],",", grDevices::col2rgb(colour[5])[2],",",grDevices::col2rgb(colour[5])[3],",", 0.1 * bright,")"
+                  grDevices::col2rgb(colour[5])[1],",", grDevices::col2rgb(colour[5])[2],",",grDevices::col2rgb(colour[5])[3],",", 0.1 ,")"
                 )
               ), "5 (or more)-factor level subgroups"
             )
@@ -202,26 +200,14 @@ mod_legend_server <- function(
                  )
              )
         },
-        if (different_hues(colthemeCol()$ColorFactCont, value = 89) %in% plot_color()) {
+        if (different_hues(colthemeCol()$ColorFactCont, value = 50) %in% plot_color()) {
           tag = shiny::p(
             shiny::span(
               shiny::tagList(
                 shiny::tags$i(
                   class = "fa-solid fa-circle",
-                  style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 89))
+                  style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 50))
                 ),"Pseudo factorial Context"
-              )
-           )
-          )
-        },
-        if (different_hues(colthemeCol()$ColorFactCont, value = 180) %in% plot_color()) {
-          tag = shiny::p(
-            shiny::span(
-              shiny::tagList(
-                shiny::tags$i(
-                  class = "fa-solid fa-circle",
-                  style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 180))
-                ),"Removed Subgroup to repair Context"
               )
            )
           )
@@ -233,6 +219,18 @@ mod_legend_server <- function(
                 shiny::tags$i(
                   class = "fa-solid fa-circle",
                   style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 150))
+                ),"Removed Subgroup to repair Context"
+              )
+           )
+          )
+        },
+        if (different_hues(colthemeCol()$ColorFactCont, value = 100) %in% plot_color()) {
+          tag = shiny::p(
+            shiny::span(
+              shiny::tagList(
+                shiny::tags$i(
+                  class = "fa-solid fa-circle",
+                  style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 100))
                 ),"Incomplete factorial Context"
               )
            )
@@ -249,7 +247,7 @@ mod_legend_server <- function(
               shiny::tags$i(
                 class = "fa-solid fa-circle",
                 style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[1])[1],",", grDevices::col2rgb(colour[1])[2],",",grDevices::col2rgb(colour[1])[3],",", 1 * bright,")"
+                  grDevices::col2rgb(colour[1])[1],",", grDevices::col2rgb(colour[1])[2],",",grDevices::col2rgb(colour[1])[3],",", 1 ,")"
                 )
               ),"1-factor level subgroups"
             )
@@ -261,7 +259,7 @@ mod_legend_server <- function(
               shiny::tags$i(
                 class = "fa-solid fa-circle",
                  style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[2])[1],",", grDevices::col2rgb(colour[2])[2],",",grDevices::col2rgb(colour[2])[3],",", 0.75 * bright,")"
+                  grDevices::col2rgb(colour[2])[1],",", grDevices::col2rgb(colour[2])[2],",",grDevices::col2rgb(colour[2])[3],",", 0.75 ,")"
                 )
               ),"2-factor level subgroups"
             )
@@ -273,7 +271,7 @@ mod_legend_server <- function(
               shiny::tags$i(
                 class = "fa-solid fa-circle",
                  style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[3])[1],",", grDevices::col2rgb(colour[3])[2],",",grDevices::col2rgb(colour[3])[3],",", 0.5 * bright,")"
+                  grDevices::col2rgb(colour[3])[1],",", grDevices::col2rgb(colour[3])[2],",",grDevices::col2rgb(colour[3])[3],",", 0.5 ,")"
                 )
               ),"3-factor level subgroups"
             )
@@ -285,7 +283,7 @@ mod_legend_server <- function(
               shiny::tags$i(
                 class = "fa-solid fa-circle",
                  style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[4])[1],",", grDevices::col2rgb(colour[4])[2],",",grDevices::col2rgb(colour[4])[3],",", 0.25 * bright,")"
+                  grDevices::col2rgb(colour[4])[1],",", grDevices::col2rgb(colour[4])[2],",",grDevices::col2rgb(colour[4])[3],",", 0.25 ,")"
                 )
               ),"4-factor level subgroups"
             )
@@ -297,7 +295,7 @@ mod_legend_server <- function(
               shiny::tags$i(
                 class = "fa-solid fa-circle",
                 style = paste0("color: rgba(",
-                  grDevices::col2rgb(colour[5])[1],",", grDevices::col2rgb(colour[5])[2],",",grDevices::col2rgb(colour[5])[3],",", 0.1 * bright,")"
+                  grDevices::col2rgb(colour[5])[1],",", grDevices::col2rgb(colour[5])[2],",",grDevices::col2rgb(colour[5])[3],",", 0.1 ,")"
                 )
               ), "5 (or more)-factor level subgroups"
             )
@@ -373,27 +371,15 @@ mod_legend_server <- function(
               )
            )
         },
-        if (different_hues(colthemeCol()$ColorFactCont, value = 89) %in% plot_color()) {
+        if (different_hues(colthemeCol()$ColorFactCont, value = 50) %in% plot_color()) {
             shiny::span(
               shiny::tagList(
                 shiny::tags$i(
                   class = "fa-solid fa-circle",
-                  style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 89))
+                  style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 50))
                 ),"Pseudo factorial Context"
               )
            )
-        },
-        if (different_hues(colthemeCol()$ColorFactCont, value = 180) %in% plot_color()) {
-          tag = shiny::p(
-            shiny::span(
-              shiny::tagList(
-                shiny::tags$i(
-                  class = "fa-solid fa-circle",
-                  style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 180))
-                ),"Removed subgroup(s) to repair context"
-              )
-           )
-          )
         },
         if (different_hues(colthemeCol()$ColorFactCont, value = 150) %in% plot_color()) {
           tag = shiny::p(
@@ -402,6 +388,18 @@ mod_legend_server <- function(
                 shiny::tags$i(
                   class = "fa-solid fa-circle",
                   style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 150))
+                ),"Removed subgroup(s) to repair context"
+              )
+           )
+          )
+        },
+        if (different_hues(colthemeCol()$ColorFactCont, value = 100) %in% plot_color()) {
+          tag = shiny::p(
+            shiny::span(
+              shiny::tagList(
+                shiny::tags$i(
+                  class = "fa-solid fa-circle",
+                  style = paste0("color: ", different_hues(colthemeCol()$ColorFactCont, value = 100))
                 ),"Incomplete factorial Context"
               )
            )

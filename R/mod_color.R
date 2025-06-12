@@ -29,6 +29,17 @@ mod_color_ui <- function(id) {
       )
     ),
     shiny::fluidRow(
+       shiny::column(6,
+        shiny::checkboxInput(
+          inputId = ns("LabelTabClicked"),
+          label = "Labels",
+          value = FALSE
+        )
+      ),
+      shiny::column(6,
+      )
+    ),
+    shiny::fluidRow(
       shiny::column(6,
         colourpicker::colourInput(
           inputId = ns("ColorParents"),
@@ -46,6 +57,22 @@ mod_color_ui <- function(id) {
       ),
     ),
     shiny::fluidRow(
+       shiny::column(6,
+        shiny::checkboxInput(
+          inputId = ns("LabelParents"),
+          label = "Labels",
+          value = FALSE
+        )
+      ),
+      shiny::column(6,
+        shiny::checkboxInput(
+          inputId = ns("LabelMemorized"),
+          label = "Labels",
+          value = FALSE
+        )
+      )
+    ),
+    shiny::fluidRow(
       shiny::column(6,
         colourpicker::colourInput(
           inputId = ns("ColorImportance"),
@@ -58,7 +85,7 @@ mod_color_ui <- function(id) {
         colourpicker::colourInput(
           inputId = ns("ColorReference"),
           label = "Choose a colour for the reference line",
-          value = "#0091DF60",
+          value = "#0091DF",
           allowTransparent = TRUE
         )
       )
@@ -76,7 +103,25 @@ mod_color_ui <- function(id) {
         colourpicker::colourInput(
           inputId = ns("ColorPoints"),
           "Choose a colour for the points",
-          value = "#FFFFFF"
+          value = "#FFFFFF5F",
+          allowTransparent = TRUE
+        )
+      )
+    ),
+    shiny::fluidRow(
+       shiny::column(6,
+        shiny::checkboxInput(
+          inputId = ns("LabelFactCont"),
+          label = "Labels",
+          value = FALSE
+        )
+      ),
+      shiny::column(6,
+        colourpicker::colourInput(
+          inputId = ns("ColorCustomReference"),
+          label = "Choose a colour for the custom reference line",
+          value = "#00BCFFFF",
+          allowTransparent = TRUE
         )
       )
     ),
@@ -116,15 +161,16 @@ mod_color_server <- function(input, output, session) {
     ColorReference = "#0091DF60",
     ColorFactCont = "#0350E0",
     ColorBGplot = "#383838",
-    ColorPoints = "#FFFFFF",
-    ColorMemorized = "#57D48B"
+    ColorPoints = "#FFFFFF5F",
+    ColorMemorized = "#57D48B",
+    ColorCustomReference = "#00BCFFFF"
   )
 
   shiny::observeEvent(input$select_col, {
     if (input$select_col == 'app version') {
       colthemeCol$col.bg <- '#383838'
       colthemeCol$ColorBGplot <- "#383838"
-      colthemeCol$ColorPoints <- "#FFFFFF"
+      colthemeCol$ColorPoints <- "#FFFFFF5F"
     } else if (input$select_col == 'print version') {
       colthemeCol$col.bg <- '#ffffff'
       colthemeCol$ColorReference <- "#0091DF"
@@ -154,6 +200,9 @@ mod_color_server <- function(input, output, session) {
 
   shiny::observeEvent(input$ColorReference, {
       colthemeCol$ColorReference <- input$ColorReference
+  })
+  shiny::observeEvent(input$ColorCustomReference, {
+      colthemeCol$ColorCustomReference <- input$ColorCustomReference
   })
   shiny::observeEvent(input$ColorBGplot, {
       colthemeCol$ColorBGplot <- input$ColorBGplot
@@ -186,7 +235,11 @@ mod_color_server <- function(input, output, session) {
   return(
     list(
       colthemeCol = shiny::reactive({colthemeCol}),
-      button = shiny::reactive({input$select_col})
+      button = shiny::reactive({input$select_col}),
+      LabelTabClicked = shiny::reactive({input$LabelTabClicked}),
+      LabelParents = shiny::reactive({input$LabelParents}),
+      LabelMemorized = shiny::reactive({input$LabelMemorized}),
+      LabelFactCont = shiny::reactive({input$LabelFactCont})
     )
   )
 }

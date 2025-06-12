@@ -280,7 +280,6 @@ subscreencalc <- function(
     m = M[i, ]
     S = character()
     S = append(S, names(FFF)[(1:length(m)) * m])
-
     # if (is(tryCatch(plyr::ddply(cbind(FFF, TTT), S, eval_function), error=function(e) e, warning = function(w) w),"error")) {
     #   print(paste("Error in calculation eval_function for subgroup factor(s combination): ", paste(S,collapse =",")))
     #   print(tryCatch(plyr::ddply(cbind(FFF, TTT), S, eval_function), error=function(e) e, warning = function(w) w))
@@ -292,7 +291,7 @@ subscreencalc <- function(
       names(d_comp)[!names(d_comp) %in% S] <- paste0("Complement_",names(d_comp)[!names(d_comp) %in% S])
     }
     d_N <- plyr::ddply(cbind(FFF,TTT),S,function(x){
-      N.of.subjects <- sum(!is.na(x[subjectid]))
+      N.of.subjects <- sum(!is.na(unique(x[subjectid])))
       data.frame(N.of.subjects)
     })
     d <- merge(d,d_N)
@@ -363,7 +362,7 @@ subscreencalc <- function(
   rowsM <- dim(M)[1]
 
   if (verbose == TRUE) {
-    cat("\n", "Number of Subjects                     ",AaS,
+    cat("\n", "Number of Subjects                     ",sum(!is.na(unique(cbind(TTT,FFF)[subjectid]))),
         "\n", "Number of Subgroup Factors             ",AnFa,
         "\n", "Potential Subgroups                    ",sum(AnSu))
     }
@@ -434,7 +433,7 @@ subscreencalc <- function(
 
 
   evfu <- eval_function(cbind(FFF, TTT))
-  N <- data.frame('N.of.subjects' = sum(!is.na(cbind(TTT,FFF)[subjectid])))
+  N <- data.frame('N.of.subjects' = sum(!is.na(unique(cbind(TTT,FFF)[subjectid]))))
   res <- merge(evfu, N)
 
   pt3a <- proc.time()
@@ -474,15 +473,15 @@ subscreencalc <- function(
         "subscreencalc stopped at ", format(Sys.time(), format = "%F %R %Z"), "\n")}
 
   ## note about infinite values
-  if (length(names(which(apply(H$sge[,names(H$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))})))) > 0) {
-    subscreencalc_notes <- c(subscreencalc_notes,
-      paste0(
-        "Note: the following target variable(s) include infinite values (-Inf/Inf) : ",
-        paste(names(which(apply(H$sge[,names(H$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))}))), collapse = ", "),
-        ", which causes errors within the app and therefore won't be shown! Please check your eval_function to avoid infinite values or replace all infinite values with finite values! "
-      )
-    )
-  }
+  # if (length(names(which(apply(H$sge[,names(H$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))})))) > 0) {
+  #   subscreencalc_notes <- c(subscreencalc_notes,
+  #     paste0(
+  #       "Note: the following target variable(s) include infinite values (-Inf/Inf) : ",
+  #       paste(names(which(apply(H$sge[,names(H$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))}))), collapse = ", "),
+  #       ", which causes errors within the app and therefore won't be shown! Please check your eval_function to avoid infinite values or replace all infinite values with finite values! "
+  #     )
+  #   )
+  # }
   if (!is.null(subscreencalc_notes)) {
     print(subscreencalc_notes)
   }

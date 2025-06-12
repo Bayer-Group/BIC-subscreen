@@ -62,11 +62,14 @@ mod_mosaic_server <- function(
         choices = results()$factors,
         selected = results()$factors[1]
       ),
-      shiny::selectInput(
-        inputId = ns("var2"),
-        label = "Second subgroup variable (y)",
-        choices = c('no selection', results()$factors),
-        selected = 'no selection'
+
+      shiny::conditionalPanel(condition = paste0('output[\'', ns('show_var21'), "\'] == true"),
+        shiny::selectInput(
+          inputId = ns("var2"),
+          label = "Second subgroup variable (y)",
+          choices = c('no selection', results()$factors),
+          selected = 'no selection'
+        )
       ),
       shiny::conditionalPanel(condition = paste0('output[\'', ns('show_var22'), "\'] == true"),
         shiny::selectInput(
@@ -117,6 +120,25 @@ mod_mosaic_server <- function(
     )
   })
 
+
+  show_var21_val <- shiny::reactiveValues(val = FALSE)
+  output$show_var21 <- shiny::reactive({
+    show_var21_val$val
+  })
+  shiny::observeEvent(results()$max_comb,{
+    if (results()$max_comb > 1) {
+      show_var21_val$val <- TRUE
+    } else {
+    shiny::updateSelectInput(
+      inputId ="var21",
+      selected = 'no selection'
+    )
+      show_var21_val$val <- FALSE
+    }
+  })
+  outputOptions(output, "show_var21", suspendWhenHidden = FALSE)
+
+
   show_var22_val <- shiny::reactiveValues(val = FALSE)
 
   output$show_var22 <- shiny::reactive({
@@ -157,7 +179,8 @@ mod_mosaic_server <- function(
         mos.z = shiny::req(input$var3),
         col.bg = ColorBGplot(),
         col.txt = font_color(ColorBGplot()),
-        colrange.z = c('#00BCFF','gray89','#89D329'),
+        #colrange.z = c("#443247FF","#00BCFFFF","white","#fad56eFF","#004422FF"),
+        colrange.z = c("#10384FFF","#00BCFFFF","white","#89D329FF","#004422FF"),
         scale = input$logmosaic
       )
     }
@@ -177,7 +200,8 @@ mod_mosaic_server <- function(
       mos.z <- shiny::req(input$var3)
       col.bg <- ColorBGplot()
       col.txt <- font_color(ColorBGplot())
-      colrange.z <- c('#00BCFF','gray89','#89D329')
+      colrange.z <- c("#10384FFF","#00BCFFFF","white","#89D329FF","#004422FF")
+      #colrange.z <- c("#443247FF","#00BCFFFF","white","#fad56eFF","#004422FF")
       not.used <- 'Not used'
 
       if (mos.y == 'no selection') {
@@ -218,7 +242,7 @@ mod_mosaic_server <- function(
 
         tmp_y <- dplyr::arrange(tmp_y, !!!rlang::syms(c(mos.x, mos.y)))
         expected_tmp_y <- expand.grid(lapply(lapply(
-          tmp_y %>% dplyr::select(c(mos.x,mos.y)) ,levels),function(x){x[x != "Not used"]}))
+          tmp_y %>% dplyr::select(all_of(c(mos.x,mos.y))) ,levels),function(x){x[x != "Not used"]}))
 
         if(dim(tmp_y)[1] !=  dim(expected_tmp_y)[1]){
           expected_tmp_2 <- expected_tmp_y %>%
@@ -228,7 +252,7 @@ mod_mosaic_server <- function(
               nfactors = unique(tmp_y$nfactors)
             )
           tmp_y <- tmp_y %>% dplyr::right_join(expected_tmp_2, by = c(colnames(expected_tmp_y),"FCID_all","max_level","nfactors"))
-
+          tmp_y <- dplyr::arrange(tmp_y, !!!rlang::syms(c(mos.x, mos.y)))
         }
         prop.y <- plyr::ddply(tmp_y,mos.y,function(x){x$N.of.subjects})[,-1]
         prop.y[is.na(prop.y)] <- 0
@@ -296,42 +320,14 @@ mod_mosaic_server <- function(
       }
 
         if (!is.null(mos.y2)) {
-         val.z <- matrix(dplyr::arrange(tmp_y, !!!rlang::syms(c(mos.x, mos.y, mos.y2))) %>%
-               dplyr::pull(mos.z),dim(mid.y)[1] ,length(mid.x)
-              )
-         colnames(val.z) <- names(mid.x)
-         rownames(val.z) <- rownames(mid.y)
          tmp <- results()$sge[results()$sge$nfactors == 3 & !results()$sge[, mos.x] %in% not.used &
                               !results()$sge[, mos.y] %in% not.used & !results()$sge[, mos.y2] %in% not.used, ]
          tmp <- dplyr::arrange(tmp, !!!rlang::syms(c(mos.x,mos.y,mos.y2)))
         } else if (!is.null(mos.y)) {
-          val.z <- data.frame(matrix(NA, nrow = length(mid.y), ncol = length(mid.x)))
-          colnames(val.z) <- names(mid.x)
-          rownames(val.z) <- names(mid.y)
-
-          for (i in 1:length(mid.x)) {
-            tmp <- tmp_2factors %>% dplyr::filter(!! rlang::sym(mos.x) == tmp_x2[i, mos.x])
-            for (j in 1:length(mid.y)) {
-              level <- tmp_y[j, mos.y]
-              if (dim(dplyr::filter(tmp,!! rlang::sym(mos.y) == level))[1] > 0) {
-                tmp1 <- dplyr::filter(tmp,!! rlang::sym(mos.y) == level)
-                tmp1 <- ifelse(shiny::req(input$logmosaic) == "lin", tmp1[, mos.z], log(tmp1[, mos.z]))
-                val.z [j,i] <- tmp1
-              } else {
-                val.z [j,i] <- NA
-              }
-            }
-          }
-
           tmp <- res[res$nfactors == 2 & !res[, mos.x] %in% not.used & !res[, mos.y] %in% not.used,]
 
         } else {
           tmp <- res[res$nfactors == 1 & !res[, mos.x] %in% not.used, ]
-          if(shiny::req(input$logmosaic) == "lin") {
-              val.z <- matrix(tmp_x2[, mos.z], ncol = length(prop.x) - 1, byrow = FALSE)
-          } else if (shiny::req(input$logmosaic) == "log") {
-             val.z <- matrix(log(tmp_x2[, mos.z]), ncol = length(prop.x) - 1, byrow = FALSE)
-          }
         }
 
       if (!rg.z[1] < results()$results_total[,mos.z]) {
@@ -356,7 +352,7 @@ mod_mosaic_server <- function(
 
           if (is.null(mos.y2)) {
             hoverlabel$value <- tmp[tmp[,mos.x] == (hov.x[cut(input$plot_hover$x, prop.x, labels = FALSE)]) &
-                                      tmp[,mos.y] == (hov.y[cut(input$plot_hover$y, prop.y[,cut(input$plot_hover$x, prop.x, labels = FALSE)], labels = FALSE)]),col.disp]
+                                      tmp[,mos.y] == (hov.y[cut(input$plot_hover$y, prop.y[,cut(input$plot_hover$x, prop.x, labels = FALSE)]+(1:dim(prop.y)[1])*0.0000001, labels = FALSE)]),col.disp]
           } else {
             tmp2 <- tmp[tmp[,mos.x] == (hov.x[cut(input$plot_hover$x, prop.x, labels = FALSE)]),col.disp]
             tmp3 <-  tmp2[cut(input$plot_hover$y, unique(prop.y[,cut(input$plot_hover$x, prop.x, labels = FALSE)]), labels = FALSE),]
@@ -376,8 +372,8 @@ mod_mosaic_server <- function(
     input$plot_hover
     hover <- input$plot_hover
     hover$mapping <- list(xintercept = "xintercept", x = "x", y = "y")
-
-    colrange.z = c('#00BCFF','gray89','#89D329')
+    #colrange.z = c("#443247FF","#00BCFFFF","white","#fad56eFF","#004422FF")
+    colrange.z = c("#10384FFF","#00BCFFFF","white","#89D329FF","#004422FF")
     if (shiny::req(input$logmosaic) == "lin") {
       rg.z <- range(results()$sge[, input$var3], na.rm = TRUE)
     }
@@ -402,7 +398,6 @@ mod_mosaic_server <- function(
 
     f_colZ <- grDevices::colorRamp(colrange.z, bias = log(tr.mean.z, base = 0.5))
 
-
     if (input$var3 %in% colnames(hoverlabel$value)) {
       val.z.ij <- hoverlabel$value[input$var3]
 
@@ -411,12 +406,11 @@ mod_mosaic_server <- function(
     }
 
     if (dim(val.z.ij)[1] > 0 & !is.na(as.numeric(val.z.ij))) {
+
       hoverColor <- grDevices::rgb(f_colZ((val.z.ij - rg.z[1])/diff(rg.z)), maxColorValue = 255)
 
-      left_pct <- (hover$coords_img$x - hover$range$left) / (hover$range$right - hover$range$left)
-      top_pct <- (hover$domain$top - hover$y ) / (hover$domain$top - hover$domain$bottom)
-      left_px <- (hover$range$left + left_pct * (hover$range$right - hover$range$left) / hover$img_css_ratio$x) + 3
-      top_px <- (hover$range$top + top_pct * (hover$range$bottom - hover$range$top) / hover$img_css_ratio$y) + 3
+      left_px <- hover$coords_img$x
+      top_px <- hover$coords_img$y
 
       style <- paste0("position:absolute; z-index:100; background-color: rgba(",
         grDevices::col2rgb(hoverColor)[1],",",grDevices::col2rgb(hoverColor)[2],",",grDevices::col2rgb(hoverColor)[3],",0.95); ",

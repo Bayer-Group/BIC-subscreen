@@ -1,7 +1,7 @@
 #' #'Create example data for subscreen package with pbc data set
 #' #'
 #' #'
-#'
+#' 
 #' library(survival)
 #' library(dplyr)
 #' utils::data(pbc, package = "survival")
@@ -65,7 +65,7 @@
 #'       )
 #'     )
 #' ## # eliminate treatment NAs#
-#'
+#' 
 #'   pbcdat <- pbc[!is.na(pbc$trt), ]
 #' # # PFS and OS endpoints
 #'   set.seed(2006)##
@@ -75,9 +75,9 @@
 #'   pbcdat$'timeos' <- pbcdat$time##
 #'   #variable importance for OS for the created categorical variables
 #'   # (higher is more important, also works for numeric variables)
-#'
+#' 
 #'   #define function the eval_function()
-#'
+#' 
 #' #Attention: The eval_function ALWAYS needs to return a dataframe with one row.
 #' #            Include exception handling, like if(N1>0 && N2>0) hr <- exp(coxph(...) )#
 #' #           to avoid program abort due to errors
@@ -116,7 +116,7 @@
 #'     "plateletg","spidersg"
 #'   )
 #' )
-#'
+#' 
 #' results <- subscreencalc(
 #'   data = pbcdat,
 #'   eval_function = hazardratio,
@@ -128,7 +128,7 @@
 #'   ),
 #'   use_complement = FALSE,
 #'   factorial = FALSE)
-#'
+#' 
 #' results_factorial_true <- subscreencalc(
 #'   data = pbcdat,
 #'   eval_function = hazardratio,
@@ -141,8 +141,8 @@
 #'   use_complement = FALSE,
 #'   factorial = TRUE
 #' )
-#'
-#' results_factorial_complement_true <- subscreencalc(
+#' 
+#' results_factorial_complement_true1 <- subscreencalc(
 #'   data = pbcdat,
 #'   eval_function = hazardratio,
 #'   subjectid = "id",
@@ -154,7 +154,19 @@
 #'   use_complement = TRUE,
 #'   factorial = TRUE
 #' )
-#'
+#' 
+#' results_factorial_complement_true <- subscreenfunnel(
+#'  data = pbcdat,
+#'  H = results_factorial_complement_true1,
+#'  eval_function = hazardratio,
+#'  min_start = 15,
+#'  n_support_points = 25,
+#'  nperm = 1500,
+#'  alpha = c(0.05,0.1),
+#'  treat = "trt",
+#'  endpoints = c("timepfs" , "event.pfs", "timeos", "event.os")
+#'  )
+#' 
 #' results_complement_true <- subscreencalc(
 #'   data = pbcdat,
 #'   eval_function = hazardratio,
@@ -167,19 +179,19 @@
 #'   use_complement = TRUE,
 #'   factorial = FALSE
 #' )
-#'
-#'
+#' 
+#' 
 #' #save
 #' save(results, file = "data/results.rda")
 #' save(results_factorial_true, file = "data/results_factorial_true.rda")
 #' save(results_factorial_complement_true, file = "data/results_factorial_complement_true.rda")
 #' save(results_complement_true, file = "data/results_complement_true.rda")
 #' save(importance, file = "data/importance.rda")
-#'
+#' 
 #' # studies <- read.csv("data/studies.csv")
 #' # save(studies, file = "data/studies.rda")
-#'
-#'
+#' 
+#' 
 #' # ##save
 #' # saveRDS(results, "data/results.rds", version = 2)
 #' # saveRDS(results_factorial_true, "data/results_factorial_true.rds", version = 2)
@@ -190,3 +202,7 @@
 #' #
 #' # # studies <- read.csv("data/studies.csv")#
 #' # #saveRDS(studies, "data/studies.rds", version = 2)
+#' 
+#' 
+#' 
+#' 

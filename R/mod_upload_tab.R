@@ -47,7 +47,7 @@ upload_tab_ui <- function(id, bg.col) {
     ),
     shiny::h3("Welcome to"),
     shiny::uiOutput(ns("myImage")),
-    shiny::column(6,
+    shiny::column(3,
       shiny::h4("Please upload your prepared data or use the demo data set."),
       shiny::uiOutput(ns("mode")),
       shiny::fluidPage(
@@ -71,6 +71,10 @@ upload_tab_ui <- function(id, bg.col) {
           uploadButton(ns('apply_uploaded_data'),'Use uploaded data',"download")
         )
       )
+    ),
+    shiny::column(3,
+      uiOutput(ns("variable_filter_selection"))#,
+      #actionButton(ns('apply_filter'),'Update selection')
     ),
     shiny::column(6,
       shiny::uiOutput(ns("list_output"))
@@ -204,10 +208,10 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
 
   preview_scresults_tmp <- reactiveValues(dat = NULL)
   preview_variable_importance_tmp <- reactiveValues(dat = NULL)
-  buttons_clicked <- reactiveValues(dat = 0)
-  shiny::observeEvent(c(input$apply_rdata_files,input$apply_demo_data, input$apply_uploaded_data),{
-    buttons_clicked$dat <- buttons_clicked$dat + 1
-  })
+  # buttons_clicked <- reactiveValues(dat = 0)
+  # shiny::observeEvent(c(input$apply_rdata_files,input$apply_demo_data, input$apply_uploaded_data),{
+  #   buttons_clicked$dat <- buttons_clicked$dat + 1
+  # })
 
   shiny::observeEvent(c(input$mode,input$results_file), {
     if (input$mode == "rdata") {
@@ -246,7 +250,18 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
     input$results_file
     uploadInformationOutput(preview_scresults_tmp$dat, input$mode, input$results_file, dat_name, font = font_col())
   })
-
+  output$variable_filter_selection <- shiny::renderUI({
+    shinyWidgets::pickerInput(
+      inputId =ns("variable_filter_selection"),
+      label = "Select/Deselect Factors",
+      choices = preview_scresults_tmp$dat$factors,
+      selected = preview_scresults_tmp$dat$factors,
+      options = list(
+      `actions-box` = TRUE
+      ),
+      multiple = TRUE
+    )
+  })
   output$myImage <- shiny::renderUI({
     list(shiny::HTML("<img src = 'www/subscreen_logo.png' alt = 'Subgroup Explorer Logo' width = '423' height = '140'>"))
   })
@@ -262,11 +277,12 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
   #### Press demo data button ####
   shiny::observeEvent(input$apply_demo_data, {
     scresults_tmp$dat <- get(load(paste0(getwd(),"/data/results_factorial_complement_true.rda")))
-  })
-
-  shiny::observeEvent(input$apply_demo_data, {
     variable_importance_tmp$dat <- get(load(paste0(getwd(),"/data/importance.rda")))
   })
+
+  # shiny::observeEvent(input$apply_demo_data, {
+  #
+  # })
 
   #### Press uploaded data button ####
   shiny::observeEvent(input$apply_uploaded_data, {
@@ -275,7 +291,6 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
 
   shiny::observeEvent(input$apply_rdata_files, {
     if (!is.null(input$results_file$datapath)) {
-
       if (utils::tail(strsplit(input$results_file$datapath,"/.")[[1]], n = 1) %in% c(".rdata",".RData")) {
         scresults_tmp$dat <- get(load(input$results_file$datapath))
       }
@@ -290,15 +305,28 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
           variable_importance_tmp$dat <- readRDS(input$vi_file$datapath)
         }
       }
-
     }
   })
 
+
+  filtered_scresults_tmp <- shiny::eventReactive(c(input$apply_demo_data,input$apply_uploaded_data,input$apply_rdata_files), {
+    scresults_tmp_copy <- preview_scresults_tmp$dat
+    if(!is.null(input$variable_filter_selection)){
+      remove_factor_vector <- preview_scresults_tmp$dat$factors[!preview_scresults_tmp$dat$factors%in%input$variable_filter_selection]
+      if(length(remove_factor_vector)!=0){
+        for(i in remove_factor_vector) {
+          scresults_tmp_copy$sge <- scresults_tmp_copy$sge %>% dplyr::filter(!!rlang::sym(i) == "Not used")
+          scresults_tmp_copy$factors <- scresults_tmp_copy$factors[-which(scresults_tmp_copy$factors == i)]
+        }
+      }
+    }
+    scresults_tmp_copy
+  })
   return(
     list(
-      parameter1 = shiny::reactive({scresults_tmp$dat}),
-      parameter2 = shiny::reactive({variable_importance_tmp$dat}),
-      parameter3 = shiny::reactive({buttons_clicked$dat})
+      parameter1 = filtered_scresults_tmp,
+      parameter2 = shiny::reactive({variable_importance_tmp$dat})#,
+      #parameter3 = shiny::reactive({buttons_clicked$dat})
     )
   )
 }

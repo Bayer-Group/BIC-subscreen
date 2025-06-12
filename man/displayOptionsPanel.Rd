@@ -4,7 +4,12 @@
 \alias{displayOptionsPanel}
 \title{shiny widgets of display option panel}
 \usage{
-displayOptionsPanel()
+displayOptionsPanel(
+  custom_ref_line_at_start,
+  custom_ref_line_value,
+  favour_label_at_start,
+  favour_direction
+)
 }
 \description{
 shiny widgets of display option panel
