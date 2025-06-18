@@ -8,7 +8,7 @@
 #' @param nperm integer value for number of permutations
 #' @param alpha numerical value 
 #' @param stratified logical value (TRUE/FALSE) for stratification
-#' @param treat character value of treatment variabale name
+#' @param treat character value of treatment variable name
 #' @param endpoints character vector of endpoints
 #' @param verbose logical value to switch on/off output of computational information (defaults to TRUE)
 #' @param nkernel integer value for number of kernel used

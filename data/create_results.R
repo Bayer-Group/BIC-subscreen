@@ -129,6 +129,18 @@
 #'   use_complement = FALSE,
 #'   factorial = FALSE)
 #' 
+#' results_w_funnel <- subscreenfunnel(
+#'   data = pbcdat,
+#'   H = results,
+#'   hazardratio,
+#'   min_start=25,
+#'   n_support_points=6,
+#'   nperm=2500,
+#'   alpha = c(0.1,0.01,0.001),
+#'   treat = "trt",
+#'   endpoints = c("event.pfs","timepfs","event.os","timeos")
+#' )
+#' 
 #' results_factorial_true <- subscreencalc(
 #'   data = pbcdat,
 #'   eval_function = hazardratio,
@@ -142,7 +154,7 @@
 #'   factorial = TRUE
 #' )
 #' 
-#' results_factorial_complement_true1 <- subscreencalc(
+#' results_factorial_complement_true <- subscreencalc(
 #'   data = pbcdat,
 #'   eval_function = hazardratio,
 #'   subjectid = "id",
@@ -154,18 +166,6 @@
 #'   use_complement = TRUE,
 #'   factorial = TRUE
 #' )
-#' 
-#' results_factorial_complement_true <- subscreenfunnel(
-#'  data = pbcdat,
-#'  H = results_factorial_complement_true1,
-#'  eval_function = hazardratio,
-#'  min_start = 15,
-#'  n_support_points = 25,
-#'  nperm = 1500,
-#'  alpha = c(0.05,0.1),
-#'  treat = "trt",
-#'  endpoints = c("timepfs" , "event.pfs", "timeos", "event.os")
-#'  )
 #' 
 #' results_complement_true <- subscreencalc(
 #'   data = pbcdat,
@@ -183,6 +183,7 @@
 #' 
 #' #save
 #' save(results, file = "data/results.rda")
+#' save(results_w_funnel, file = "data/results_w_funnel.rda")
 #' save(results_factorial_true, file = "data/results_factorial_true.rda")
 #' save(results_factorial_complement_true, file = "data/results_factorial_complement_true.rda")
 #' save(results_complement_true, file = "data/results_complement_true.rda")
@@ -202,7 +203,3 @@
 #' #
 #' # # studies <- read.csv("data/studies.csv")#
 #' # #saveRDS(studies, "data/studies.rds", version = 2)
-#' 
-#' 
-#' 
-#' 
