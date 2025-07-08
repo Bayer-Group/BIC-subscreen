@@ -99,7 +99,7 @@ uploadInformationOutput <- function(
         <p style = 'color: ",font,"'>
           Dataset: <b style='font-size: 130%; color: #428bca'> ",
           if (mode == "demo") {
-            "results_factorial_complement_true.rda"
+            "results_w_funnel.rda"
           } else if (mode == "rdata") {
             resultsFile$name
           } else if (mode == "uploaded") {
