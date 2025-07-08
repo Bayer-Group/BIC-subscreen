@@ -126,8 +126,8 @@
 #'     "cholg", "copperg", "ascitesg",
 #'     "plateletg","spidersg"
 #'   ),
-#'   use_complement = FALSE,
-#'   factorial = FALSE)
+#'   use_complement = TRUE,
+#'   factorial = TRUE)
 #' 
 #' results_w_funnel <- subscreenfunnel(
 #'   data = pbcdat,
@@ -141,53 +141,53 @@
 #'   endpoints = c("event.pfs","timepfs","event.os","timeos")
 #' )
 #' 
-#' results_factorial_true <- subscreencalc(
-#'   data = pbcdat,
-#'   eval_function = hazardratio,
-#'   subjectid = "id",
-#'   factors = c("sex", "ageg", "phosg",
-#'     "albuming", "astg", "bilig",
-#'     "cholg", "copperg", "ascitesg",
-#'     "plateletg","spidersg"
-#'   ),
-#'   use_complement = FALSE,
-#'   factorial = TRUE
-#' )
-#' 
-#' results_factorial_complement_true <- subscreencalc(
-#'   data = pbcdat,
-#'   eval_function = hazardratio,
-#'   subjectid = "id",
-#'   factors = c("sex", "ageg", "phosg",
-#'     "albuming", "astg", "bilig",
-#'     "cholg", "copperg", "ascitesg",
-#'     "plateletg","spidersg"
-#'   ),
-#'   use_complement = TRUE,
-#'   factorial = TRUE
-#' )
-#' 
-#' results_complement_true <- subscreencalc(
-#'   data = pbcdat,
-#'   eval_function = hazardratio,
-#'   subjectid = "id",
-#'   factors = c("sex", "ageg", "phosg",
-#'     "albuming", "astg", "bilig",
-#'     "cholg", "copperg", "ascitesg",
-#'     "plateletg","spidersg"
-#'   ),
-#'   use_complement = TRUE,
-#'   factorial = FALSE
-#' )
+#' # results_factorial_true <- subscreencalc(
+#' #   data = pbcdat,
+#' #   eval_function = hazardratio,
+#' #   subjectid = "id",
+#' #   factors = c("sex", "ageg", "phosg",
+#' #     "albuming", "astg", "bilig",
+#' #     "cholg", "copperg", "ascitesg",
+#' #     "plateletg","spidersg"
+#' #   ),
+#' #   use_complement = FALSE,
+#' #   factorial = TRUE
+#' # )
+#' # 
+#' # results_factorial_complement_true <- subscreencalc(
+#' #   data = pbcdat,
+#' #   eval_function = hazardratio,
+#' #   subjectid = "id",
+#' #   factors = c("sex", "ageg", "phosg",
+#' #     "albuming", "astg", "bilig",
+#' #     "cholg", "copperg", "ascitesg",
+#' #     "plateletg","spidersg"
+#' #   ),
+#' #   use_complement = TRUE,
+#' #   factorial = TRUE
+#' # )
+#' # 
+#' # results_complement_true <- subscreencalc(
+#' #   data = pbcdat,
+#' #   eval_function = hazardratio,
+#' #   subjectid = "id",
+#' #   factors = c("sex", "ageg", "phosg",
+#' #     "albuming", "astg", "bilig",
+#' #     "cholg", "copperg", "ascitesg",
+#' #     "plateletg","spidersg"
+#' #   ),
+#' #   use_complement = TRUE,
+#' #   factorial = FALSE
+#' # )
 #' 
 #' 
 #' #save
 #' save(results, file = "data/results.rda")
 #' save(results_w_funnel, file = "data/results_w_funnel.rda")
-#' save(results_factorial_true, file = "data/results_factorial_true.rda")
-#' save(results_factorial_complement_true, file = "data/results_factorial_complement_true.rda")
-#' save(results_complement_true, file = "data/results_complement_true.rda")
-#' save(importance, file = "data/importance.rda")
+#' # save(results_factorial_true, file = "data/results_factorial_true.rda")
+#' # save(results_factorial_complement_true, file = "data/results_factorial_complement_true.rda")
+#' # save(results_complement_true, file = "data/results_complement_true.rda")
+#' # save(importance, file = "data/importance.rda")
 #' 
 #' # studies <- read.csv("data/studies.csv")
 #' # save(studies, file = "data/studies.rda")
