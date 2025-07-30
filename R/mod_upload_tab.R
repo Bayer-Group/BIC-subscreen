@@ -236,8 +236,8 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
         preview_variable_importance_tmp$dat <- NULL
       }
     } else if (input$mode == "demo") {
-      preview_scresults_tmp$dat <- get(load(paste0(getwd(),"/data/results_factorial_complement_true.rda")))
-      preview_variable_importance_tmp$dat <- get(load(paste0(getwd(),"/data/importance.rda")))
+      preview_scresults_tmp$dat <- results_factorial_complement_true
+      preview_variable_importance_tmp$dat <- importance
 
     } else if (input$mode == "uploaded") {
       preview_scresults_tmp$dat <- dat
@@ -276,8 +276,8 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
 
   #### Press demo data button ####
   shiny::observeEvent(input$apply_demo_data, {
-    scresults_tmp$dat <- get(load(paste0(getwd(),"/data/results_factorial_complement_true.rda")))
-    variable_importance_tmp$dat <- get(load(paste0(getwd(),"/data/importance.rda")))
+    scresults_tmp$dat <- results
+    variable_importance_tmp$dat <- importance
   })
 
   # shiny::observeEvent(input$apply_demo_data, {

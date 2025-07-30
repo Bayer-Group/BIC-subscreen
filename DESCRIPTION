@@ -50,7 +50,7 @@ Imports:
     methods,
     bsplus,
     colourpicker,
-    dplyr (== 1.0.10),
+    dplyr,
     ranger,
     shinyWidgets,
     lazyeval
