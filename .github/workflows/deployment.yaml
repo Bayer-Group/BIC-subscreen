@@ -5,7 +5,10 @@ on:
   # Trigger when a push occurs on the "api" branch or when any tag is created
   push:
     branches:
-      - 12-switch-to-renv-for-dependencies-management
+      - main
+  # Trigger when a release is published
+  release:
+    types: [published]
   # Allows manual triggering of the workflow via the GitHub Actions interface
   workflow_dispatch:
 env:
@@ -82,3 +85,30 @@ jobs:
           slot-name: "dev" # Specify the development slot
           publish-profile: ${{ secrets.PUBLISH_PROFILE_DEV }} # Publish profile for the development environment
           images: ${{ secrets.DOCKER_REPO }}/${{ env.repo_name }}:${{ github.sha }} # Use the image from the ACR with the Git commit SHA
+
+  # Job 3: Deploy to the production environment
+  deploy-prod:
+    # Runs on the latest Ubuntu host
+    runs-on: ubuntu-latest
+    if: github.event_name == 'release' && github.event.action == 'published' # Only run this job for new published releases
+    # This job depends on the "deploy-dev" job and will run after it completes successfully
+    needs: deploy-dev
+    # Define the deployment environment as "production"
+    environment:
+      name: "production"
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+    steps:
+      # 1. Convert the repository name to lowercase (reuse logic for consistent naming)
+      - name: Convert repo name to lowercase
+        id: lowercase_repo_name
+        run: echo "repo_name=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+      # 2. Deploy the container image to the Azure Web App (Production Slot)
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ env.repo_name }} # Use the lowercase repository name as the app name
+          slot-name: "production" # Specify the production slot
+          publish-profile: ${{ secrets.PUBLISH_PROFILE }} # Publish profile for the production environment
+          images: ${{ secrets.DOCKER_REPO }}/${{ env.repo_name }}:${{ github.sha }} # Use the image from the ACR with the Git commit SHA
+

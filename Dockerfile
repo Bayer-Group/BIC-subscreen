@@ -1,4 +1,4 @@
-ARG R_VERSION
+ARG R_VERSION=4.5.1
 FROM rocker/verse:$R_VERSION
 RUN apt-get update -y && apt-get install -y  make zlib1g-dev git && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /usr/local/lib/R/etc/ /usr/lib/R/etc/
