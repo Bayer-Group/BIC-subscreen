@@ -1,5 +1,5 @@
 # Workflow Name: Automated Build and Deployment of Container Apps to Azure Web App
-name: Build and deploy container dev app to Azure Web App
+name: Build and deploy container app to Azure Web App
 # Workflow triggers
 on:
   # Trigger when a push occurs on the "api" branch or when any tag is created
