@@ -339,6 +339,8 @@ ui <- shiny::navbarPage(
 #' @noRd
 
 server <- function(input, output, session) {
+  
+  shinyjs::logjs("Welcome to Subscreen Explorer!")
 
   options(shiny.maxRequestSize = 300*1024^2)
 
