@@ -1,4 +1,5 @@
-FROM rocker/verse:4.5.1
+ARG R_VERSION
+FROM rocker/verse:$R_VERSION
 RUN apt-get update -y && apt-get install -y  make zlib1g-dev git && rm -rf /var/lib/apt/lists/*
 RUN mkdir -p /usr/local/lib/R/etc/ /usr/lib/R/etc/
 RUN echo "options(renv.config.pak.enabled = FALSE, repos = c(CRAN = 'https://cran.rstudio.com/'), download.file.method = 'libcurl', Ncpus = 4)" | tee /usr/local/lib/R/etc/Rprofile.site | tee /usr/lib/R/etc/Rprofile.site
