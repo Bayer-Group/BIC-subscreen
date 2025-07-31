@@ -1,7 +1,8 @@
-name: Feature Request
+name: ✨ Feature Request
 description: Suggest a new feature or enhancement for Subscreen Explorer
 title: "[FEATURE] "
 labels: ["enhancement", "triage"]
+type: Feature
 assignees: []
 body:
   - type: markdown
@@ -81,8 +82,8 @@ body:
     attributes:
       label: Are you willing to contribute?
       options:
-        - I'm willing to submit a PR for this feature
-        - I could help test this feature
         - I'm just suggesting the idea
+        - I could help test this feature
+        - I'm willing to submit a PR for this feature
     validations:
       required: true

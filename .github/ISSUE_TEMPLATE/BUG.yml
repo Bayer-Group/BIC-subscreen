@@ -1,7 +1,8 @@
-name: Bug Report
+name: 🐛 Bug Report
 description: Report a bug or issue for Subscreen Explorer
 title: "[BUG] "
 labels: ["bug", "triage"]
+type: Bug
 assignees: []
 body:
   - type: markdown
