@@ -11,8 +11,6 @@ on:
     types: [published]
   # Allows manual triggering of the workflow via the GitHub Actions interface
   workflow_dispatch:
-env:
-  R_VERSION: 4.5.1
 # Define the jobs in the workflow
 jobs:
   # Job 1: Build process
@@ -22,11 +20,17 @@ jobs:
     steps:
       # 1. Check out the repository code into the workflow
       - uses: actions/checkout@v4
+      # 1.1 Extract R version from renv.lock and append to GITHUB_ENV
+      - name: Extract R version from renv.lock
+        id: extract_r_version
+        run: |
+          R_VERSION=$(jq -r '.R.Version' renv.lock)
+          echo "R_VERSION=${R_VERSION}" >> $GITHUB_ENV
       # 2. Check and build project
       # 2.1 Set up R environment
       - uses: r-lib/actions/setup-r@v2
         with:
-          r-version: "${{ env.R_VERSION }}"
+          r-version: renv
       # 2.2 Install dependencies
       - uses: r-lib/actions/setup-renv@v2
       - uses: r-lib/actions/setup-pandoc@v2
