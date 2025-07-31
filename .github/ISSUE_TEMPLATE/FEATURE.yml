@@ -1,5 +1,5 @@
 name: Feature Request
-description: Suggest a new feature or enhancement for the {{ github.repo }} Shiny app
+description: Suggest a new feature or enhancement for Subscreen Explorer
 title: "[FEATURE] "
 labels: ["enhancement", "triage"]
 assignees: []
@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for suggesting a feature for {{ github.repository }}!
+        Thanks for suggesting a feature!
 
   - type: textarea
     id: problem-statement

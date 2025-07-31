@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug or issue with the ${{ github.repo }} Shiny app
+description: Report a bug or issue for Subscreen Explorer
 title: "[BUG] "
 labels: ["bug", "triage"]
 assignees: []
@@ -7,7 +7,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        Thanks for taking the time to fill out this bug report for ${{ github.repository }}!
+        Thanks for taking the time to fill out this bug report!
 
   - type: textarea
     id: bug-description
@@ -61,7 +61,7 @@ body:
   - type: input
     id: package-version
     attributes:
-      label: ${{ github.repo }} Package Version
+      label: Subscreen Version
       placeholder: e.g., 1.7.3
 
   - type: input
