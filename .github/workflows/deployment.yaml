@@ -15,8 +15,8 @@ on:
 jobs:
   # Job 1: Build process
   build:
-    # Runs on the latest Ubuntu host
-    runs-on: ubuntu-latest
+    # Runs on the Bayer runner
+    runs-on: external-k8s-v2
     steps:
       # 1. Check out the repository code into the workflow
       - uses: actions/checkout@v4
@@ -67,8 +67,8 @@ jobs:
 
   # Job 2: Deploy to the development environment
   deploy-dev:
-    # Runs on the latest Ubuntu host
-    runs-on: ubuntu-latest
+    # Runs on the Bayer runner
+    runs-on: external-k8s-v2
     # This job depends on the "build" job and will run after it completes successfully
     needs: build
     # Define the deployment environment as "development"
@@ -92,8 +92,8 @@ jobs:
 
   # Job 3: Deploy to the production environment
   deploy-prod:
-    # Runs on the latest Ubuntu host
-    runs-on: ubuntu-latest
+    # Runs on the Bayer runner
+    runs-on: external-k8s-v2
     if: github.event_name == 'release' && github.event.action == 'published' # Only run this job for new published releases
     # This job depends on the "deploy-dev" job and will run after it completes successfully
     needs: deploy-dev
