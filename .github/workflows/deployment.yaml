@@ -4,6 +4,11 @@ name: Build and deploy container app to Azure Web App
 on:
   # Trigger when a push occurs on the "api" branch or when any tag is created
   push:
+    # Ignore certain files that do not influence the functionality of the system
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.gitignore'
+      - 'README.md'
     branches:
       - main
   # Trigger when a release is published
@@ -15,8 +20,8 @@ on:
 jobs:
   # Job 1: Build process
   build:
-    # Runs on the Bayer runner
-    runs-on: external-k8s-v2
+    # Runs on the latest Ubuntu host
+    runs-on: ubuntu-latest
     steps:
       # 1. Check out the repository code into the workflow
       - uses: actions/checkout@v4
@@ -67,8 +72,8 @@ jobs:
 
   # Job 2: Deploy to the development environment
   deploy-dev:
-    # Runs on the Bayer runner
-    runs-on: external-k8s-v2
+    # Runs on the latest Ubuntu host
+    runs-on: ubuntu-latest
     # This job depends on the "build" job and will run after it completes successfully
     needs: build
     # Define the deployment environment as "development"
@@ -92,8 +97,8 @@ jobs:
 
   # Job 3: Deploy to the production environment
   deploy-prod:
-    # Runs on the Bayer runner
-    runs-on: external-k8s-v2
+    # Runs on the latest Ubuntu host
+    runs-on: ubuntu-latest
     if: github.event_name == 'release' && github.event.action == 'published' # Only run this job for new published releases
     # This job depends on the "deploy-dev" job and will run after it completes successfully
     needs: deploy-dev

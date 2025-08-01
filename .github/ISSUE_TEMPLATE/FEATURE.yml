@@ -1,7 +1,7 @@
 name: ✨ Feature Request
 description: Suggest a new feature or enhancement for Subscreen Explorer
 title: "[FEATURE] "
-labels: ["enhancement", "triage"]
+labels: ["enhancement", "needs triage"]
 type: Feature
 assignees: []
 body:
