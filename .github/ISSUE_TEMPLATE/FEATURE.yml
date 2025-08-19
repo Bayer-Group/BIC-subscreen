@@ -54,7 +54,7 @@ body:
   - type: textarea
     id: implementation-ideas
     attributes:
-      label: Implementation Ideas (Optional)
+      label: Implementation Ideas
       description: If you have suggestions on how this might be implemented in R/Shiny, please share
       render: R
 
@@ -64,10 +64,10 @@ body:
       label: Priority Level
       description: How important is this feature to you?
       options:
-        - Critical (application is significantly limited without it)
-        - High (would substantially improve functionality)
-        - Medium (would be a nice enhancement)
         - Low (would be a minor improvement)
+        - Medium (would be a nice enhancement)
+        - High (would substantially improve functionality)
+        - Critical (application is significantly limited without it)
     validations:
       required: true
 
