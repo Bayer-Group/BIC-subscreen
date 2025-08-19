@@ -16,6 +16,7 @@
 #' @return an object of type SubScreenResult of the form
 #' @keywords subgroup analysis
 #' @export subscreenfunnel
+#' @importFrom rlang .data
 #'
 
 subscreenfunnel <- function(
@@ -51,8 +52,8 @@ subscreenfunnel <- function(
 
   weightedSampler <- function(dat, treat = 'T', size = 10) {
     sizePerTrt <- round(size/length(trts))
-    trt1 <- slice_sample(dat[dat[,treat]== trts[1],] ,n =sizePerTrt)
-    trt2 <- slice_sample(dat[dat[,treat]== trts[2],] ,n =sizePerTrt)
+    trt1 <- dplyr::slice_sample(dat[dat[,treat]== trts[1],] ,n =sizePerTrt)
+    trt2 <- dplyr::slice_sample(dat[dat[,treat]== trts[2],] ,n =sizePerTrt)
     samp <- data.frame(matrix(ncol = ncol(dat), nrow = size))
     colnames(samp) <- colnames(dat)
     samp[2*(1:sizePerTrt),] <- trt1
@@ -83,7 +84,7 @@ subscreenfunnel <- function(
     ) # ensure that max. sampsize does not exceed min. required sampsize for each trt level
     all_samples <- replicate(nperm, weightedSampler(data_trimmed, treat, sampsize))
   } else if (!stratified) {
-    all_samples <- replicate(nperm, slice_sample(data_trimmed, n = sampsize))
+    all_samples <- replicate(nperm, dplyr::slice_sample(data_trimmed, n = sampsize))
   }
 
   future::plan("multisession", workers = nkernel)
@@ -101,8 +102,8 @@ subscreenfunnel <- function(
 
   tmp3 <- tmp2 %>%
     dplyr::as_tibble() %>%
-    dplyr::group_by(n) %>%
-    dplyr::summarise_all(funs(quantile(., probs = c(alpha/2, 1-(alpha/2)), na.rm = TRUE))) %>%
+    dplyr::group_by(.data$n) %>%
+    dplyr::summarise_all(dplyr::funs(quantile(., probs = c(alpha/2, 1-(alpha/2)), na.rm = TRUE))) %>%
     dplyr::mutate(alpha = c(alpha/2, 1-(alpha/2))) %>%
     dplyr::ungroup()
 

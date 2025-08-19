@@ -37,7 +37,7 @@ subscreenfunnel(
 
 \item{stratified}{logical value (TRUE/FALSE) for stratification}
 
-\item{treat}{character value of treatment variabale name}
+\item{treat}{character value of treatment variable name}
 
 \item{endpoints}{character vector of endpoints}
 
