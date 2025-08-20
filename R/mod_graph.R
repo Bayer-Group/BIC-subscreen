@@ -29,7 +29,7 @@ mod_graph_ui <- function(id, plotHeight, plotWidth) {
 }
 
 #' graph module server-side
-#'
+#' 
 #' @param input,output,session Internal parameters for shiny.
 #' @param results SubScreenResult object with results from a subscreencalc call
 #' @param plot_point Selected point information.
@@ -59,6 +59,7 @@ mod_graph_ui <- function(id, plotHeight, plotWidth) {
 #' @param memorized_labels_on_off If labels of memorized subgroups should be displayed.
 #' @param subTitle Subtitle for graph.
 #' @param plot_points_data_complement Complement information.
+#' @importFrom rlang .data
 #' @noRd
 
 mod_graph_server <- function(
@@ -287,8 +288,8 @@ mod_graph_server <- function(
 
           data <- data %>%
             dplyr::mutate(lower = approx_lower_fun(data[,x()]),upper = approx_higher_fun(data[,x()])) %>%
-            dplyr::mutate(outlier = (data[y()] <= lower | data[y()] > upper)) %>%
-            dplyr::mutate(outlier = ifelse(is.na(outlier), FALSE, outlier))
+            dplyr::mutate(outlier = (data[y()] <= .data$lower | data[y()] > .data$upper)) %>%
+            dplyr::mutate(outlier = ifelse(is.na(.data$outlier), FALSE, .data$outlier))
 
 
           if(!is.null(XRange)) {
@@ -365,7 +366,7 @@ mod_graph_server <- function(
        p <- p +
         ggplot2::geom_ribbon(
           data = data,
-          ggplot2::aes(ymax = upper, ymin = lower,xmax = x_range_2),
+          ggplot2::aes(ymax = .data$upper, ymin = .data$lower,xmax = .data$x_range_2),
           fill = ColorPoints(),
           alpha = 0.2
         )
@@ -373,12 +374,12 @@ mod_graph_server <- function(
 
           data <- data %>%
             dplyr::filter(
-              outlier == TRUE |
-                ((outlier == FALSE & data$point_color != ColorPoints()) &
-                (outlier == FALSE & data$point_color != grDevices::adjustcolor(ColorPoints(), alpha = 0.75 )) &
-                (outlier == FALSE & data$point_color != grDevices::adjustcolor(ColorPoints(), alpha = 0.5 )) &
-                (outlier == FALSE & data$point_color != grDevices::adjustcolor(ColorPoints(), alpha = 0.25 )) &
-                (outlier == FALSE & data$point_color != grDevices::adjustcolor(ColorPoints(), alpha = 0.1 )))
+              .data$outlier == TRUE |
+                ((.data$outlier == FALSE & data$point_color != ColorPoints()) &
+                (.data$outlier == FALSE & data$point_color != grDevices::adjustcolor(ColorPoints(), alpha = 0.75 )) &
+                (.data$outlier == FALSE & data$point_color != grDevices::adjustcolor(ColorPoints(), alpha = 0.5 )) &
+                (.data$outlier == FALSE & data$point_color != grDevices::adjustcolor(ColorPoints(), alpha = 0.25 )) &
+                (.data$outlier == FALSE & data$point_color != grDevices::adjustcolor(ColorPoints(), alpha = 0.1 )))
             )
         } else {
 
@@ -386,10 +387,10 @@ mod_graph_server <- function(
           dplyr::mutate(
             point_color =
               dplyr::case_when(
-                outlier == TRUE ~ point_color,
-                outlier == FALSE & data$point_color == ColorPoints() ~ point_color,
-                outlier == FALSE & data$point_color != ColorPoints()  ~ point_color,
-                is.na(outlier) ~ point_color
+                .data$outlier == TRUE ~ point_color,
+                .data$outlier == FALSE & data$point_color == ColorPoints() ~ point_color,
+                .data$outlier == FALSE & data$point_color != ColorPoints()  ~ point_color,
+                is.na(.data$outlier) ~ point_color
               )
           )
         }
@@ -584,10 +585,10 @@ mod_graph_server <- function(
             ggplot2::geom_point(
               data = data %>%
                 dplyr::arrange(desc(point_color)) %>%
-                dplyr::filter(outlier == TRUE),
+                dplyr::filter(.data$outlier == TRUE),
               fill = data %>%
                 dplyr::arrange(desc(point_color)) %>%
-                dplyr::filter(outlier == TRUE) %>%
+                dplyr::filter(.data$outlier == TRUE) %>%
                 dplyr::pull(point_color),
               shape = 21,
               size = point_size(),

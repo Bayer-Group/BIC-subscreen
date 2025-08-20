@@ -99,7 +99,7 @@ uploadInformationOutput <- function(
         <p style = 'color: ",font,"'>
           Dataset: <b style='font-size: 130%; color: #428bca'> ",
           if (mode == "demo") {
-            "results_w_funnel.rda"
+            "results.rda"
           } else if (mode == "rdata") {
             resultsFile$name
           } else if (mode == "uploaded") {
@@ -236,7 +236,7 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
         preview_variable_importance_tmp$dat <- NULL
       }
     } else if (input$mode == "demo") {
-      preview_scresults_tmp$dat <- results_factorial_complement_true
+      preview_scresults_tmp$dat <- results
       preview_variable_importance_tmp$dat <- importance
 
     } else if (input$mode == "uploaded") {

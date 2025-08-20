@@ -39,11 +39,11 @@ jobs:
       # 2.2 Install dependencies
       - uses: r-lib/actions/setup-renv@v2
       - uses: r-lib/actions/setup-pandoc@v2
-      # 2.3 Check project
-      # TODO: Add a step to run CMD check
-      # 2.4 Build project
-      - name: Build project
-        run: R CMD build .
+      # 2.3 Build and check project
+      - name: Build and check R package
+        run: |
+          R CMD build .
+          R CMD check *.tar.gz --as-cran
       # 3. Set up Docker Buildx, a tool for advanced Docker image building
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
