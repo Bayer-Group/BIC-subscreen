@@ -4,6 +4,7 @@
 [![CRAN status](https://www.r-pkg.org/badges/version/subscreen)](https://cran.r-project.org/package=subscreen)
 [![CRAN total downloads](https://cranlogs.r-pkg.org/badges/grand-total/subscreen)](https://cranlogs.r-pkg.org/badges/grand-total/subscreen)
 [![status](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![R-CMD-check](https://github.com/Bayer-Group/BIC-subscreen/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Bayer-Group/BIC-subscreen/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 ***subscreen*** (***sub***group ***screen***ing) package has been developed to systematically analyze data, e.g., from clinical trials, for subgroup effects and visualize the outcome for all evaluated subgroups simultaneously.

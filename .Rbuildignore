@@ -9,6 +9,6 @@
 ^MAINTAINERS.md$
 ^LICENSE$
 ^Dockerfile$
-^.github$
 ^LICENSE\.md$
 ^data-raw$
+^\.github$
