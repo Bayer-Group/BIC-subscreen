@@ -29,10 +29,9 @@ Description: Identifying outcome relevant subgroups has now become as simple as 
  The central result of a subgroup screening is a diagram in which each single dot stands for a subgroup. The diagram may show thousands of them. The position of the dot in the diagram is determined by the
  sample size of the subgroup and the statistical measure of the treatment effect in that subgroup. The sample size is shown on the horizontal axis while the treatment effect is displayed on the vertical axis. Furthermore, the diagram shows the line of no effect and the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while for larger subgroups only small deviations from the study mean can be expected to be chance findings.
  So for a study with no conspicuous subgroup effects, the dots in the figure are expected to form a kind of funnel. Any deviations from this funnel shape hint to conspicuous subgroups.
-License: GPL-3 + file LICENSE
+License: GPL (>= 3)
 Depends: R (>= 3.5.0)
 Encoding: UTF-8
-LazyData: TRUE
 Imports: 
     utils,
     plyr,
@@ -50,10 +49,11 @@ Imports:
     methods,
     bsplus,
     colourpicker,
-    dplyr (== 1.0.10),
+    dplyr,
     ranger,
     shinyWidgets,
-    lazyeval
+    furrr,
+    future
 Suggests: 
     parallel,
     survival,
@@ -62,6 +62,6 @@ Suggests:
     testthat,
     roxygen2
 NeedsCompilation: no
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.2
 VignetteBuilder: knitr
 Config/testthat/edition: 3

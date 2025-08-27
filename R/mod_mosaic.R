@@ -242,7 +242,7 @@ mod_mosaic_server <- function(
 
         tmp_y <- dplyr::arrange(tmp_y, !!!rlang::syms(c(mos.x, mos.y)))
         expected_tmp_y <- expand.grid(lapply(lapply(
-          tmp_y %>% dplyr::select(all_of(c(mos.x,mos.y))) ,levels),function(x){x[x != "Not used"]}))
+          tmp_y %>% dplyr::select(dplyr::all_of(c(mos.x,mos.y))) ,levels),function(x){x[x != "Not used"]}))
 
         if(dim(tmp_y)[1] !=  dim(expected_tmp_y)[1]){
           expected_tmp_2 <- expected_tmp_y %>%

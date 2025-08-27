@@ -1,66 +1,56 @@
-# Workflow Name: Automated Build and Deployment of Container Apps to Azure Web App
 name: Build and deploy container app to Azure Web App
-# Workflow triggers
+
 on:
-  # Trigger when a push occurs on the "api" branch or when any tag is created
   push:
-    # Ignore certain files that do not influence the functionality of the system
-    paths-ignore:
-      - '.github/ISSUE_TEMPLATE/**'
-      - '.gitignore'
-      - 'README.md'
     branches:
       - main
-  # Trigger when a release is published
-  release:
-    types: [published]
-  # Allows manual triggering of the workflow via the GitHub Actions interface
+    tags:
+      - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
   workflow_dispatch:
-# Define the jobs in the workflow
+
 jobs:
-  # Job 1: Build process
   build:
-    # Runs on the latest Ubuntu host
     runs-on: ubuntu-latest
     steps:
-      # 1. Check out the repository code into the workflow
       - uses: actions/checkout@v4
-      # 1.1 Extract R version from renv.lock and append to GITHUB_ENV
+
       - name: Extract R version from renv.lock
-        id: extract_r_version
-        run: |
+        run: | # Extract R version from renv.lock using jq and storing it as an environment variable
           R_VERSION=$(jq -r '.R.Version' renv.lock)
           echo "R_VERSION=${R_VERSION}" >> $GITHUB_ENV
-      # 2. Check and build project
-      # 2.1 Set up R environment
+
       - uses: r-lib/actions/setup-r@v2
         with:
           r-version: renv
-      # 2.2 Install dependencies
-      - uses: r-lib/actions/setup-renv@v2
-      - uses: r-lib/actions/setup-pandoc@v2
-      # 2.3 Check project
-      # TODO: Add a step to run CMD check
-      # 2.4 Build project
-      - name: Build project
+
+      - uses: r-lib/actions/setup-dependencies@v2
+        with:
+          install-pandoc: true
+          extra-packages: |
+            any::rcmdcheck
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
+
+      - name: Build package
         run: R CMD build .
-      # 3. Set up Docker Buildx, a tool for advanced Docker image building
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
-      # 4. Log in to the Azure Container Registry (ACR)
-      # Requires credentials stored in GitHub Secrets
+
       - name: Log in to registry
         uses: docker/login-action@v3
         with:
           registry: ${{ secrets.DOCKER_REGISTRY }}
           username: PushToken
           password: ${{ secrets.DOCKER_REGISTRY_SERVER_PASSWORD }}
-      # 5. Convert the repository name to lowercase
-      # Docker image names must be lowercase
+
       - name: Convert repo name to lowercase
         id: lowercase_repo_name
         run: echo "repo_name=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-      # 6. Build the Docker image and push it to the Azure Container Registry
+
       - name: Build and push container without tag
         uses: docker/build-push-action@v4
         with:
@@ -69,23 +59,19 @@ jobs:
           context: ./ # The build context is the root of the repository
           build-args: |
             R_VERSION=${{ env.R_VERSION }}
-
-  # Job 2: Deploy to the development environment
+  
   deploy-dev:
-    # Runs on the latest Ubuntu host
     runs-on: ubuntu-latest
-    # This job depends on the "build" job and will run after it completes successfully
     needs: build
-    # Define the deployment environment as "development"
     environment:
       name: "development"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
-      # 1. Convert the repository name to lowercase (reuse logic for consistent naming)
+
       - name: Convert repo name to lowercase
         id: lowercase_repo_name
         run: echo "repo_name=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-      # 2. Deploy the container image to the Azure Web App (Development Slot)
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -95,23 +81,19 @@ jobs:
           publish-profile: ${{ secrets.PUBLISH_PROFILE_DEV }} # Publish profile for the development environment
           images: ${{ secrets.DOCKER_REPO }}/${{ env.repo_name }}:${{ github.sha }} # Use the image from the ACR with the Git commit SHA
 
-  # Job 3: Deploy to the production environment
   deploy-prod:
-    # Runs on the latest Ubuntu host
     runs-on: ubuntu-latest
-    if: github.event_name == 'release' && github.event.action == 'published' # Only run this job for new published releases
-    # This job depends on the "deploy-dev" job and will run after it completes successfully
+    if: startsWith(github.event.ref, 'refs/tags/v') # Only run this job for tags
     needs: deploy-dev
-    # Define the deployment environment as "production"
     environment:
       name: "production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
-      # 1. Convert the repository name to lowercase (reuse logic for consistent naming)
+
       - name: Convert repo name to lowercase
         id: lowercase_repo_name
         run: echo "repo_name=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-      # 2. Deploy the container image to the Azure Web App (Production Slot)
+
       - name: Deploy to Azure Web App
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -120,4 +102,3 @@ jobs:
           slot-name: "production" # Specify the production slot
           publish-profile: ${{ secrets.PUBLISH_PROFILE }} # Publish profile for the production environment
           images: ${{ secrets.DOCKER_REPO }}/${{ env.repo_name }}:${{ github.sha }} # Use the image from the ACR with the Git commit SHA
-
