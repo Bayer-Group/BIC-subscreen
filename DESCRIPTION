@@ -1,7 +1,7 @@
 Package: subscreen
 Type: Package
 Title: Systematic Screening of Study Data for Subgroup Effects
-Version: 4.1.1
+Version: 4.1.2
 Authors@R: c(person(given = "Bodo",
                    family = "Kirsch",
                      role = c("aut", "cre"),

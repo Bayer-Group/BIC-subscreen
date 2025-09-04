@@ -1,3 +1,13 @@
+# subscreen 4.1.2
+
+* Reorganization of code to improve deployment
+* Manage dependencies with `renv`
+* Replace deprecated functions from `dplyr` and `purrr` with newer versions
+* Update `DESCRIPTION`
+* Fix warnings and notes coming from `R CMD check`
+* Move data to its corresponding `data-raw` folder
+* Add check and check badge to README
+
 # subscreen 4.1.0
 
 ## subscreencalc
