@@ -1,6 +1,5 @@
 
-- [`{subscreen}`
-  <img src='inst/www/SubgroupExplorer_Logo_final.png' align='right' height='100'>](#subscreen-)
+- [`{subscreen}`](#subscreen)
   - [Installation](#installation)
   - [Run](#run)
   - [About](#about)
@@ -15,7 +14,9 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# `{subscreen}` <img src='inst/www/SubgroupExplorer_Logo_final.png' align='right' height='100'>
+# `{subscreen}`
+
+<img src='inst/www/SubgroupExplorer_Logo_final.png' align='center' height='100'>
 
 <!-- badges: start -->
 
@@ -67,7 +68,7 @@ You are reading the doc about version : 4.1.2
 
 This README has been compiled on the
 
-    #> [1] "2025-09-08 18:53:58 CEST"
+    #> [1] "2025-09-09 10:53:20 CEST"
 
 Here are the tests results and package coverage:
 
@@ -75,9 +76,12 @@ Here are the tests results and package coverage:
 devtools::check(quiet = TRUE)
 #> ℹ Loading subscreen
 #> ── R CMD check results ──────────────────────────────────── subscreen 4.1.2 ────
-#> Duration: 26.1s
+#> Duration: 1m 24.5s
 #> 
-#> 0 errors ✔ | 0 warnings ✔ | 0 notes ✔
+#> ❯ checking for future file timestamps ... NOTE
+#>   unable to verify current time
+#> 
+#> 0 errors ✔ | 0 warnings ✔ | 1 note ✖
 ```
 
 ## Getting Started

@@ -15,7 +15,9 @@ output:
 )
 ```
 
-# `{subscreen}` <img src='inst/www/SubgroupExplorer_Logo_final.png' align='right' height='100'>
+# `{subscreen}` 
+
+<img src='inst/www/SubgroupExplorer_Logo_final.png' align='center' height='100'>
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/subscreen)](https://cran.r-project.org/package=subscreen)

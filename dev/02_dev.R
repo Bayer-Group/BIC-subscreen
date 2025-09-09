@@ -57,6 +57,9 @@ usethis::use_test("app")
 
 # Documentation
 
+## README ----
+devtools::build_readme()
+
 ## Vignette ----
 usethis::use_vignette("subscreen")
 devtools::build_vignettes()
