@@ -9,7 +9,7 @@ displayOptionsPanel <- function(
     favour_direction
   ) {
   shiny::tagList(
-    conditionalPanel(condition = "output.funnelenabled == true",
+    shiny::conditionalPanel(condition = "output.funnelenabled == true",
       shiny::checkboxInput(
         inputId = "add_funnel",
         label = "Draw reference funnel",
@@ -130,14 +130,14 @@ displayOptionsPanel <- function(
       value = TRUE
     ),
     shiny::fluidRow(
-      shiny::column(6,
+      col_6(
         shiny::checkboxInput(
           inputId ="add_custom_ref_line",
           label ="Add custom reference line",
           value = custom_ref_line_at_start
         )
       ),
-      column(6,
+      col_6(
         shiny::conditionalPanel(condition = "input.add_custom_ref_line == true",
           shiny::numericInput(
             inputId = "custom_ref_line",
@@ -148,24 +148,24 @@ displayOptionsPanel <- function(
       )
     ),
     shiny::fluidRow(
-      shiny::column(6,
+      col_6(
         shiny::checkboxInput(
           inputId = "add_favour_arrows",
           label = "Add favour labels",
           value = favour_label_at_start
         )
       ),
-      shiny::column(6,
+      col_6(
         shiny::conditionalPanel(condition = "input.add_favour_arrows == true",
           shinyWidgets::prettyToggle(
             inputId = "favour_direction",
             label_on = "High values favour verum",
-            icon_on = icon("arrow-up"),
+            icon_on = shiny::icon("arrow-up"),
             status_on = "success",
             value = favour_direction,
             status_off = "success",
             label_off = "Smaller values favour verum",
-            icon_off = icon("arrow-down")
+            icon_off = shiny::icon("arrow-down")
           )
         )
       )

@@ -2,7 +2,6 @@
 ^renv\.lock$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^subscreen\.Rproj$
 ^CODEOWNERS$
 ^CODE_OF_CONDUCT.md$
 ^CONTRIBUTING.md$
@@ -12,3 +11,10 @@
 ^LICENSE\.md$
 ^data-raw$
 ^\.github$
+dev_history.R
+^dev$
+$run_dev.*
+^.here$
+^README\.Rmd$
+^doc$
+^Meta$

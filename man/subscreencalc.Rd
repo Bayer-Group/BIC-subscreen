@@ -134,7 +134,7 @@ results <- subscreencalc(
 )
 
 # visualize the results of the subgroup screening with a Shiny app
-subscreenshow(results)
+run_app(results)
 }
 }
 \keyword{analysis}

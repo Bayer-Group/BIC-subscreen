@@ -124,7 +124,7 @@ createFilteredTable <- function(
 
     if (dim(df_filt)[1] != 0) {
       tmp.sglev <- levels(
-        relevel(
+        stats::relevel(
           factor(
             unlist(
               unique(

@@ -100,7 +100,7 @@ if (is.null(dim(parents$Parents)) || dim(parents$Parents)[1] == 0) {
       border = paste0('.5px solid ', bg.color)
     )
 
-    tmp.sglev <- levels(relevel(factor(unlist(lapply(df_par[, results$factors], as.character))), ref = 'Not used'))
+    tmp.sglev <- levels(stats::relevel(factor(unlist(lapply(df_par[, results$factors], as.character))), ref = 'Not used'))
 
     colXY <- which(colnames(df_par) %in% c('SGID', names(results$results_total), 'nfactors'))
 
