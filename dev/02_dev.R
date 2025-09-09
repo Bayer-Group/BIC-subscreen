@@ -18,6 +18,17 @@
 ## install.packages('attachment') # if needed.
 attachment::att_amend_desc()
 
+## When in need for a new package, install it using renv:
+renv::install("package")
+## DON'T FORGET to add it back to the DESCRIPTION
+usethis::use_package("package")
+
+## We generally use functions as package::fun(), but if you prefer
+## to just use fun(), you will need to importFrom package using this:
+usethis::use_import_from("package", "fun")
+## this will load fun to be available in your R code. This can be useful
+## to load pipes, and special symbols from packages
+
 ## Add modules ----
 ## Create a module infrastructure in R/
 golem::add_module(name = "name_of_module1", with_test = TRUE) # Name of the module
