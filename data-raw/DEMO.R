@@ -67,10 +67,10 @@ TRUE ~ "No data"
   pbcdat <- pbc[!is.na(pbc$trt), ]
 # # PFS and OS endpoints
   set.seed(2006)##
-  pbcdat$'event.pfs<- sample(c(0, 1), dim(pbcdat)[1], replace = TRUE)
-  pbcdat$'timepfs<- sample(1:5000, dim(pbcdat)[1], replace = TRUE)#
-  pbcdat$'event.os<- pbcdat$event
-  pbcdat$'timeos<- pbcdat$time##
+  pbcdat$'event.pfs'<- sample(c(0, 1), dim(pbcdat)[1], replace = TRUE)
+  pbcdat$'timepfs'<- sample(1:5000, dim(pbcdat)[1], replace = TRUE)#
+  pbcdat$'event.os'<- pbcdat$event
+  pbcdat$'timeos'<- pbcdat$time##
   #variable importance for OS for the created categorical variables
   # (higher is more important, also works for numeric variables)
 
@@ -115,7 +115,7 @@ importance <- subscreenvi(
   )
 )
 
-results <- subscreencalc(
+results_no_funnel <- subscreencalc(
   data = pbcdat,
   eval_function = hazardratio,
   subjectid = "id",
@@ -127,17 +127,17 @@ results <- subscreencalc(
   use_complement = TRUE,
   factorial = TRUE)
 
-# results_w_funnel <- subscreenfunnel(
-#   data = pbcdat,
-#   H = results,
-#   hazardratio,
-#   min_start=25,
-#   n_support_points=6,
-#   nperm=2500,
-#   alpha = c(0.1,0.01,0.001),
-#   treat = "trt",
-#   endpoints = c("event.pfs","timepfs","event.os","timeos")
-# )
+results <- subscreenfunnel(
+  data = pbcdat,
+  H = results_no_funnel,
+  eval_function = hazardratio,
+  min_start=25,
+  n_support_points=6,
+  nperm=2500,
+  alpha = c(0.1,0.01,0.001),
+  treat = "trt",
+  endpoints = c("event.pfs","timepfs","event.os","timeos")
+)
 
 # results_factorial_true <- subscreencalc(
 #   data = pbcdat,

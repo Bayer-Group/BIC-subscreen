@@ -102,7 +102,8 @@ subscreenfunnel <- function(
   tmp3 <- tmp2 %>%
     dplyr::as_tibble() %>%
     dplyr::group_by(.data$n) %>%
-    dplyr::summarise_all(list(quantile = ~ stats::quantile(., probs = c(alpha/2, 1-(alpha/2)), na.rm = TRUE))) %>%
+    dplyr::reframe(dplyr::across(dplyr::everything(), function(x) stats::quantile(x, probs = c(alpha/2, 1-(alpha/2)), na.rm = TRUE))) %>%
+    dplyr::group_by(.data$n) %>%
     dplyr::mutate(alpha = c(alpha/2, 1-(alpha/2))) %>%
     dplyr::ungroup()
 
