@@ -3,7 +3,6 @@
 #'
 #' @param id Internal parameter for shiny
 #'
-#' @import shiny
 #' @noRd
 
 asmus2_module_ui <- function(id) {
@@ -18,7 +17,7 @@ asmus2_module_ui <- function(id) {
         )
       )
     ),
-    shiny::column(12,
+    col_12(
       shiny::HTML(
         "<h3>
           <b style = 'color: #e2b007'>A</b>dvanced
@@ -33,9 +32,9 @@ asmus2_module_ui <- function(id) {
     shiny::uiOutput(ns("missing_factor_text")),
     shiny::conditionalPanel(condition = paste0('output[\'', ns('cond_panel'), "\'] == true"),
       shiny::conditionalPanel(condition = paste0('output[\'', ns('PageASMUS'), "\'] == true"),
-        shiny::column(12,
+        col_12(
           shiny::fluidRow(
-            column(12,
+            col_12(
               shiny::HTML(
                 "<p>
                   Please make a selection and press
@@ -45,8 +44,8 @@ asmus2_module_ui <- function(id) {
             )
           ),
           shiny::fluidRow(
-            shiny::column(5,
-              shiny::column(2,
+            col_5(
+              col_2(
                 shiny::tags$style(
                   ".btn-asmuscustom {background-color: #e2b007; color: #FFF;}"
                 ),
@@ -62,12 +61,12 @@ asmus2_module_ui <- function(id) {
                   "Pseudo(-complete) factorial context: An incomplete factorial context that can be made complete ignoring certain factor levels",
                   circle = TRUE,
                   status = "asmuscustom",
-                  icon = icon("question"),
+                  icon = shiny::icon("question"),
                   width = "300px",
                   tooltip = shinyWidgets::tooltipOptions(title = "Click to see further Information!")
                 )
               ),
-              shiny::column(10,
+              col_10(
                 shiny::selectInput(
                   inputId = ns("asmus2_y"),
                   label = "Target variable",
@@ -76,7 +75,7 @@ asmus2_module_ui <- function(id) {
 
                 )
               ),
-              shiny::column(4,
+              col_4(
                 shiny::radioButtons(
                   inputId = ns("asmus2_plot_type"),
                   label ="Type",
@@ -86,34 +85,34 @@ asmus2_module_ui <- function(id) {
                   choiceValues = c("lin", "log")
                 )
               ),
-              shiny::column(8,
+              col_8(
                 shiny::uiOutput(ns("asmus2_slider"))
               )
             ),
-            shiny::column(2,
+            col_2(
               shiny::tagList(
                 shiny::HTML("<p> Do you want to include pseudo factorial context?"),
                 shinyWidgets::prettyToggle(
                   inputId = ns("asmus_include_pseudo"),
                   label_on = "Yes",
-                  icon_on = icon("check"),
+                  icon_on = shiny::icon("check"),
                   status_on = "info",
                   value = TRUE,
                   status_off = "warning",
                   label_off = "No",
-                  icon_off = icon("remove")
+                  icon_off = shiny::icon("remove")
                 )
               )
             ),
-            shiny::column(4,
+            col_4(
               shiny::uiOutput(ns('asmus2_total_numbers'))
             )
           ),
           shiny::fluidRow(
-            shiny::column(5,
+            col_5(
               shiny::plotOutput(
                 outputId = ns("graph_asmus2"),
-                hover = hoverOpts(
+                hover = shiny::hoverOpts(
                   ns("graph_asmus_hover1"),
                   delay = 300,
                   delayType = "debounce"
@@ -121,8 +120,8 @@ asmus2_module_ui <- function(id) {
               )
             ),
             shiny::uiOutput(ns("asmus_hover_info1")),
-            shiny::column(6,
-              shiny::column(12,
+            col_6(
+              col_12(
                 shinyWidgets::materialSwitch(
                   inputId = ns("asmus_use_ref"),
                   label = "Show all subgroups as reference (Includes subgroups with incomplete factorial context)",
@@ -130,7 +129,7 @@ asmus2_module_ui <- function(id) {
                   status = "primary"
                 )
               ),
-              shiny::column(12,
+              col_12(
                 shiny::HTML(
                   paste0(
                     "<p> Please consider a lower limit value for which the target value
@@ -141,33 +140,33 @@ asmus2_module_ui <- function(id) {
                   )
                 )
               ),
-              shiny::column(6,
+              col_6(
                 shiny::numericInput(
                   inputId = ns("asmus2_remarkability_1"),
                   label = "Lower value (y-axis):",
                   value  = NULL
                 )
               ),
-              shiny::column(6,
+              col_6(
                 shiny::numericInput(
                   inputId = ns("asmus2_remarkability_2"),
                   label = "Upper value (y-axis):",
                   value  = NULL
                 )
               ),
-              shiny::column(12,
+              col_12(
                 shinyWidgets::prettyToggle(
                   inputId = ns("asmus_direction"),
                   label_on = "High values are remarkable",
-                  icon_on = icon("arrow-up"),
+                  icon_on = shiny::icon("arrow-up"),
                   status_on = "success",
                   value = TRUE,
                   status_off = "danger",
                   label_off = "Smaller values are remarkable",
-                  icon_off = icon("arrow-down")
+                  icon_off = shiny::icon("arrow-down")
                 )
               ),
-              shiny::column(12,
+              col_12(
                 shiny::HTML(
                   paste0(
                     "<p> Please consider a lower limit value for which the number of subjects
@@ -177,26 +176,26 @@ asmus2_module_ui <- function(id) {
                   )
                 )
               ),
-              shiny::column(6,
+              col_6(
                 shiny::numericInput(
                   inputId = ns("asmus2_reliability_1"),
                   label = "Lower value (x-axis):",
                   value  = NULL
                 )
               ),
-              shiny::column(6,
+              col_6(
                 shiny::numericInput(
                   inputId = ns("asmus2_reliability_2"),
                   label = "Upper value (x-axis):",
                   value  = NULL
                 )
               ),
-              shiny::column(6,
+              col_6(
                 shiny::uiOutput(ns('cont1_text')),
                 shiny::uiOutput(ns('cont1')),
                 shiny::uiOutput(ns('cont2_text'))
               ),
-              shiny::column(4,
+              col_4(
                 shiny::numericInput(
                   inputId = ns("fuzzy_multiplicity_value"),
                   label = "Multiplicity value [0,1]",
@@ -209,45 +208,45 @@ asmus2_module_ui <- function(id) {
             )
           ),
           shiny::fluidRow(
-            shiny::column(2,
+            col_2(
               shiny::actionButton(
                 inputId = ns("asmus2_continue"),
                 label = "Continue",
-                icon = icon("step-forward")
+                icon = shiny::icon("step-forward")
               ),
               shiny::uiOutput(ns('continue_cont1')),
               shiny::uiOutput(ns('continue_cont2_text'))
             ),
-            shiny::column(10,
+            col_10(
               shiny::uiOutput(ns("asmus2_rel_and_rem_number_text"))
             )
           )
         )
       ),
       shiny::conditionalPanel(condition = paste0('output[\'', ns('PageASMUS'), "\'] == false"),
-        shiny::column(12,
+        col_12(
           shiny::uiOutput(ns('helptext_graph2'))
         ),
-        shiny::column(12,
+        col_12(
             shiny::actionButton(
               inputId = ns("asmus2_back"),
               label = "Back",
-              icon = icon("step-backward"),
+              icon = shiny::icon("step-backward"),
               style = "color: #fff; background-color: #ba1637; border-color: #fff"
             ),
-            br(),
-            br()
+            shiny::br(),
+            shiny::br()
           ),
-          shiny::column(5,
-            DT::dataTableOutput(ns('asmus2_table_rem_and_rel')),
+          col_5(
+            DT::DTOutput(ns('asmus2_table_rem_and_rel')),
             shiny::helpText("The memorized subgroups are displayed in the 'Memorized Subgroups'-tab within the 'Explorer'-tab.")
           ),
-          shiny::column(7,
-            shiny::column(6,
+          col_7(
+            col_6(
               shiny::plotOutput(ns('graph2_asmus2'))
             ),
-            br(),
-            shiny::column(6,
+            shiny::br(),
+            col_6(
               shiny::plotOutput(ns('asmus2_interaction'))
             ),
             shiny::tags$head(
@@ -255,23 +254,23 @@ asmus2_module_ui <- function(id) {
                 ".fa-mouse-pointer {color: #ff8a8a}"
               )
             ),
-            shiny::column(12,
+            col_12(
               shiny::tabsetPanel(type = "tabs",
                 shiny::tabPanel(
                   "Selected Subgroup",
-                  DT::dataTableOutput(ns("selectedSG_asmus2")),
-                  icon = icon("mouse-pointer")
+                  DT::DTOutput(ns("selectedSG_asmus2")),
+                  icon = shiny::icon("mouse-pointer")
 
                 ),
                 shiny::tabPanel(
                   title = "Parent Subgroups",
-                  DT::dataTableOutput(ns("parents_asmus2")),
-                  icon = icon("sitemap")
+                  DT::DTOutput(ns("parents_asmus2")),
+                  icon = shiny::icon("sitemap")
                 ),
                 shiny::tabPanel(
                   title = "Factorial Contexts",
-                  DT::dataTableOutput(ns("factorial_asmus2")),
-                  icon = icon("list")
+                  DT::DTOutput(ns("factorial_asmus2")),
+                  icon = shiny::icon("list")
               )
             )
           )
@@ -292,7 +291,6 @@ asmus2_module_ui <- function(id) {
 #' @param nice_Numbers list of numbers used for a 'nice' scale
 #'
 #' @noRd
-#' @importFrom dplyr %>%
 
 asmus2_module_server <- function(
   input,
@@ -400,7 +398,7 @@ asmus2_module_server <- function(
   output$cond_panel <- shiny::reactive({
     cond_panel_val$val
   })
-  outputOptions(output, "cond_panel", suspendWhenHidden = FALSE)
+  shiny::outputOptions(output, "cond_panel", suspendWhenHidden = FALSE)
 
   #### OBSERVER ####
   # observe new data set
@@ -535,22 +533,22 @@ asmus2_module_server <- function(
     shiny::updateNumericInput(
       session,
       inputId ="asmus2_remarkability_1",
-      value  = reactive({NULL})
+      value  = shiny::reactive({NULL})
     )
     shiny::updateNumericInput(
       session,
       inputId ="asmus2_remarkability_2",
-      value = reactive({NULL})
+      value = shiny::reactive({NULL})
     )
         shiny::updateNumericInput(
       session,
       inputId ="asmus2_reliability_1",
-      value  = reactive({NULL})
+      value  = shiny::reactive({NULL})
     )
     shiny::updateNumericInput(
       session,
       inputId ="asmus2_reliability_2",
-      value = reactive({NULL})
+      value = shiny::reactive({NULL})
     )
      shiny::updateNumericInput(
        session,
@@ -917,7 +915,7 @@ asmus2_module_server <- function(
     hover <- input$graph_asmus_hover1
     hover$mapping <- list(xintercept = "xintercept", x = "x", y = "y")
 
-    point <- nearPoints(colored_points, hover)
+    point <- shiny::nearPoints(colored_points, hover)
 
     if (nrow(point) == 0) return(NULL)
 
@@ -1132,7 +1130,7 @@ asmus2_module_server <- function(
   output$continue_cont1 <- shiny::renderUI({
     list(
       shiny::tags$head(
-        tags$style(HTML(paste0('#', session$ns("asmus2_continue"),'{color: #ffffff; background-color:#e3e3e3;}')))
+        shiny::tags$style(shiny::HTML(paste0('#', session$ns("asmus2_continue"),'{color: #ffffff; background-color:#e3e3e3;}')))
       )
     )
   })
@@ -1144,7 +1142,7 @@ asmus2_module_server <- function(
           output$continue_cont1 <- shiny::renderUI({
             list(
               shiny::tags$head(
-                tags$style(HTML(paste0('#', session$ns("asmus2_continue"), '{color: #ffffff; background-color:#1eba1e;}')))
+                shiny::tags$style(shiny::HTML(paste0('#', session$ns("asmus2_continue"), '{color: #ffffff; background-color:#1eba1e;}')))
               )
             )
           })
@@ -1180,7 +1178,7 @@ asmus2_module_server <- function(
       output$cont1 <- shiny::renderUI({
         list(
           shiny::tags$head(
-            tags$style(HTML(paste0('#',session$ns("asmus2_calculate"),'{color: #ffffff; background-color:#e3e3e3;}')))
+            shiny::tags$style(shiny::HTML(paste0('#',session$ns("asmus2_calculate"),'{color: #ffffff; background-color:#e3e3e3;}')))
           )
         )
       })
@@ -1189,7 +1187,7 @@ asmus2_module_server <- function(
       output$continue_cont1 <- shiny::renderUI({
         list(
           shiny::tags$head(
-            tags$style(HTML(paste0('#',session$ns("asmus2_continue"),'{color: #ffffff; background-color:#1eba1e;}')))
+            shiny::tags$style(shiny::HTML(paste0('#',session$ns("asmus2_continue"),'{color: #ffffff; background-color:#1eba1e;}')))
           )
         )
       })
@@ -1209,7 +1207,7 @@ asmus2_module_server <- function(
       txt3 <- paste0("Warning: Multiplicity value is missing! Please select a value between 0 and 1!")
     } else {txt3 <- ""}
     output$cont1_text <- shiny::renderUI({
-      HTML(paste0("<b style='color: #ff8a8a; border-color: #f78300'>", paste(txt3, sep ="<br>"),"</b>"))
+      shiny::HTML(paste0("<b style='color: #ff8a8a; border-color: #f78300'>", paste(txt3, sep ="<br>"),"</b>"))
     })
 
     if (!is.na(input$asmus2_remarkability_1) &
@@ -1221,7 +1219,7 @@ asmus2_module_server <- function(
         input$asmus2_reliability_1 < input$asmus2_reliability_2
       ) {
         output$cont2_text <- shiny::renderUI({
-          HTML("")
+          shiny::HTML("")
         })
       } else {
 
@@ -1233,7 +1231,7 @@ asmus2_module_server <- function(
         } else {txt2 <- ""}
 
         output$cont2_text <- shiny::renderUI({
-          HTML(paste0("<b style='color: #ff8a8a; border-color: #f78300'>", paste(txt1, txt2, sep ="<br>"),"</b>"))
+          shiny::HTML(paste0("<b style='color: #ff8a8a; border-color: #f78300'>", paste(txt1, txt2, sep ="<br>"),"</b>"))
         })
       }
     }
@@ -1268,7 +1266,7 @@ asmus2_module_server <- function(
     output$helptext_graph2 <- shiny::renderUI({
       if(!is.null(results())) {
         if (any(startsWith(colnames(results()$sge),"FCID_complete_"))) {
-          HTML("<p style ='color:white'> Please select a row in the left side table for further investigation of the reliable and remarkable subgroups.</p>")
+          shiny::HTML("<p style ='color:white'> Please select a row in the left side table for further investigation of the reliable and remarkable subgroups.</p>")
         }
       }
     })
@@ -1285,7 +1283,7 @@ asmus2_module_server <- function(
           inputs
         }
         Memorize = shinyInput(
-          actionButton,
+          shiny::actionButton,
           dim(df_rem_rel_)[1],
           'button_',
           label = "Memorize",
@@ -1867,11 +1865,11 @@ asmus2_module_server <- function(
 
   firstPageASMUS2 <- shiny::reactiveValues(val = TRUE)
 
-  observeEvent(input$asmus2_continue, {
+  shiny::observeEvent(input$asmus2_continue, {
     firstPageASMUS2$val <- FALSE
   })
 
-  observeEvent(input$asmus2_back, {
+  shiny::observeEvent(input$asmus2_back, {
     firstPageASMUS2$val <- TRUE
   })
 
@@ -1879,7 +1877,7 @@ asmus2_module_server <- function(
     firstPageASMUS2$val
   })
 
-  outputOptions(output, "PageASMUS", suspendWhenHidden = FALSE)
+  shiny::outputOptions(output, "PageASMUS", suspendWhenHidden = FALSE)
 
     shiny::observeEvent(input$deletePressed, {
 

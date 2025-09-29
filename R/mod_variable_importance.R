@@ -6,11 +6,10 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
 mod_variable_importance_ui <- function(id) {
-  ns <- NS(id)
-  tagList(
-    conditionalPanel(
+  ns <- shiny::NS(id)
+  shiny::tagList(
+    shiny::conditionalPanel(
       condition = "output.importanceenabled == true",
       shiny::wellPanel(
       shiny::radioButtons(
@@ -34,7 +33,7 @@ mod_variable_importance_ui <- function(id) {
             expanded = TRUE
           )
         ),
-        tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),
+        shiny::tags$style(type = "text/css", ".irs-grid-pol.small {height: 0px;}"),
         shiny::uiOutput(ns("impo"))
       ),
       shiny::conditionalPanel("input.Impo_opt == '2'", ns = ns,
@@ -81,10 +80,10 @@ mod_variable_importance_ui <- function(id) {
       bsplus::use_bs_popover(),
       bsplus::use_bs_tooltip()
     )),
-    conditionalPanel(
+    shiny::conditionalPanel(
       condition = "output.importanceenabled == false",
       shiny::wellPanel(
-        p("To use the Variable Importance Feature, please upload a variable importance data set on the upload page.
+        shiny::p("To use the Variable Importance Feature, please upload a variable importance data set on the upload page.
                   Variable importance data sets can be created using the screenvi-function.")
       )
     )

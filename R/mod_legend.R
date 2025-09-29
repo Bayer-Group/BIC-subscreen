@@ -6,9 +6,8 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
 mod_legend_ui <- function(id) {
-  ns <- NS(id)
+  ns <- shiny::NS(id)
   shiny::tagList(
     shiny::uiOutput(ns('legend'))
   )
@@ -51,7 +50,7 @@ mod_legend_server <- function(
         shiny::p(
            shiny::span(
             shiny::tagList(
-              tags$i(class = "fa-solid fa-circle",
+              shiny::tags$i(class = "fa-solid fa-circle",
                 style = paste0("color: rgba(",
                   grDevices::col2rgb(colour[2])[1],",", grDevices::col2rgb(colour[2])[2],",",grDevices::col2rgb(colour[2])[3],",", 0.75 ,")"
                 )
@@ -65,7 +64,7 @@ mod_legend_server <- function(
         shiny::p(
            shiny::span(
             shiny::tagList(
-              tags$i(class = "fa-solid fa-circle",
+              shiny::tags$i(class = "fa-solid fa-circle",
                  style = paste0("color: rgba(",
                   grDevices::col2rgb(colour[2])[1],",", grDevices::col2rgb(colour[2])[2],",",grDevices::col2rgb(colour[2])[3],",", 0.75 ,")"
                 )

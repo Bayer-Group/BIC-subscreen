@@ -103,7 +103,7 @@
 #' )
 #'
 #' # visualize the results of the subgroup screening with a Shiny app
-#' subscreenshow(results)
+#' run_app(results)
 #' }
 
 subscreencalc <- function(
@@ -189,7 +189,7 @@ subscreencalc <- function(
   } else if (!is.function(eval_function) & is.function(match.fun(eval_function))) {
     eval_function <- match.fun(eval_function)
   }
-  if (is(tryCatch(eval_function(data), error=function(e) e, warning = function(w) w),"error")) {
+  if (methods::is(tryCatch(eval_function(data), error=function(e) e, warning = function(w) w),"error")) {
     print(paste("error in calculation eval_function for overall data! Please check your eval_function!"))
     print(tryCatch(eval_function(data), error=function(e) e, warning = function(w) w))
   }
@@ -280,7 +280,7 @@ subscreencalc <- function(
     m = M[i, ]
     S = character()
     S = append(S, names(FFF)[(1:length(m)) * m])
-    # if (is(tryCatch(plyr::ddply(cbind(FFF, TTT), S, eval_function), error=function(e) e, warning = function(w) w),"error")) {
+    # if (methods::is(tryCatch(plyr::ddply(cbind(FFF, TTT), S, eval_function), error=function(e) e, warning = function(w) w),"error")) {
     #   print(paste("Error in calculation eval_function for subgroup factor(s combination): ", paste(S,collapse =",")))
     #   print(tryCatch(plyr::ddply(cbind(FFF, TTT), S, eval_function), error=function(e) e, warning = function(w) w))
     # }

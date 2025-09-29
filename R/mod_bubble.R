@@ -6,15 +6,14 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
 mod_bubble_ui <- function(id, plotHeight, plotWidth) {
-  ns <- NS(id)
-  tagList(
+  ns <- shiny::NS(id)
+  shiny::tagList(
     shiny::div(style = "position:relative",
       shiny::plotOutput(
         outputId = ns("bubble"),
         click = ns("plot_click"),
-        hover = hoverOpts(
+        hover = shiny::hoverOpts(
           ns("plot_hover"),
           delay = 300,
           delayType = "debounce"
@@ -363,7 +362,7 @@ mod_bubble_server <- function(input, output, session,
     hover <- input$plot_hover
     hover$mapping <- list(xintercept = "xintercept", x = "x", y = "y")
 
-    point <- nearPoints(colored_points, hover)
+    point <- shiny::nearPoints(colored_points, hover)
 
     if (nrow(point) == 0) return(NULL)
       # left_pct <- (hover$coords_img$x - hover$range$left) / (hover$range$right - hover$range$left)
@@ -398,7 +397,7 @@ mod_bubble_server <- function(input, output, session,
     )
     tmp2 <- tmp %>%
       dplyr::mutate(
-        text2 = paste0("ID:", SGID,", ", text),
+        text2 = paste0("ID:", SGID,", ", .data$text),
         text3 =paste("<p>",
                      ifelse(nrow(tmp) > 1,
                             paste0("<b style = 'color: ",
@@ -409,12 +408,12 @@ mod_bubble_server <- function(input, output, session,
                       ifelse(nrow(tmp) > 1,
                          paste(
                            "<li> <b style = 'color: ",font.col,"'> SGID:", SGID, ", ",x() ,":", !!rlang::sym(x()),", ",y() ,":",!!rlang::sym(y()),
-                           "</br>", text, "</b> </li><br>"
+                           "</br>", .data$text, "</b> </li><br>"
                            ,collapse = ""
                          ),
                          paste(
                            "<b style = 'color: ",font.col,"'> SGID:", SGID, ", ",x() ,":", !!rlang::sym(x()),", ",y() ,":",!!rlang::sym(y()),
-                           "</br>", text, "</b><br>"
+                           "</br>", .data$text, "</b><br>"
                            ,collapse = ""
                          )
                       ),
@@ -514,7 +513,7 @@ mod_bubble_server <- function(input, output, session,
     click <- input$plot_click
     click$mapping <- list(xintercept = "xintercept", x = "x", y = "y")
 
-    point <- nearPoints(colored_points, click)
+    point <- shiny::nearPoints(colored_points, click)
   if (nrow(point) == 0) {
     selected_SGIDs$val <- NULL
     output$click_info <- shiny::renderUI({
@@ -550,7 +549,7 @@ mod_bubble_server <- function(input, output, session,
       )
     }
     tmp <- tmp %>%
-      dplyr::mutate(text2 = paste0("SGID:", SGID,", ", text))
+      dplyr::mutate(text2 = paste0("SGID:", SGID,", ", .data$text))
 
     if(nrow(tmp) ==1) {
       selected_SGIDs$val <- tmp$SGID
@@ -574,9 +573,9 @@ mod_bubble_server <- function(input, output, session,
   }
   },ignoreNULL = FALSE)
 
-  selected_SGIDs <- reactiveValues(val = NULL)
+  selected_SGIDs <- shiny::reactiveValues(val = NULL)
 
-  observeEvent(input$checkbox,{
+  shiny::observeEvent(input$checkbox,{
     selected_SGIDs$val <- input$checkbox
     output$click_info <- shiny::renderUI({
       NULL
@@ -585,7 +584,7 @@ mod_bubble_server <- function(input, output, session,
 
  return(
     list(
-      clicked_points = reactive({ click_points_data$xy }),
+      clicked_points = shiny::reactive({ click_points_data$xy }),
       plot_click = shiny::reactive({input$plot_click}),
       selected_SGIDs = shiny::reactive({selected_SGIDs$val})
     )

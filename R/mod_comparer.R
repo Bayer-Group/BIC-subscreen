@@ -6,13 +6,12 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
 
 mod_comparer_ui <- function(id) {
-  ns <- NS(id)
-  tagList(
+  ns <- shiny::NS(id)
+  shiny::tagList(
     shiny::fluidRow(
-      shiny::column(3,
+      col_3(
         shiny::wellPanel(
           shiny::div(
             style = "position:absolute;right:2em;",
@@ -96,13 +95,13 @@ mod_comparer_ui <- function(id) {
         shiny::tabsetPanel(type = "tabs",
           shiny::tabPanel("Compare",
             mod_legend_ui(ns("legend2")),
-            shiny::column(7,
+            col_7(
               mod_graph_ui(ns("graph2"),
                plotHeight = 390,
                plotWidth = 1100
               )
             ),
-            shiny::column(7,
+            col_7(
               mod_graph_ui(ns("graph3"),
                 plotHeight = 390,
                 plotWidth = 1100
@@ -112,7 +111,7 @@ mod_comparer_ui <- function(id) {
           ####.. Bubble plot####
           shiny::tabPanel("Bubble plot",
             mod_legend_ui(ns("legend3")),
-            shiny::column(7,
+            col_7(
               mod_bubble_ui(ns("graph4"),
                 plotHeight = 780,
                 plotWidth = 1100

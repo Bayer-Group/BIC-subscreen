@@ -6,12 +6,11 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
 mod_color_ui <- function(id) {
-  ns <- NS(id)
-  tagList(
+  ns <- shiny::NS(id)
+  shiny::tagList(
     shiny::fluidRow(
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorTabClicked"),
           label = "Choose a colour for the selected subgroup",
@@ -19,7 +18,7 @@ mod_color_ui <- function(id) {
           allowTransparent = TRUE
         )
       ),
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorSelected"),
           label = "Choose a colour for the filtered subgroup(s)",
@@ -29,18 +28,18 @@ mod_color_ui <- function(id) {
       )
     ),
     shiny::fluidRow(
-       shiny::column(6,
+       col_6(
         shiny::checkboxInput(
           inputId = ns("LabelTabClicked"),
           label = "Labels",
           value = FALSE
         )
       ),
-      shiny::column(6,
+      col_6(
       )
     ),
     shiny::fluidRow(
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorParents"),
           label = "Choose a colour for the parent subgroup(s)",
@@ -48,7 +47,7 @@ mod_color_ui <- function(id) {
           allowTransparent = TRUE
         )
       ),
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorMemorized"),
           "Choose a colour for the memorized subgroups",
@@ -57,14 +56,14 @@ mod_color_ui <- function(id) {
       ),
     ),
     shiny::fluidRow(
-       shiny::column(6,
+       col_6(
         shiny::checkboxInput(
           inputId = ns("LabelParents"),
           label = "Labels",
           value = FALSE
         )
       ),
-      shiny::column(6,
+      col_6(
         shiny::checkboxInput(
           inputId = ns("LabelMemorized"),
           label = "Labels",
@@ -73,7 +72,7 @@ mod_color_ui <- function(id) {
       )
     ),
     shiny::fluidRow(
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorImportance"),
           label = "Choose a colour for the subgroup(s) with important variable(s) ",
@@ -81,7 +80,7 @@ mod_color_ui <- function(id) {
           allowTransparent = TRUE
         )
       ),
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorReference"),
           label = "Choose a colour for the reference line",
@@ -91,7 +90,7 @@ mod_color_ui <- function(id) {
       )
     ),
     shiny::fluidRow(
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorFactCont"),
           label = "Choose a colour for the factorial context",
@@ -99,7 +98,7 @@ mod_color_ui <- function(id) {
           allowTransparent = TRUE
         )
       ),
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorPoints"),
           "Choose a colour for the points",
@@ -109,14 +108,14 @@ mod_color_ui <- function(id) {
       )
     ),
     shiny::fluidRow(
-       shiny::column(6,
+       col_6(
         shiny::checkboxInput(
           inputId = ns("LabelFactCont"),
           label = "Labels",
           value = FALSE
         )
       ),
-      shiny::column(6,
+      col_6(
         colourpicker::colourInput(
           inputId = ns("ColorCustomReference"),
           label = "Choose a colour for the custom reference line",
@@ -126,7 +125,7 @@ mod_color_ui <- function(id) {
       )
     ),
     shiny::fluidRow(
-      shiny::column(12,
+      col_12(
         shiny::selectInput(
           inputId = ns('select_col'),
           label = "Select standard color theme:",

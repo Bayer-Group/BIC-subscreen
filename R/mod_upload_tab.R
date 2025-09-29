@@ -3,7 +3,7 @@ uploadButton <- function(id, label, icon) {
   shiny::actionButton(
     inputId = id,
     label = label,
-    icon = icon(icon),
+    icon = shiny::icon(icon),
     style = "color: #fff; background-color: #5cb85c; border-color: #fff"
   )
 }
@@ -25,13 +25,11 @@ uploadFileInput <- function(id, label) {
 #' @param bg.col background color
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
-#' @importFrom graphics text
 #'
 
 
 upload_tab_ui <- function(id, bg.col) {
-  ns <- NS(id)
+  ns <- shiny::NS(id)
   shiny::tagList(
     list(
       shiny::tags$head(
@@ -47,7 +45,7 @@ upload_tab_ui <- function(id, bg.col) {
     ),
     shiny::h3("Welcome to"),
     shiny::uiOutput(ns("myImage")),
-    shiny::column(3,
+    col_3(
       shiny::h4("Please upload your prepared data or use the demo data set."),
       shiny::uiOutput(ns("mode")),
       shiny::fluidPage(
@@ -55,7 +53,7 @@ upload_tab_ui <- function(id, bg.col) {
           uploadFileInput(ns("results_file"), "Choose results data file (created with subscreencalc())"),
           shinyWidgets::materialSwitch(
             inputId = ns("switch_vi_file"),
-            label = HTML("<span style = 'color: white;'> Add variable importance file or press 'Upload data' </span>"),
+            label = shiny::HTML("<span style = 'color: white;'> Add variable importance file or press 'Upload data' </span>"),
             status = "success"
           ),
           shiny::conditionalPanel(condition = "input.switch_vi_file == true", ns = ns,
@@ -72,11 +70,11 @@ upload_tab_ui <- function(id, bg.col) {
         )
       )
     ),
-    shiny::column(3,
-      uiOutput(ns("variable_filter_selection"))#,
-      #actionButton(ns('apply_filter'),'Update selection')
+    col_3(
+      shiny::uiOutput(ns("variable_filter_selection"))#,
+      #shiny::actionButton(ns('apply_filter'),'Update selection')
     ),
-    shiny::column(6,
+    col_6(
       shiny::uiOutput(ns("list_output"))
     )
   )
@@ -92,7 +90,7 @@ uploadInformationOutput <- function(
   ) {
   preview_scresults_tmp <- input <- dat_name <- font_col <- NULL
   if (!is.null(previewScresults)) {
-      if(is(previewScresults) == "SubScreenResult") {
+      if(methods::is(previewScresults) == "SubScreenResult") {
       shinyjs::enable("apply_rdata_files")
       shiny::HTML(
         paste0("
@@ -175,7 +173,6 @@ uploadInformationOutput <- function(
 #' @param dat results data set.
 #' @param dat_name name of data set.
 #' @param vi variable importance data set.
-#' @importFrom methods is
 #'
 #' @noRd
 upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_col = "#e3e3e3") {
@@ -206,9 +203,9 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
     )
   })
 
-  preview_scresults_tmp <- reactiveValues(dat = NULL)
-  preview_variable_importance_tmp <- reactiveValues(dat = NULL)
-  # buttons_clicked <- reactiveValues(dat = 0)
+  preview_scresults_tmp <- shiny::reactiveValues(dat = NULL)
+  preview_variable_importance_tmp <- shiny::reactiveValues(dat = NULL)
+  # buttons_clicked <- shiny::reactiveValues(dat = 0)
   # shiny::observeEvent(c(input$apply_rdata_files,input$apply_demo_data, input$apply_uploaded_data),{
   #   buttons_clicked$dat <- buttons_clicked$dat + 1
   # })

@@ -316,11 +316,11 @@ subscreen_mosaicPlot <- function(
       ticks.q <- c(0, 1, 2, 3, 4) / 4
       graphics::text(
         x = leg.x - (leg.width / 2 + 0.01),
-        y = quantile(leg.y, prob = ticks.q),
+        y = stats::quantile(leg.y, prob = ticks.q),
         xpd = NA,
         col = col.txt,
         adj = c(1, 0.5),
-        labels = round(quantile(seq(rg.z[1], rg.z[2], length.out = 1001), prob = ticks.q), ndig),
+        labels = round(stats::quantile(seq(rg.z[1], rg.z[2], length.out = 1001), prob = ticks.q), ndig),
         cex = 0.75
       )
     }
@@ -328,11 +328,11 @@ subscreen_mosaicPlot <- function(
       ticks.q <- c(0, 1, 2, 3, 4) / 4
       graphics::text(
         x = leg.x - (leg.width / 2 + 0.01),
-        y = quantile(leg.y, prob = ticks.q),
+        y = stats::quantile(leg.y, prob = ticks.q),
         xpd = NA,
         col = col.txt,
         adj = c(1, 0.5),
-        labels = round(exp(quantile(seq(rg.z[1], rg.z[2], length.out = 1001), prob = ticks.q)), ndig),
+        labels = round(exp(stats::quantile(seq(rg.z[1], rg.z[2], length.out = 1001), prob = ticks.q)), ndig),
         cex = 0.75
       )
     }
@@ -340,7 +340,7 @@ subscreen_mosaicPlot <- function(
     graphics::segments(
       x0 = leg.x + (leg.width / 2),
       x1 = leg.x + (leg.width / 2 + 0.01),
-      y0 = quantile(leg.y, prob = tr.mean.z),
+      y0 = stats::quantile(leg.y, prob = tr.mean.z),
       col = col.txt,
       lwd = 2,
       xpd = NA
@@ -348,7 +348,7 @@ subscreen_mosaicPlot <- function(
 
     graphics::text(
       x = leg.x + (leg.width / 2 + 0.02),
-      y = quantile(leg.y, prob = tr.mean.z),
+      y = stats::quantile(leg.y, prob = tr.mean.z),
       xpd = NA,
       col = col.txt,
       adj = c(0, 0.5),
