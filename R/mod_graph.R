@@ -5,7 +5,6 @@
 #' @param plotWidth Plot width.
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
 
 mod_graph_ui <- function(id, plotHeight, plotWidth) {
   ns <- shiny::NS(id)
@@ -14,7 +13,7 @@ mod_graph_ui <- function(id, plotHeight, plotWidth) {
       shiny::plotOutput(
         outputId = ns("graph"),
         click = ns("plot_click"),
-        hover = hoverOpts(
+        hover = shiny::hoverOpts(
           ns("plot_hover"),
           delay = 50,
           delayType = "debounce"
@@ -59,7 +58,6 @@ mod_graph_ui <- function(id, plotHeight, plotWidth) {
 #' @param memorized_labels_on_off If labels of memorized subgroups should be displayed.
 #' @param subTitle Subtitle for graph.
 #' @param plot_points_data_complement Complement information.
-#' @importFrom rlang .data
 #' @noRd
 
 mod_graph_server <- function(
@@ -232,7 +230,7 @@ mod_graph_server <- function(
       }
       # check for completeness of the data
       if (y() %in% colnames(data)) {
-        data <- data[complete.cases(data[[y()]]),]
+        data <- data[stats::complete.cases(data[[y()]]),]
 
         minix <- roundDownNice(min(data[[x()]], na.rm=TRUE),nice = nice_Numbers)
         maxix <- roundUpNice(max(data[[x()]], na.rm=TRUE),nice = nice_Numbers)
@@ -276,12 +274,12 @@ mod_graph_server <- function(
         if (add_funnel()) {
           quantiles <- results()$funnel_quantiles
           #lower line
-          approx_lower_fun <-approxfun(
+          approx_lower_fun <- stats::approxfun(
             quantiles[quantiles[,"alpha"] == ((as.numeric(alpha_funnel()))/2),][,"n"],
             quantiles[quantiles[,"alpha"] == ((as.numeric(alpha_funnel()))/2),][,y()]
           )
           #upper
-          approx_higher_fun <-approxfun(
+          approx_higher_fun <- stats::approxfun(
             quantiles[quantiles[,"alpha"] == 1-((as.numeric(alpha_funnel()))/2),][,"n"],
             quantiles[quantiles[,"alpha"] == 1-((as.numeric(alpha_funnel()))/2),][,y()]
           )
@@ -327,7 +325,7 @@ mod_graph_server <- function(
 
      data_tmp <- data
       p <- ggplot2::ggplot(
-         data %>% dplyr::arrange(desc(point_color)),
+         data %>% dplyr::arrange(plyr::desc(point_color)),
          ggplot2::aes(
            x = !!rlang::sym(x()),
            y = !!rlang::sym(y()),
@@ -419,7 +417,7 @@ mod_graph_server <- function(
       if (circlestyle() == "standard") {
         p <- p +
           ggplot2::geom_point(
-            data = data %>% dplyr::arrange(desc(point_color)) %>% dplyr::filter(!is.na(point_color)),
+            data = data %>% dplyr::arrange(plyr::desc(point_color)) %>% dplyr::filter(!is.na(point_color)),
             ggplot2::aes(
               colour = point_color
             ),
@@ -430,7 +428,7 @@ mod_graph_server <- function(
       } else {
         p <- p +
           ggplot2::geom_point(
-            data = data %>% dplyr::arrange(desc(point_color))%>% dplyr::filter(!is.na(point_color)),
+            data = data %>% dplyr::arrange(plyr::desc(point_color))%>% dplyr::filter(!is.na(point_color)),
             ggplot2::aes(
               colour = point_color,
               size = !!rlang::sym(x())
@@ -446,7 +444,7 @@ mod_graph_server <- function(
           ggrepel::geom_label_repel(
             colour = "white",
             fill = data %>%
-              dplyr::arrange(desc(point_color)) %>%
+              dplyr::arrange(plyr::desc(point_color)) %>%
               dplyr::pull(point_color),
             max.overlaps = Inf,
             min.segment.length = 0,
@@ -459,7 +457,7 @@ mod_graph_server <- function(
             colour = "white",
             #fill = "#424242",
             fill = data_tmp %>%
-              dplyr::arrange(desc(point_color)) %>%
+              dplyr::arrange(plyr::desc(point_color)) %>%
               dplyr::pull(point_color),
             max.overlaps = Inf,
             min.segment.length = 0,
@@ -584,10 +582,10 @@ mod_graph_server <- function(
           p <- p +
             ggplot2::geom_point(
               data = data %>%
-                dplyr::arrange(desc(point_color)) %>%
+                dplyr::arrange(plyr::desc(point_color)) %>%
                 dplyr::filter(.data$outlier == TRUE),
               fill = data %>%
-                dplyr::arrange(desc(point_color)) %>%
+                dplyr::arrange(plyr::desc(point_color)) %>%
                 dplyr::filter(.data$outlier == TRUE) %>%
                 dplyr::pull(point_color),
               shape = 21,
@@ -640,7 +638,7 @@ mod_graph_server <- function(
 
     click <- input$plot_click
     click$mapping <- list(xintercept = "xintercept", x = "x", y = "y")
-    point <- nearPoints(colored_points, click)
+    point <- shiny::nearPoints(colored_points, click)
   if (nrow(point) == 0) {
     selected_SGIDs$val <- NULL
     output$click_info <- shiny::renderUI({
@@ -705,9 +703,9 @@ mod_graph_server <- function(
   }
   },ignoreNULL = FALSE)
 
-  selected_SGIDs <- reactiveValues(val = NULL)
+  selected_SGIDs <- shiny::reactiveValues(val = NULL)
 
-  observeEvent(input$checkbox,{
+  shiny::observeEvent(input$checkbox,{
     selected_SGIDs$val <- input$checkbox
     output$click_info <- shiny::renderUI({
       NULL
@@ -734,7 +732,7 @@ mod_graph_server <- function(
     hover <- input$plot_hover
     hover$mapping <- list(xintercept = "xintercept", x = "x", y = "y")
 
-    point <- nearPoints(colored_points, hover)
+    point <- shiny::nearPoints(colored_points, hover)
 
     if (nrow(point) == 0) return(NULL)
       # left_pct <- (hover$coords_img$x - hover$range$left) / (hover$range$right - hover$range$left)

@@ -12,9 +12,6 @@
 #'   (one for each treatment level, one with the ranking variability between the
 #'   treatment levels and one with the total results)
 #'
-#' @import ranger
-#' @import plyr
-#' @import stats
 #' @keywords variable importance
 #' @export subscreenvi
 #' @examples
@@ -81,7 +78,7 @@ subscreenvi <- function(data, y, cens = NULL, x = NULL, trt = NULL) {
       for (i in 1:length(trt.lev)){
 
         fit <- ranger::ranger(
-          as.formula(mod.form[j]),
+          stats::as.formula(mod.form[j]),
           data = data[data[, trt] == trt.lev[i], ],
           importance = "permutation",
           num.trees = 1000
@@ -101,7 +98,7 @@ subscreenvi <- function(data, y, cens = NULL, x = NULL, trt = NULL) {
 
     # summarize trt level results: rank variability over treatment levels
     tmp <- plyr::join_all(tmp, by = 'Variable', type = 'full')
-    tmp$'Importance' <- apply(tmp[,-1], MARGIN = 1, FUN = var)
+    tmp$'Importance' <- apply(tmp[,-1], MARGIN = 1, FUN = stats::var)
     tmp <- plyr::arrange(tmp, plyr::desc(Importance))
     result[['VI.RV.trt']] <- tmp[, c('Variable', 'Importance')]
 

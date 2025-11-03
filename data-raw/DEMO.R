@@ -7,43 +7,43 @@ utils::data(pbc, package = "survival")
 pbc <- pbc %>%
   dplyr::mutate(
   ageg = dplyr::case_when(
-    age <= quantile(pbc$age, 0.33, na.rm = TRUE) ~ "Low",
-    age > quantile(pbc$age, 0.33, na.rm = TRUE) & age <= quantile(pbc$age, 0.66, na.rm = TRUE) ~"Middle",
-    age > quantile(pbc$age, 0.66, na.rm = TRUE) ~ "High",
+    age <= stats::quantile(pbc$age, 0.33, na.rm = TRUE) ~ "Low",
+    age > stats::quantile(pbc$age, 0.33, na.rm = TRUE) & age <= stats::quantile(pbc$age, 0.66, na.rm = TRUE) ~"Middle",
+    age > stats::quantile(pbc$age, 0.66, na.rm = TRUE) ~ "High",
 TRUE ~ "No data"
   ),
   phosg = dplyr::case_when(
-    alk.phos<= quantile(pbc$alk.phos, 0.5, na.rm = TRUE) ~ "Low",
-    alk.phos > quantile(pbc$alk.phos, 0.5, na.rm = TRUE) ~ "High",
+    alk.phos<= stats::quantile(pbc$alk.phos, 0.5, na.rm = TRUE) ~ "Low",
+    alk.phos > stats::quantile(pbc$alk.phos, 0.5, na.rm = TRUE) ~ "High",
      TRUE ~ "No data"
   ),
   albuming = dplyr::case_when(
-    albumin<= quantile(pbc$albumin, 0.33, na.rm = TRUE) ~ "Low",
-    albumin > quantile(pbc$albumin, 0.33, na.rm = TRUE) & albumin <= quantile(pbc$albumin, 0.66, na.rm = TRUE) ~"Middle",
-    albumin > quantile(pbc$albumin, 0.66, na.rm = TRUE) ~ "High",
+    albumin<= stats::quantile(pbc$albumin, 0.33, na.rm = TRUE) ~ "Low",
+    albumin > stats::quantile(pbc$albumin, 0.33, na.rm = TRUE) & albumin <= stats::quantile(pbc$albumin, 0.66, na.rm = TRUE) ~"Middle",
+    albumin > stats::quantile(pbc$albumin, 0.66, na.rm = TRUE) ~ "High",
           TRUE ~ "No data"
   ),
   astg = dplyr::case_when(
-    ast<= quantile(pbc$ast, 0.33, na.rm = TRUE) ~ "Low",
-    ast > quantile(pbc$ast, 0.33, na.rm = TRUE) & ast<= quantile(pbc$ast, 0.66, na.rm = TRUE) ~"Middle",
-    ast > quantile(pbc$ast, 0.66, na.rm = TRUE) ~ "High",
+    ast<= stats::quantile(pbc$ast, 0.33, na.rm = TRUE) ~ "Low",
+    ast > stats::quantile(pbc$ast, 0.33, na.rm = TRUE) & ast<= stats::quantile(pbc$ast, 0.66, na.rm = TRUE) ~"Middle",
+    ast > stats::quantile(pbc$ast, 0.66, na.rm = TRUE) ~ "High",
      TRUE ~ "No data"
   ),
   bilig = dplyr::case_when(
-    bili<= quantile(pbc$bili, 0.33, na.rm = TRUE) ~ "Low",
-    bili > quantile(pbc$bili, 0.33, na.rm = TRUE) & bili<= quantile(pbc$bili, 0.66, na.rm = TRUE) ~"Middle",
-    bili > quantile(pbc$bili, 0.66, na.rm = TRUE) ~ "High",
+    bili<= stats::quantile(pbc$bili, 0.33, na.rm = TRUE) ~ "Low",
+    bili > stats::quantile(pbc$bili, 0.33, na.rm = TRUE) & bili<= stats::quantile(pbc$bili, 0.66, na.rm = TRUE) ~"Middle",
+    bili > stats::quantile(pbc$bili, 0.66, na.rm = TRUE) ~ "High",
     TRUE ~ "No data"
     ),
   cholg = dplyr::case_when(
-    chol<= quantile(pbc$chol, 0.5, na.rm = TRUE) ~ "Low",
-    chol > quantile(pbc$chol, 0.5, na.rm = TRUE) ~ "High",
+    chol<= stats::quantile(pbc$chol, 0.5, na.rm = TRUE) ~ "Low",
+    chol > stats::quantile(pbc$chol, 0.5, na.rm = TRUE) ~ "High",
      TRUE ~ "No data"
   ),
     copperg = dplyr::case_when(
-    copper<= quantile(pbc$copper, 0.33, na.rm = TRUE) ~ "Low",
-    copper > quantile(pbc$copper, 0.33, na.rm = TRUE) & copper<= quantile(pbc$copper, 0.66, na.rm = TRUE) ~ "Middle",
-    copper > quantile(pbc$copper, 0.66, na.rm = TRUE) ~ "High",
+    copper<= stats::quantile(pbc$copper, 0.33, na.rm = TRUE) ~ "Low",
+    copper > stats::quantile(pbc$copper, 0.33, na.rm = TRUE) & copper<= stats::quantile(pbc$copper, 0.66, na.rm = TRUE) ~ "Middle",
+    copper > stats::quantile(pbc$copper, 0.66, na.rm = TRUE) ~ "High",
       TRUE ~ "No data"
       ),
     ascitesg = dplyr::case_when(
@@ -52,8 +52,8 @@ TRUE ~ "No data"
       TRUE ~ "No data"
       ),
     plateletg = dplyr::case_when(
-    platelet<= quantile(pbc$platelets, 0.5, na.rm = TRUE) ~ "Low",
-      platelet > quantile(pbc$platelet, 0.5, na.rm = TRUE) ~ "High",
+    platelet<= stats::quantile(pbc$platelets, 0.5, na.rm = TRUE) ~ "Low",
+      platelet > stats::quantile(pbc$platelet, 0.5, na.rm = TRUE) ~ "High",
      TRUE ~ "No data"
       ),
     spidersg = dplyr::case_when(

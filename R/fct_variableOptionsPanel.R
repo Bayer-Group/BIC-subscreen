@@ -32,7 +32,7 @@ variableOptionsPanel <- function(){
       selected = NULL
     ),
     shiny::fluidRow(
-      shiny::column(6,
+      col_6(
         shiny::div(style = "position:absolute;right:2em;",
           bsplus::bs_embed_tooltip(
             tag = bsplus::shiny_iconlink("question"),
@@ -49,7 +49,7 @@ variableOptionsPanel <- function(){
         bsplus::use_bs_popover(),
         bsplus::use_bs_tooltip()
       ),
-      shiny::column(6,
+      col_6(
         shiny::conditionalPanel(
           condition = "input.filter != 'no selection'",
           shiny::uiOutput("VarChosen"),
@@ -58,7 +58,7 @@ variableOptionsPanel <- function(){
       )
     ),
     shiny::fluidRow(
-      shiny::column(6,
+      col_6(
         shiny::conditionalPanel(condition = "input.filter != 'no selection'",
           shiny::selectInput(
           inputId = "filter2",
@@ -68,7 +68,7 @@ variableOptionsPanel <- function(){
           )
         )
       ),
-      shiny::column(6,
+      col_6(
         shiny::conditionalPanel(condition = "input.filter2 != 'no selection' & input.filter != 'no selection'",
           shiny::uiOutput("VarChosen2"),
           selectize = FALSE
@@ -84,7 +84,7 @@ variableOptionsPanel <- function(){
       )
     ),
     shiny::fluidRow(
-      shiny::column(8,
+      col_8(
         shiny::sliderInput(
           inputId = "key",
           label = "Subgroup level(s)",
@@ -97,10 +97,10 @@ variableOptionsPanel <- function(){
       )
     ),
     shiny::fluidRow(
-      shiny::column(8,
+      col_8(
         shiny::uiOutput('YRange'),
       ),
-      shiny::column(4,
+      col_4(
         shiny::radioButtons(
           inputId = "plot_type",
           label = "",
@@ -112,7 +112,7 @@ variableOptionsPanel <- function(){
       )
     ),
       shiny::fluidRow(
-        shiny::column(8,
+        col_8(
           shiny::uiOutput("XRange")
         )
     )

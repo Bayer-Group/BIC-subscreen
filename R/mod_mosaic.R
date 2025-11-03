@@ -6,17 +6,16 @@
 #'
 #' @noRd
 #'
-#' @importFrom shiny NS tagList
 mod_mosaic_ui <- function(id) {
-  ns <- NS(id)
-  tagList(
+  ns <- shiny::NS(id)
+  shiny::tagList(
     shiny::fluidPage(
       shiny::fluidRow(
-          shiny::column(3,
+          col_3(
           # Option and variable panel
           shiny::uiOutput(ns('PanelMosaic'))
         ),
-        shiny::column(8,
+        col_8(
           shiny::div(style = "position:relative",
             shiny::uiOutput(ns('helptext_mosaic')),
             # Mosaic plot
@@ -24,7 +23,7 @@ mod_mosaic_ui <- function(id) {
             shiny::plotOutput(
               outputId = ns("mosaic"),
               # hover options
-              hover = hoverOpts(id = ns('plot_hover'), delay = 200, delayType = 'debounce'),
+              hover = shiny::hoverOpts(id = ns('plot_hover'), delay = 200, delayType = 'debounce'),
               height = 600,
               width = 1000
             ),
@@ -136,7 +135,7 @@ mod_mosaic_server <- function(
       show_var21_val$val <- FALSE
     }
   })
-  outputOptions(output, "show_var21", suspendWhenHidden = FALSE)
+  shiny::outputOptions(output, "show_var21", suspendWhenHidden = FALSE)
 
 
   show_var22_val <- shiny::reactiveValues(val = FALSE)
@@ -157,7 +156,7 @@ mod_mosaic_server <- function(
     }
   })
 
-  outputOptions(output, "show_var22", suspendWhenHidden = FALSE)
+  shiny::outputOptions(output, "show_var22", suspendWhenHidden = FALSE)
 
   #### renderPlot mosaic ####
   output$mosaic <- shiny::renderPlot({
@@ -166,7 +165,7 @@ mod_mosaic_server <- function(
     if (!is.null(results())) {
       if (shiny::req(results())$min_comb > 1) {
         output$helptext_mosaic <- shiny::renderUI({
-          HTML("<p style ='color:#DE0043'> Please set parameter min_comb in subscreencalc to 1 to use the mosaic plot.</p>")
+          shiny::HTML("<p style ='color:#DE0043'> Please set parameter min_comb in subscreencalc to 1 to use the mosaic plot.</p>")
         })
       }
     }

@@ -1,0 +1,8 @@
+default:
+  golem_name: subscreen
+  golem_version: 4.1.2
+  app_prod: no
+production:
+  app_prod: yes
+dev:
+  golem_wd: !expr golem::pkg_path()
