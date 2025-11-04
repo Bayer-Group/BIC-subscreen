@@ -106,9 +106,6 @@ jobs:
   deploy-dev-posit:
     runs-on: internal-k8s-v2
     needs: build
-    environment:
-      APP_NAME: ${{ env.repo_name }}
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     steps:
 
       - uses: r-lib/actions/setup-r@v2
