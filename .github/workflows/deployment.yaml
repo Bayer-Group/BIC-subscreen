@@ -18,6 +18,8 @@ jobs:
         with:
           r-version: renv
 
+      - uses: r-lib/actions/setup-pandoc@v2
+
       - name: Install renv dependencies
         uses: r-lib/actions/setup-renv@v2
       
