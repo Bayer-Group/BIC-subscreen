@@ -55,6 +55,6 @@ jobs:
           url: ${{ secrets.CONNECT_SERVER }}
           api-key: ${{ secrets.CONNECT_API_KEY }}
           access-type: logged_in
-          namespace: DIG
+          namespace: DIG-
           dir: |
             .:/${{ github.event.repository.name }}-${{startsWith(github.event.ref, 'refs/tags/v') && github.ref_name || 'dev'}}
