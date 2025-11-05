@@ -260,7 +260,14 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
     )
   })
   output$myImage <- shiny::renderUI({
-    list(shiny::HTML("<img src = 'www/subscreen_logo.png' alt = 'Subgroup Explorer Logo' width = '423' height = '140'>"))
+    list(
+      shiny::img(
+        src = "www/images/subscreen_logo.png",
+        alt = "Subgroup Explorer Logo",
+        width = 423,
+        height = 140
+      )
+    )
   })
 
   scresults_tmp <- shiny::reactiveValues(

@@ -16,8 +16,6 @@ app_ui <- function(request) {
       shiny::tabPanel(
         "Explorer",
         value = "SubscreenExplorer",
-        #includes css files from inst/www folder
-        shiny::uiOutput('includeCSS'),
         shiny::fluidPage(
           shiny::fluidRow(
             shiny::uiOutput('logo'),

@@ -1,4 +1,4 @@
-name: Build and deploy container app to Azure Web App
+name: Build and deploy container app to Posit Connect
 
 on:
   push:
@@ -9,101 +9,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  # build:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
-
-  #     - name: Extract R version from renv.lock
-  #       run: | # Extract R version from renv.lock using jq and storing it as an environment variable
-  #         R_VERSION=$(jq -r '.R.Version' renv.lock)
-  #         echo "R_VERSION=${R_VERSION}" >> $GITHUB_ENV
-
-  #     - uses: r-lib/actions/setup-r@v2
-  #       with:
-  #         r-version: renv
-
-  #     - uses: r-lib/actions/setup-r-dependencies@v2
-  #       with:
-  #         install-pandoc: true
-  #         extra-packages: |
-  #           any::rcmdcheck
-
-  #     - uses: r-lib/actions/check-r-package@v2
-  #       with:
-  #         upload-snapshots: true
-  #         build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
-
-      # - name: Build package
-      #   run: R CMD build .
-
-      # - name: Set up Docker Buildx
-      #   uses: docker/setup-buildx-action@v2
-
-      # - name: Log in to registry
-      #   uses: docker/login-action@v3
-      #   with:
-      #     registry: ${{ secrets.DOCKER_REGISTRY }}
-      #     username: PushToken
-      #     password: ${{ secrets.DOCKER_REGISTRY_SERVER_PASSWORD }}
-
-      # - name: Convert repo name to lowercase
-      #   id: lowercase_repo_name
-      #   run: echo "repo_name=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-      # - name: Build and push container without tag
-      #   uses: docker/build-push-action@v4
-      #   with:
-      #     push: true
-      #     tags: ${{ secrets.DOCKER_REPO }}/${{ env.repo_name }}:${{ github.sha }} # Use Git commit SHA as the tag
-      #     context: ./ # The build context is the root of the repository
-      #     build-args: |
-      #       R_VERSION=${{ env.R_VERSION }}
-  
-  # deploy-dev:
-  #   runs-on: ubuntu-latest
-  #   needs: build
-  #   environment:
-  #     name: "development"
-  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-  #   steps:
-
-  #     - name: Convert repo name to lowercase
-  #       id: lowercase_repo_name
-  #       run: echo "repo_name=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-  #     - name: Deploy to Azure Web App
-  #       id: deploy-to-webapp
-  #       uses: azure/webapps-deploy@v2
-  #       with:
-  #         app-name: ${{ env.repo_name }} # Use the lowercase repository name as the app name
-  #         slot-name: "dev" # Specify the development slot
-  #         publish-profile: ${{ secrets.PUBLISH_PROFILE_DEV }} # Publish profile for the development environment
-  #         images: ${{ secrets.DOCKER_REPO }}/${{ env.repo_name }}:${{ github.sha }} # Use the image from the ACR with the Git commit SHA
-
-  # deploy-prod:
-  #   runs-on: ubuntu-latest
-  #   if: startsWith(github.event.ref, 'refs/tags/v') # Only run this job for tags
-  #   needs: deploy-dev
-  #   environment:
-  #     name: "production"
-  #     url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-  #   steps:
-
-  #     - name: Convert repo name to lowercase
-  #       id: lowercase_repo_name
-  #       run: echo "repo_name=$(echo '${{ github.event.repository.name }}' | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
-
-  #     - name: Deploy to Azure Web App
-  #       id: deploy-to-webapp
-  #       uses: azure/webapps-deploy@v2
-  #       with:
-  #         app-name: ${{ env.repo_name }} # Use the lowercase repository name as the app name
-  #         slot-name: "production" # Specify the production slot
-  #         publish-profile: ${{ secrets.PUBLISH_PROFILE }} # Publish profile for the production environment
-  #         images: ${{ secrets.DOCKER_REPO }}/${{ env.repo_name }}:${{ github.sha }} # Use the image from the ACR with the Git commit SHA
-
-  deploy-dev-posit:
+  deploy-posit:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -116,7 +22,12 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
       
       - name: Install extra dependencies
-        run: Rscript -e 'renv::install(c("any::rsconnect"))'
+        run: Rscript -e 'renv::install(c("any::rsconnect", "any::rcmdcheck"))'
+
+      - uses: r-lib/actions/check-r-package@v2
+        with:
+          upload-snapshots: true
+          build_args: 'c("--no-manual","--compact-vignettes=gs+qpdf")'
 
       - name: Create manifest.json
         shell: Rscript {0}
@@ -129,5 +40,6 @@ jobs:
           url: ${{ secrets.CONNECT_SERVER }}
           api-key: ${{ secrets.CONNECT_API_KEY }}
           access-type: logged_in
+          namespace: DIG
           dir: |
-            .:/DIG/${{ env.repo_name }}/${{ env.repo_name }}-dev
+            .:/${{ github.event.repository.name }}-${{startsWith(github.event.ref, 'refs/tags/v') && github.ref_name || 'dev'}}

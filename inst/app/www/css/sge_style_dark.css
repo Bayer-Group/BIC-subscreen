@@ -13,11 +13,12 @@ height: 60px;
 .navbar-default .navbar-nav > .active > a:hover {color: #dedede; background-color: #404040;}
 .navbar-default .navbar-nav > li > a:hover {color: #999999;}
 
-header4{color: #e2b007;}
+h4 {color: #e2b007;}
 
 body {
   background-color: #383838;
   color: #ffffff;
+  overflow-y: scroll;
 }
 .tabbable > .nav > li[class=active]    > a {
   background-color: #383838; color:#ffffff
