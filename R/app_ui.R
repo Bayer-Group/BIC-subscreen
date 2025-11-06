@@ -23,7 +23,7 @@ app_ui <- function(request) {
               #acitvate javascript code to disable/enable tabs
               shinyjs::useShinyjs(debug = TRUE),
               shinyjs::extendShinyjs(
-                  script = "tabs.js",
+                  script = "www/tabs.js",
                   functions = c("disableTab", "enableTab")
                 ),
               #### Variable options-tab ####
