@@ -1,6 +1,10 @@
+# subscreen 4.1.4
+
+* No news in this version, just some deployment-related tasks.
+
 # subscreen 4.1.3
 
- * Fix bug in DEMO data that prevented the funnel from being displayed correctly
+* Fix bug in DEMO data that prevented the funnel from being displayed correctly
 
 # subscreen 4.1.2
 
