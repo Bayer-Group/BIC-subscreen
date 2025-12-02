@@ -7,6 +7,15 @@ on:
     tags:
       - 'v*' # Push events to matching v*, i.e. v1.0, v20.15.10
   workflow_dispatch:
+    inputs:
+      deploy-to:
+        description: 'Deploy to environment'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - prod
 
 jobs:
   check:
@@ -58,4 +67,4 @@ jobs:
           access-type: logged_in
           namespace: DIG
           dir: |
-            .:/${{ github.event.repository.name }}-${{startsWith(github.event.ref, 'refs/tags/v') && github.ref_name || 'dev'}}
+            .:/${{ github.event.repository.name }}-${{(startsWith(github.event.ref, 'refs/tags/v') || github.event.inputs.deploy-to == 'prod') && 'prod' || 'dev'}}
