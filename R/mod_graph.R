@@ -323,7 +323,11 @@ mod_graph_server <- function(
             !!rlang::sym(y()) <= YRange[2]
           )
 
+     data$font_color2 <-  unlist(lapply(data$point_color,font_color))
      data_tmp <- data
+     
+
+     
       p <- ggplot2::ggplot(
          data %>% dplyr::arrange(plyr::desc(point_color)),
          ggplot2::aes(
@@ -381,16 +385,16 @@ mod_graph_server <- function(
             )
         } else {
 
-        data <- data %>%
-          dplyr::mutate(
-            point_color =
-              dplyr::case_when(
-                .data$outlier == TRUE ~ point_color,
-                .data$outlier == FALSE & data$point_color == ColorPoints() ~ point_color,
-                .data$outlier == FALSE & data$point_color != ColorPoints()  ~ point_color,
-                is.na(.data$outlier) ~ point_color
-              )
-          )
+        # data <- data %>%
+        #   dplyr::mutate(
+        #     point_color =
+        #       dplyr::case_when(
+        #         .data$outlier == TRUE ~ point_color,
+        #         .data$outlier == FALSE & data$point_color == ColorPoints() ~ point_color,
+        #         .data$outlier == FALSE & data$point_color != ColorPoints()  ~ point_color,
+        #         is.na(.data$outlier) ~ point_color
+        #       )
+        #   )
         }
       }
       if (is.null(subTitle) && xlabel()){
@@ -439,13 +443,14 @@ mod_graph_server <- function(
       }
 
      if (!exclude_funnel()) {
-
         p <- p +
           ggrepel::geom_label_repel(
-            colour = "white",
+            colour =data %>%
+              dplyr::arrange(plyr::desc(point_color)) %>%
+              dplyr::pull(font_color2),
             fill = data %>%
               dplyr::arrange(plyr::desc(point_color)) %>%
-              dplyr::pull(point_color),
+              dplyr::pull(point_color) ,
             max.overlaps = Inf,
             min.segment.length = 0,
             size = 5#,
@@ -454,7 +459,9 @@ mod_graph_server <- function(
      } else {
        p <- p +
        ggrepel::geom_label_repel(
-            colour = "white",
+            colour = data_tmp %>%
+              dplyr::arrange(plyr::desc(point_color)) %>%
+              dplyr::pull(font_color2),
             #fill = "#424242",
             fill = data_tmp %>%
               dplyr::arrange(plyr::desc(point_color)) %>%
@@ -748,7 +755,8 @@ mod_graph_server <- function(
           grDevices::col2rgb(ColorBGplot())[1],",",
           grDevices::col2rgb(ColorBGplot())[2],",",
           grDevices::col2rgb(ColorBGplot())[3],",0.95); ",
-          "left:", left_px, "px; top:", top_px, "px; border: 0px;"
+          "left:", left_px, "px; top:", top_px, "px; 
+          border: 1px solid #ffffff;"
       )
 
 
@@ -764,44 +772,61 @@ mod_graph_server <- function(
         function(x){paste(paste0(names(which(x != "Not used")),":", x[which(x != "Not used")]), collapse = ", ")}
       )
     }
-    tmp2 <- tmp %>%
+    
+    tmp2 <- tmp %>% 
+      dplyr::select(SGID, !!rlang::sym(x()), !!rlang::sym(y()), text, font.col) %>%
       dplyr::mutate(
-        text2 = paste0("ID:", SGID,", ", text),
-        text3 =paste("<p>",
-                     ifelse(nrow(tmp) > 1,
-                            paste0("<b style = 'color: ",
-                     ColorPoints() ,
-                    "'> List of: ",nrow(tmp)," </b></br> <ul>"),
-                            paste0("")
-                      ),
-                      ifelse(nrow(tmp) > 1,
-                         paste(
-                           "<li> <b style = 'color: ",font.col,"'> SGID:", SGID, ", ",x() ,":", !!rlang::sym(x()),", ",y() ,":",!!rlang::sym(y()),
-                           "</br>", text, "</b> </li><br>"
-                           ,collapse = ""
-                         ),
-                         paste(
-                           "<b style = 'color: ",font.col,"'> SGID:", SGID, ", ",x() ,":", !!rlang::sym(x()),", ",y() ,":",!!rlang::sym(y()),
-                           "</br>", text, "</b><br>"
-                           ,collapse = ""
-                         )
-                      ),
-                    ifelse(nrow(tmp) > 1,"</ul>",""),
-                    "</p>",
-         collapse ="")
-      )
-    if(length(tmp2$text3)!= 0) {
-
+        background_color = dplyr::case_when(
+          substr(ColorPoints(),1,7) != substr(font.col, 1,7) ~ substr(font.col, 1,7),
+          substr(ColorPoints(),1,7) == substr(font.col, 1,7) ~ ""
+        ),
+      ) %>%
+      dplyr::rowwise() %>%
+      dplyr::mutate(
+        font.col2 = dplyr::case_when(
+          substr(ColorPoints(),1,7) != substr(font.col, 1,7) ~ font_color(font.col),
+          substr(ColorPoints(),1,7) == substr(font.col, 1,7) ~ substr(font.col,1,7)
+        )
+      ) %>% 
+      dplyr::ungroup() %>% 
+      dplyr::mutate(
+        html_text = paste0(
+          "<p style = 'color: ",
+          font.col2,
+          "; background-color:",
+          background_color,
+          "; border-color: #000; border-style: solid; border-width: 0.1px",
+          ";'> ",
+          x(),
+          ":", 
+          !!rlang::sym(x()),
+          ", ",
+          y(),
+          ":",
+          !!rlang::sym(y()),
+          "</br>",
+          tmp$text,
+          "</p>"
+        )
+      ) %>% 
+      dplyr::arrange(dplyr::desc(background_color))
+    
+    html_text <- paste(
+      "<p>",
+      paste(
+        tmp2$html_text
+      ),
+      "</p>",
+      collapse ="")
+    
     shiny::wellPanel(
       style = style,
-       shiny::p(
+      shiny::p(
         shiny::HTML(
-          as.character(tmp2$text3[1])
+          as.character(html_text)
         )
       )
     )
-    }
-
   })
 
  return(
