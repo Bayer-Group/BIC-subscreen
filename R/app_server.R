@@ -226,6 +226,27 @@ app_server <- function(input, output, session) {
   shiny::observeEvent(mod_comparer_vars$selected_SGIDs3(), {
     new_selected_ids$val <- mod_comparer_vars$selected_SGIDs3()
   }, ignoreNULL = FALSE)
+  
+  #### ObserveEvent: mod_comparer_vars$selected_SGIDs3() ####
+  shiny::observeEvent(mod_comparer_vars$selected_SGIDs31(), {
+    new_selected_ids$val <- mod_comparer_vars$selected_SGIDs31()
+  }, ignoreNULL = FALSE)
+  
+  #### ObserveEvent: mod_comparer_vars$selected_SGIDs3() ####
+  shiny::observeEvent(mod_comparer_vars$selected_SGIDs32(), {
+    new_selected_ids$val <- mod_comparer_vars$selected_SGIDs32()
+  }, ignoreNULL = FALSE)
+  
+  
+  #### ObserveEvent: mod_comparer_vars$selected_SGIDs3() ####
+  shiny::observeEvent(mod_comparer_vars$selected_SGIDs33(), {
+    new_selected_ids$val <- mod_comparer_vars$selected_SGIDs33()
+  }, ignoreNULL = FALSE)
+  
+  #### ObserveEvent: mod_comparer_vars$selected_SGIDs3() ####
+  shiny::observeEvent(mod_comparer_vars$selected_SGIDs34(), {
+    new_selected_ids$val <- mod_comparer_vars$selected_SGIDs34()
+  }, ignoreNULL = FALSE)
 
   #### ObserveEvent: mod_comparer_vars$selected_SGIDs3() ####
   shiny::observeEvent(mod_comparer_vars$selected_SGIDs4(), {

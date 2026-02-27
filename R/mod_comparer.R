@@ -17,7 +17,7 @@ mod_comparer_ui <- function(id) {
             style = "position:absolute;right:2em;",
             bsplus::bs_embed_tooltip(
               tag = bsplus::shiny_iconlink("question"),
-              title = "Variable plotted on the y-axis (upper plot).",
+              title = "Variable to be plotted on the y-axis (first plot).",
               placement = "top",
               expanded = TRUE
             )
@@ -27,7 +27,7 @@ mod_comparer_ui <- function(id) {
             style = "position:absolute;right:2em;",
             bsplus::bs_embed_tooltip(
               tag = bsplus::shiny_iconlink("question"),
-              title = "Change the scale on the y-axis (upper plot).",
+              title = "Change the scale on the y-axis (first plot).",
               placement = "top",
               expanded = TRUE
             )
@@ -37,7 +37,7 @@ mod_comparer_ui <- function(id) {
             style = "position:absolute;right:2em;",
             bsplus::bs_embed_tooltip(
               tag = bsplus::shiny_iconlink("question"),
-              title = "Change the y-axis limits (upper plot).",
+              title = "Change the y-axis limits (first plot).",
               placement = "top",
               expanded = TRUE
             )
@@ -51,7 +51,7 @@ mod_comparer_ui <- function(id) {
             style = "position:absolute;right:2em;",
             bsplus::bs_embed_tooltip(
               tag = bsplus::shiny_iconlink("question"),
-              title = "Variable t obe plotted on the y-axis (lower plot).",
+              title = "Variable to be plotted on the y-axis (second plot).",
               placement = "top",
               expanded = TRUE
             )
@@ -61,7 +61,7 @@ mod_comparer_ui <- function(id) {
             style = "position:absolute;right:2em;",
             bsplus::bs_embed_tooltip(
               tag = bsplus::shiny_iconlink("question"),
-              title = "Change the scale on the y-axis (lower plot).",
+              title = "Change the scale on the y-axis (second plot).",
               placement = "top",
               expanded = TRUE
             )
@@ -71,7 +71,7 @@ mod_comparer_ui <- function(id) {
             style = "position:absolute;right:2em;",
             bsplus::bs_embed_tooltip(
               tag = bsplus::shiny_iconlink("question"),
-              title = "Change y-axis limits (lower plot).",
+              title = "Change y-axis limits (second plot).",
               placement = "top",
               expanded = TRUE
             )
@@ -81,43 +81,203 @@ mod_comparer_ui <- function(id) {
           bsplus::use_bs_tooltip()
         ),
         shiny::wellPanel(
-          shiny::div(style = "position:absolute;right:2em;",
-            bsplus::bs_embed_tooltip(tag = bsplus::shiny_iconlink("question"),
-            title = "Variable plotted on the x-axes.",
-            placement = "top",
-            expanded = TRUE
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Variable to be plotted on the y-axis (third plot).",
+              placement = "top",
+              expanded = TRUE
             )
+          ),
+          shiny::uiOutput(ns("y31")),
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Change the scale on the y-axis (third plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("plot_type31")),
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Change y-axis limits (third plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("YRange31")),
+          bsplus::use_bs_popover(),
+          bsplus::use_bs_tooltip()
+        ),
+        shiny::wellPanel(
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Variable to be plotted on the y-axis (fourth plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("y32")),
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Change the scale on the y-axis (fourth plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("plot_type32")),
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Change y-axis limits (fourth plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("YRange32")),
+          bsplus::use_bs_popover(),
+          bsplus::use_bs_tooltip()
+        ),
+        shiny::wellPanel(
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Variable to be plotted on the y-axis (fifth plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("y33")),
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Change the scale on the y-axis (fifth plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("plot_type33")),
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Change y-axis limits (fifth plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("YRange33")),
+          bsplus::use_bs_popover(),
+          bsplus::use_bs_tooltip()
+        ),
+        shiny::wellPanel(
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Variable to be plotted on the y-axis (sixth plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          # shiny::uiOutput(ns("y34")),
+          # shiny::div(
+          #   style = "position:absolute;right:2em;",
+          #   bsplus::bs_embed_tooltip(
+          #     tag = bsplus::shiny_iconlink("question"),
+          #     title = "Change the scale on the y-axis (sixth plot).",
+          #     placement = "top",
+          #     expanded = TRUE
+          #   )
+          # ),
+          shiny::uiOutput(ns("plot_type34")),
+          shiny::div(
+            style = "position:absolute;right:2em;",
+            bsplus::bs_embed_tooltip(
+              tag = bsplus::shiny_iconlink("question"),
+              title = "Change y-axis limits (sixth plot).",
+              placement = "top",
+              expanded = TRUE
+            )
+          ),
+          shiny::uiOutput(ns("YRange34")),
+          bsplus::use_bs_popover(),
+          bsplus::use_bs_tooltip()
+        ),
+        shiny::wellPanel(
+          shiny::div(style = "position:absolute;right:2em;",
+                     bsplus::bs_embed_tooltip(tag = bsplus::shiny_iconlink("question"),
+                                              title = "Variable to be plotted on the x-axes.",
+                                              placement = "top",
+                                              expanded = TRUE
+                     )
           ),
           shiny::uiOutput(ns("x2"))
         )
       ),
       shiny::mainPanel(
         shiny::tabsetPanel(type = "tabs",
-          shiny::tabPanel("Compare",
-            mod_legend_ui(ns("legend2")),
-            col_7(
-              mod_graph_ui(ns("graph2"),
-               plotHeight = 390,
-               plotWidth = 1100
-              )
-            ),
-            col_7(
-              mod_graph_ui(ns("graph3"),
-                plotHeight = 390,
-                plotWidth = 1100
-              )
-            )
-          ),
-          ####.. Bubble plot####
-          shiny::tabPanel("Bubble plot",
-            mod_legend_ui(ns("legend3")),
-            col_7(
-              mod_bubble_ui(ns("graph4"),
-                plotHeight = 780,
-                plotWidth = 1100
-              )
-            )
-          )
+                           shiny::tabPanel("Compare",
+                                           mod_legend_ui(ns("legend2")),
+                                           col_7(
+                                             mod_graph_ui(ns("graph2"),
+                                                          plotHeight = 390,
+                                                          plotWidth = 1100
+                                             )
+                                           ),
+                                           col_7(
+                                             mod_graph_ui(ns("graph3"),
+                                                          plotHeight = 390,
+                                                          plotWidth = 1100
+                                             )
+                                           ),
+                                           col_7(
+                                             mod_graph_ui(ns("graph31"),
+                                                          plotHeight = 390,
+                                                          plotWidth = 1100
+                                             )
+                                           ),
+                                           col_7(
+                                             mod_graph_ui(ns("graph32"),
+                                                          plotHeight = 390,
+                                                          plotWidth = 1100
+                                             )
+                                           ),
+                                           col_7(
+                                             mod_graph_ui(ns("graph33"),
+                                                          plotHeight = 390,
+                                                          plotWidth = 1100
+                                             )
+                                           )#,
+                                           # col_7(
+                                           #   mod_graph_ui(ns("graph34"),
+                                           #                plotHeight = 390,
+                                           #                plotWidth = 1100
+                                           #   )
+                                           #)
+                           ),
+                           ####.. Bubble plot####
+                           shiny::tabPanel("Bubble plot",
+                                           mod_legend_ui(ns("legend3")),
+                                           col_7(
+                                             mod_bubble_ui(ns("graph4"),
+                                                           plotHeight = 780,
+                                                           plotWidth = 1100
+                                             )
+                                           )
+                           )
         )
       )
     )
@@ -152,49 +312,49 @@ mod_comparer_ui <- function(id) {
 #' @param memorized_Data memorized data.
 #' @noRd
 mod_comparer_server <- function(input, output, session,
-    results,
-    YRange,
-    XRange,
-    plot_type,
-    point_size,
-    color,
-    ColorBGplot,
-    ColorTabClicked,
-    ColorPoints,
-    colthemeCol,
-    ColorReference,
-    ColorCustomReference,
-    ColorMemorized,
-      ColorFactorial,
-      LabelParent,
-      LabelMemorized,
-      LabelTabClicked,
-      LabelFactCont,
-      ColorParents,
-    x,
-    y,
-    plot_points_data_complement,
-    key,
-    nice_Numbers,
-    xlabel,
-    grid,
-    circlestyle,
-    memorized_Data,
-    # point_brightness,
-    show_ref_line,
-    add_custom_ref_line,
-    value_custom_ref_line,
-    show_favour_arrows,
-    favour_direction,
-    favour_comparator_name,
-    favour_verum_name,
-    add_funnel,
-    exclude_funnel,
-    alpha_funnel
+                                results,
+                                YRange,
+                                XRange,
+                                plot_type,
+                                point_size,
+                                color,
+                                ColorBGplot,
+                                ColorTabClicked,
+                                ColorPoints,
+                                colthemeCol,
+                                ColorReference,
+                                ColorCustomReference,
+                                ColorMemorized,
+                                ColorFactorial,
+                                LabelParent,
+                                LabelMemorized,
+                                LabelTabClicked,
+                                LabelFactCont,
+                                ColorParents,
+                                x,
+                                y,
+                                plot_points_data_complement,
+                                key,
+                                nice_Numbers,
+                                xlabel,
+                                grid,
+                                circlestyle,
+                                memorized_Data,
+                                # point_brightness,
+                                show_ref_line,
+                                add_custom_ref_line,
+                                value_custom_ref_line,
+                                show_favour_arrows,
+                                favour_direction,
+                                favour_comparator_name,
+                                favour_verum_name,
+                                add_funnel,
+                                exclude_funnel,
+                                alpha_funnel
 ) {
-
+  
   ns <- session$ns
-
+  
   plot_points_data2 <- shiny::reactive({
     shiny::req(key(), input$x2, input$y1)
     data.frame(
@@ -203,8 +363,8 @@ mod_comparer_server <- function(input, output, session,
       ID = results()$sge[, "SGID"][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]]
     )
   })
-
- plot_points_data3 <- shiny::reactive({
+  
+  plot_points_data3 <- shiny::reactive({
     shiny::req(key(), input$x2, input$y2)
     data.frame(
       x = results()$sge[, c(input$x2)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
@@ -212,7 +372,44 @@ mod_comparer_server <- function(input, output, session,
       ID = results()$sge[, "SGID"][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]]
     )
   })
-
+  
+  plot_points_data31 <- shiny::reactive({
+    shiny::req(key(), input$x2, input$y31)
+    data.frame(
+      x = results()$sge[, c(input$x2)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
+      y = results()$sge[, c(input$y31)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
+      ID = results()$sge[, "SGID"][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]]
+    )
+  })
+  
+  plot_points_data32 <- shiny::reactive({
+    shiny::req(key(), input$x2, input$y32)
+    data.frame(
+      x = results()$sge[, c(input$x2)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
+      y = results()$sge[, c(input$y32)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
+      ID = results()$sge[, "SGID"][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]]
+    )
+  })
+  
+  plot_points_data33 <- shiny::reactive({
+    shiny::req(key(), input$x2, input$y33)
+    data.frame(
+      x = results()$sge[, c(input$x2)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
+      y = results()$sge[, c(input$y33)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
+      ID = results()$sge[, "SGID"][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]]
+    )
+  })
+  
+  plot_points_data34 <- shiny::reactive({
+    shiny::req(key(), input$x2, input$y34)
+    data.frame(
+      x = results()$sge[, c(input$x2)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
+      y = results()$sge[, c(input$y34)][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]],
+      ID = results()$sge[, "SGID"][results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2]]
+    )
+  })
+  
+  
   plot_points_data4 <- shiny::reactive({
     shiny::req(key(), input$y1, input$y2)
     if (input$y1 %in% colnames(results()$sge) & input$y2 %in% colnames(results()$sge)) {
@@ -223,22 +420,22 @@ mod_comparer_server <- function(input, output, session,
       )
     }
   })
-
+  
   # helper functions
   roundUpNice <- function(x, nice = nice_Numbers) {
     if (length(x) != 1) stop("'x' must be of length 1")
     if (x >= 0) 10^floor(log10(x)) * nice[[which(x <= 10^floor(log10(x)) *nice)[[1]]]]
     else -1 * (roundDownNice(-x, nice = nice_Numbers))
   }
-
+  
   roundDownNice <- function(x, nice = nice_Numbers) {
     if (length(x) != 1) stop("'x' must be of length 1")
     if (x >= 0) 10^floor(log10(x)) * nice[[max(which(x >= 10^floor(log10(x)) * nice))]]
     else -1 * (roundUpNice(-x, nice = nice_Numbers))
   }
-
+  
   output$y1 <- shiny::renderUI({
-     choi <- setdiff(
+    choi <- setdiff(
       setdiff(names(results()$results_total[ ,!is.na(results()$results_total)]),'N.of.subjects'),
       names(which(apply(results()$sge[,names(results()$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))})))
     )
@@ -249,7 +446,7 @@ mod_comparer_server <- function(input, output, session,
       selected = choi[1]
     )
   })
-
+  
   output$plot_type2 <- shiny::renderUI({
     shiny::radioButtons(
       inputId = ns("plot_type2"),
@@ -260,10 +457,10 @@ mod_comparer_server <- function(input, output, session,
       choiceValues = c("lin", "log")
     )
   })
-
-    shiny::observeEvent(input$y1, {
-      shiny::req(input$y1)
-      shiny::req(results())
+  
+  shiny::observeEvent(input$y1, {
+    shiny::req(input$y1)
+    shiny::req(results())
     if (roundDownNice(min(results()$sge[, input$y1], na.rm = TRUE), nice = nice_Numbers) <= 0) {
       shiny::updateRadioButtons(
         inputId = "plot_type2",
@@ -282,10 +479,10 @@ mod_comparer_server <- function(input, output, session,
       )
     }
   })
-
-   shiny::observeEvent(input$y2, {
-      shiny::req(input$y2)
-      shiny::req(results())
+  
+  shiny::observeEvent(input$y2, {
+    shiny::req(input$y2)
+    shiny::req(results())
     if (roundDownNice(min(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers) <= 0) {
       shiny::updateRadioButtons(
         inputId = "plot_type3",
@@ -304,8 +501,95 @@ mod_comparer_server <- function(input, output, session,
       )
     }
   })
-
-
+  
+  shiny::observeEvent(input$y31, {
+    shiny::req(input$y31)
+    shiny::req(results())
+    if (roundDownNice(min(results()$sge[, input$y31], na.rm = TRUE), nice = nice_Numbers) <= 0) {
+      shiny::updateRadioButtons(
+        inputId = "plot_type31",
+        label = "Type",
+        choices = c(linear = "lin"),
+        selected = "lin",
+        inline = TRUE
+      )
+    } else {
+      shiny::updateRadioButtons(
+        inputId = "plot_type31",
+        label = "Type",
+        choices = c(linear = "lin", log = "log"),
+        selected = "lin",
+        inline = TRUE
+      )
+    }
+  })
+  
+  shiny::observeEvent(input$y32, {
+    shiny::req(input$y32)
+    shiny::req(results())
+    if (roundDownNice(min(results()$sge[, input$y32], na.rm = TRUE), nice = nice_Numbers) <= 0) {
+      shiny::updateRadioButtons(
+        inputId = "plot_type32",
+        label = "Type",
+        choices = c(linear = "lin"),
+        selected = "lin",
+        inline = TRUE
+      )
+    } else {
+      shiny::updateRadioButtons(
+        inputId = "plot_type32",
+        label = "Type",
+        choices = c(linear = "lin", log = "log"),
+        selected = "lin",
+        inline = TRUE
+      )
+    }
+  })
+  
+  shiny::observeEvent(input$y33, {
+    shiny::req(input$y33)
+    shiny::req(results())
+    if (roundDownNice(min(results()$sge[, input$y33], na.rm = TRUE), nice = nice_Numbers) <= 0) {
+      shiny::updateRadioButtons(
+        inputId = "plot_type33",
+        label = "Type",
+        choices = c(linear = "lin"),
+        selected = "lin",
+        inline = TRUE
+      )
+    } else {
+      shiny::updateRadioButtons(
+        inputId = "plot_type33",
+        label = "Type",
+        choices = c(linear = "lin", log = "log"),
+        selected = "lin",
+        inline = TRUE
+      )
+    }
+  })
+  
+  shiny::observeEvent(input$y34, {
+    shiny::req(input$y34)
+    shiny::req(results())
+    if (roundDownNice(min(results()$sge[, input$y34], na.rm = TRUE), nice = nice_Numbers) <= 0) {
+      shiny::updateRadioButtons(
+        inputId = "plot_type34",
+        label = "Type",
+        choices = c(linear = "lin"),
+        selected = "lin",
+        inline = TRUE
+      )
+    } else {
+      shiny::updateRadioButtons(
+        inputId = "plot_type34",
+        label = "Type",
+        choices = c(linear = "lin", log = "log"),
+        selected = "lin",
+        inline = TRUE
+      )
+    }
+  })
+  
   output$YRange2 <- shiny::renderUI({
     shiny::req(input$y1)
     shiny::req(input$plot_type2)
@@ -344,11 +628,11 @@ mod_comparer_server <- function(input, output, session,
         selected = c(choices[1], choices[length(choices)]),
         grid = TRUE
       )
-     }
+    }
   })
-
+  
   output$y2 <- shiny::renderUI({
-
+    
     choi <- setdiff(
       setdiff(names(results()$results_total[ ,!is.na(results()$results_total)]),'N.of.subjects'),
       names(which(apply(results()$sge[,names(results()$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))})))
@@ -360,7 +644,64 @@ mod_comparer_server <- function(input, output, session,
       selected = choi[2]
     )
   })
-
+  
+  output$y31 <- shiny::renderUI({
+    
+    choi <- setdiff(
+      setdiff(names(results()$results_total[ ,!is.na(results()$results_total)]),'N.of.subjects'),
+      names(which(apply(results()$sge[,names(results()$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))})))
+    )
+    shiny::selectInput(
+      inputId = ns("y31"),
+      label = "Third Target variable",
+      choices = choi,
+      selected = NULL
+    )
+  })
+  
+  output$y32 <- shiny::renderUI({
+    
+    choi <- setdiff(
+      setdiff(names(results()$results_total[ ,!is.na(results()$results_total)]),'N.of.subjects'),
+      names(which(apply(results()$sge[,names(results()$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))})))
+    )
+    shiny::selectInput(
+      inputId = ns("y32"),
+      label = "Fourth Target variable",
+      choices = choi,
+      selected = NULL
+    )
+  })
+  
+  output$y33 <- shiny::renderUI({
+    
+    choi <- setdiff(
+      setdiff(names(results()$results_total[ ,!is.na(results()$results_total)]),'N.of.subjects'),
+      names(which(apply(results()$sge[,names(results()$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))})))
+    )
+    shiny::selectInput(
+      inputId = ns("y33"),
+      label = "Fifth Target variable",
+      choices = choi,
+      selected = NULL
+    )
+  })
+  
+  output$y34 <- shiny::renderUI({
+    
+    choi <- setdiff(
+      setdiff(names(results()$results_total[ ,!is.na(results()$results_total)]),'N.of.subjects'),
+      names(which(apply(results()$sge[,names(results()$results_total)],2,function(x) {(!all(is.finite(x[!is.na(x)])))})))
+    )
+    shiny::selectInput(
+      inputId = ns("y34"),
+      label = "Sixth Target variable",
+      choices = choi,
+      selected = NULL
+    )
+  })
+  
+  
   output$plot_type3 <- shiny::renderUI({
     shiny::radioButtons(
       inputId = ns("plot_type3"),
@@ -371,7 +712,51 @@ mod_comparer_server <- function(input, output, session,
       inline = TRUE
     )
   })
-
+  
+  output$plot_type31 <- shiny::renderUI({
+    shiny::radioButtons(
+      inputId = ns("plot_type31"),
+      label = "Type (Compare Plot: y-axis)",
+      choiceNames = list("linear", "logarithmic"),
+      choiceValues = c("lin", "log"),
+      selected = "lin",
+      inline = TRUE
+    )
+  })
+  
+  output$plot_type32 <- shiny::renderUI({
+    shiny::radioButtons(
+      inputId = ns("plot_type32"),
+      label = "Type (Compare Plot: y-axis)",
+      choiceNames = list("linear", "logarithmic"),
+      choiceValues = c("lin", "log"),
+      selected = "lin",
+      inline = TRUE
+    )
+  })
+  
+  output$plot_type33 <- shiny::renderUI({
+    shiny::radioButtons(
+      inputId = ns("plot_type33"),
+      label = "Type (Compare Plot: y-axis)",
+      choiceNames = list("linear", "logarithmic"),
+      choiceValues = c("lin", "log"),
+      selected = "lin",
+      inline = TRUE
+    )
+  })
+  
+  output$plot_type34 <- shiny::renderUI({
+    shiny::radioButtons(
+      inputId = ns("plot_type34"),
+      label = "Type (Compare Plot: y-axis)",
+      choiceNames = list("linear", "logarithmic"),
+      choiceValues = c("lin", "log"),
+      selected = "lin",
+      inline = TRUE
+    )
+  })
+  
   output$x2 <- shiny::renderUI({
     shiny::selectInput(
       inputId = ns("x2"),
@@ -380,31 +765,31 @@ mod_comparer_server <- function(input, output, session,
       selected =  "N.of.subjects"
     )
   })
-
+  
   output$YRange3 <- shiny::renderUI({
     shiny::req(input$y2)
     shiny::req(input$plot_type3)
-
+    
     if (input$plot_type3 == "lin") {
-    shiny::req(results())
-    if (input$y2 %in% colnames(results()$sge)) {
-      shiny::sliderInput(
-        inputId = ns("YRange3"),
-        label = "Y Range (Compare Plot: y-axis / Bubble Plot: y-axis)",
-        min = roundDownNice(min(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers),
-        max = roundUpNice(max(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers),
-        value = c(roundDownNice(min(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers), roundUpNice(max(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers)),
-        step = roundUpNice((max(results()$sge[, input$y2], na.rm = TRUE) - min(results()$sge[, names(results()$results_total[ ,!is.na(results()$results_total)])[2]], na.rm = TRUE))/100, nice = nice_Numbers)
-      )
-    }
-  } else {
+      shiny::req(results())
+      if (input$y2 %in% colnames(results()$sge)) {
+        shiny::sliderInput(
+          inputId = ns("YRange3"),
+          label = "Y Range (Compare Plot: y-axis / Bubble Plot: y-axis)",
+          min = roundDownNice(min(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers),
+          max = roundUpNice(max(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers),
+          value = c(roundDownNice(min(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers), roundUpNice(max(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers)),
+          step = roundUpNice((max(results()$sge[, input$y2], na.rm = TRUE) - min(results()$sge[, names(results()$results_total[ ,!is.na(results()$results_total)])[2]], na.rm = TRUE))/100, nice = nice_Numbers)
+        )
+      }
+    } else {
       rg.z <- log(
         range(
           roundDownNice(min(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers),
           roundUpNice(max(results()$sge[, input$y2], na.rm = TRUE), nice = nice_Numbers)
         )
       )
-
+      
       choices <- unique(
         unlist(
           lapply(
@@ -413,7 +798,7 @@ mod_comparer_server <- function(input, output, session,
           )
         )
       )
-
+      
       shinyWidgets::sliderTextInput(
         inputId = ns("YRange3"),
         label = "Log Range (Compare Plot: y-axis / Bubble Plot: y-axis)",
@@ -422,9 +807,185 @@ mod_comparer_server <- function(input, output, session,
         selected = c(choices[1], choices[length(choices)]),
         grid = TRUE
       )
-     }
+    }
   })
-
+  
+  output$YRange31 <- shiny::renderUI({
+    shiny::req(input$y31)
+    shiny::req(input$plot_type31)
+    
+    if (input$plot_type31 == "lin") {
+      shiny::req(results())
+      if (input$y31 %in% colnames(results()$sge)) {
+        shiny::sliderInput(
+          inputId = ns("YRange31"),
+          label = "Y Range (Compare Plot: y-axis)",
+          min = roundDownNice(min(results()$sge[, input$y31], na.rm = TRUE), nice = nice_Numbers),
+          max = roundUpNice(max(results()$sge[, input$y31], na.rm = TRUE), nice = nice_Numbers),
+          value = c(roundDownNice(min(results()$sge[, input$y31], na.rm = TRUE), nice = nice_Numbers), roundUpNice(max(results()$sge[, input$y31], na.rm = TRUE), nice = nice_Numbers)),
+          step = roundUpNice((max(results()$sge[, input$y31], na.rm = TRUE) - min(results()$sge[, names(results()$results_total[ ,!is.na(results()$results_total)])[2]], na.rm = TRUE))/100, nice = nice_Numbers)
+        )
+      }
+    } else {
+      rg.z <- log(
+        range(
+          roundDownNice(min(results()$sge[, input$y31], na.rm = TRUE), nice = nice_Numbers),
+          roundUpNice(max(results()$sge[, input$y31], na.rm = TRUE), nice = nice_Numbers)
+        )
+      )
+      
+      choices <- unique(
+        unlist(
+          lapply(
+            exp(seq(rg.z[1], rg.z[2], length.out = 20)),
+            function(x) {signif(x, 2)}
+          )
+        )
+      )
+      
+      shinyWidgets::sliderTextInput(
+        inputId = ns("YRange31"),
+        label = "Log Range (Compare Plot: y-axis)",
+        hide_min_max = TRUE,
+        choices = choices,
+        selected = c(choices[1], choices[length(choices)]),
+        grid = TRUE
+      )
+    }
+  })
+  
+  output$YRange32 <- shiny::renderUI({
+    shiny::req(input$y32)
+    shiny::req(input$plot_type32)
+    
+    if (input$plot_type32 == "lin") {
+      shiny::req(results())
+      if (input$y32 %in% colnames(results()$sge)) {
+        shiny::sliderInput(
+          inputId = ns("YRange32"),
+          label = "Y Range (Compare Plot: y-axis)",
+          min = roundDownNice(min(results()$sge[, input$y32], na.rm = TRUE), nice = nice_Numbers),
+          max = roundUpNice(max(results()$sge[, input$y32], na.rm = TRUE), nice = nice_Numbers),
+          value = c(roundDownNice(min(results()$sge[, input$y32], na.rm = TRUE), nice = nice_Numbers), roundUpNice(max(results()$sge[, input$y32], na.rm = TRUE), nice = nice_Numbers)),
+          step = roundUpNice((max(results()$sge[, input$y32], na.rm = TRUE) - min(results()$sge[, names(results()$results_total[ ,!is.na(results()$results_total)])[2]], na.rm = TRUE))/100, nice = nice_Numbers)
+        )
+      }
+    } else {
+      rg.z <- log(
+        range(
+          roundDownNice(min(results()$sge[, input$y32], na.rm = TRUE), nice = nice_Numbers),
+          roundUpNice(max(results()$sge[, input$y32], na.rm = TRUE), nice = nice_Numbers)
+        )
+      )
+      
+      choices <- unique(
+        unlist(
+          lapply(
+            exp(seq(rg.z[1], rg.z[2], length.out = 20)),
+            function(x) {signif(x, 2)}
+          )
+        )
+      )
+      
+      shinyWidgets::sliderTextInput(
+        inputId = ns("YRange32"),
+        label = "Log Range (Compare Plot: y-axis)",
+        hide_min_max = TRUE,
+        choices = choices,
+        selected = c(choices[1], choices[length(choices)]),
+        grid = TRUE
+      )
+    }
+  })
+  
+  output$YRange33 <- shiny::renderUI({
+    shiny::req(input$y33)
+    shiny::req(input$plot_type33)
+    
+    if (input$plot_type33 == "lin") {
+      shiny::req(results())
+      if (input$y33 %in% colnames(results()$sge)) {
+        shiny::sliderInput(
+          inputId = ns("YRange33"),
+          label = "Y Range (Compare Plot: y-axis)",
+          min = roundDownNice(min(results()$sge[, input$y33], na.rm = TRUE), nice = nice_Numbers),
+          max = roundUpNice(max(results()$sge[, input$y33], na.rm = TRUE), nice = nice_Numbers),
+          value = c(roundDownNice(min(results()$sge[, input$y33], na.rm = TRUE), nice = nice_Numbers), roundUpNice(max(results()$sge[, input$y33], na.rm = TRUE), nice = nice_Numbers)),
+          step = roundUpNice((max(results()$sge[, input$y33], na.rm = TRUE) - min(results()$sge[, names(results()$results_total[ ,!is.na(results()$results_total)])[2]], na.rm = TRUE))/100, nice = nice_Numbers)
+        )
+      }
+    } else {
+      rg.z <- log(
+        range(
+          roundDownNice(min(results()$sge[, input$y33], na.rm = TRUE), nice = nice_Numbers),
+          roundUpNice(max(results()$sge[, input$y33], na.rm = TRUE), nice = nice_Numbers)
+        )
+      )
+      
+      choices <- unique(
+        unlist(
+          lapply(
+            exp(seq(rg.z[1], rg.z[2], length.out = 20)),
+            function(x) {signif(x, 2)}
+          )
+        )
+      )
+      
+      shinyWidgets::sliderTextInput(
+        inputId = ns("YRange33"),
+        label = "Log Range (Compare Plot: y-axis)",
+        hide_min_max = TRUE,
+        choices = choices,
+        selected = c(choices[1], choices[length(choices)]),
+        grid = TRUE
+      )
+    }
+  })
+  
+  output$YRange34 <- shiny::renderUI({
+    shiny::req(input$y34)
+    shiny::req(input$plot_type34)
+    
+    if (input$plot_type34 == "lin") {
+      shiny::req(results())
+      if (input$y34 %in% colnames(results()$sge)) {
+        shiny::sliderInput(
+          inputId = ns("YRange34"),
+          label = "Y Range (Compare Plot: y-axis)",
+          min = roundDownNice(min(results()$sge[, input$y34], na.rm = TRUE), nice = nice_Numbers),
+          max = roundUpNice(max(results()$sge[, input$y34], na.rm = TRUE), nice = nice_Numbers),
+          value = c(roundDownNice(min(results()$sge[, input$y34], na.rm = TRUE), nice = nice_Numbers), roundUpNice(max(results()$sge[, input$y34], na.rm = TRUE), nice = nice_Numbers)),
+          step = roundUpNice((max(results()$sge[, input$y34], na.rm = TRUE) - min(results()$sge[, names(results()$results_total[ ,!is.na(results()$results_total)])[2]], na.rm = TRUE))/100, nice = nice_Numbers)
+        )
+      }
+    } else {
+      rg.z <- log(
+        range(
+          roundDownNice(min(results()$sge[, input$y34], na.rm = TRUE), nice = nice_Numbers),
+          roundUpNice(max(results()$sge[, input$y34], na.rm = TRUE), nice = nice_Numbers)
+        )
+      )
+      
+      choices <- unique(
+        unlist(
+          lapply(
+            exp(seq(rg.z[1], rg.z[2], length.out = 20)),
+            function(x) {signif(x, 2)}
+          )
+        )
+      )
+      
+      shinyWidgets::sliderTextInput(
+        inputId = ns("YRange34"),
+        label = "Log Range (Compare Plot: y-axis)",
+        hide_min_max = TRUE,
+        choices = choices,
+        selected = c(choices[1], choices[length(choices)]),
+        grid = TRUE
+      )
+    }
+  })
+  
   shiny::callModule(
     mod_legend_server,
     "legend2",
@@ -434,7 +995,7 @@ mod_comparer_server <- function(input, output, session,
     complement = shiny::reactive({ifelse(!is.null(plot_points_data_complement()), TRUE, FALSE)})#,
     # point_brightness = point_brightness
   )
-
+  
   shiny::callModule(
     mod_legend_server,
     "legend3",
@@ -444,7 +1005,7 @@ mod_comparer_server <- function(input, output, session,
     complement = shiny::reactive({FALSE})#,
     #point_brightness = point_brightness
   )
-
+  
   mod_graph_vars2 <- shiny::callModule(
     module = mod_graph_server,
     id = "graph2",
@@ -455,11 +1016,11 @@ mod_comparer_server <- function(input, output, session,
     plot_type = shiny::reactive({shiny::req(input$plot_type2)}),
     point_size = point_size,
     #pch_value = pch_value,
-      LabelParent = LabelParent,
-      LabelMemorized = LabelMemorized,
-      LabelTabClicked = LabelTabClicked,
-      LabelFactCont = LabelFactCont,
-      ColorParents = ColorParents,
+    LabelParent = LabelParent,
+    LabelMemorized = LabelMemorized,
+    LabelTabClicked = LabelTabClicked,
+    LabelFactCont = LabelFactCont,
+    ColorParents = ColorParents,
     color = color,
     ColorBGplot = ColorBGplot,
     ColorTabClicked = ColorTabClicked,
@@ -488,7 +1049,7 @@ mod_comparer_server <- function(input, output, session,
     exclude_funnel = exclude_funnel,
     alpha_funnel = alpha_funnel
   )
-
+  
   mod_graph_vars3 <- shiny::callModule(
     module = mod_graph_server,
     id = "graph3",
@@ -507,11 +1068,11 @@ mod_comparer_server <- function(input, output, session,
     ColorPoints = ColorPoints,
     ColorMemorized = ColorMemorized,
     ColorFactorial = ColorFactorial,
-      LabelParent = LabelParent,
-      LabelMemorized = LabelMemorized,
-      LabelTabClicked = LabelTabClicked,
-      LabelFactCont = LabelFactCont,
-      ColorParents = ColorParents,
+    LabelParent = LabelParent,
+    LabelMemorized = LabelMemorized,
+    LabelTabClicked = LabelTabClicked,
+    LabelFactCont = LabelFactCont,
+    ColorParents = ColorParents,
     x = shiny::reactive({shiny::req(input$x2)}),
     y = shiny::reactive({shiny::req(input$y2)}),
     plot_points_data_complement = plot_points_data_complement,
@@ -532,8 +1093,183 @@ mod_comparer_server <- function(input, output, session,
     exclude_funnel = exclude_funnel,
     alpha_funnel = alpha_funnel
   )
-
-
+  
+  mod_graph_vars31 <- shiny::callModule(
+    module = mod_graph_server,
+    id = "graph31",
+    results = results,
+    plot_point = shiny::reactive({plot_points_data31()}),
+    YRange = shiny::reactive({shiny::req(input$YRange31)}),
+    XRange = shiny::reactive({NULL}),
+    plot_type = shiny::reactive({shiny::req(input$plot_type31)}),
+    point_size = point_size,
+    #pch_value = pch_value,
+    color = color,
+    ColorBGplot = ColorBGplot,
+    ColorTabClicked = ColorTabClicked,
+    ColorReference = ColorReference,
+    ColorCustomReference = ColorCustomReference,
+    ColorPoints = ColorPoints,
+    ColorMemorized = ColorMemorized,
+    ColorFactorial = ColorFactorial,
+    LabelParent = LabelParent,
+    LabelMemorized = LabelMemorized,
+    LabelTabClicked = LabelTabClicked,
+    LabelFactCont = LabelFactCont,
+    ColorParents = ColorParents,
+    x = shiny::reactive({shiny::req(input$x2)}),
+    y = shiny::reactive({shiny::req(input$y31)}),
+    plot_points_data_complement = plot_points_data_complement,
+    key = key,
+    nice_Numbers = nice_Numbers,
+    xlabel = xlabel,
+    grid = grid,
+    circlestyle = circlestyle,
+    memorized_Data = memorized_Data,
+    show_ref_line = show_ref_line,
+    add_custom_ref_line  = add_custom_ref_line,
+    value_custom_ref_line  = value_custom_ref_line,
+    show_favour_arrows = show_favour_arrows,
+    favour_direction = favour_direction,
+    favour_verum_name = favour_verum_name,
+    favour_comparator_name = favour_comparator_name,
+    add_funnel = add_funnel,
+    exclude_funnel = exclude_funnel,
+    alpha_funnel = alpha_funnel
+  )
+  
+  mod_graph_vars32 <- shiny::callModule(
+    module = mod_graph_server,
+    id = "graph32",
+    results = results,
+    plot_point = shiny::reactive({plot_points_data32()}),
+    YRange = shiny::reactive({shiny::req(input$YRange32)}),
+    XRange = shiny::reactive({NULL}),
+    plot_type = shiny::reactive({shiny::req(input$plot_type32)}),
+    point_size = point_size,
+    #pch_value = pch_value,
+    color = color,
+    ColorBGplot = ColorBGplot,
+    ColorTabClicked = ColorTabClicked,
+    ColorReference = ColorReference,
+    ColorCustomReference = ColorCustomReference,
+    ColorPoints = ColorPoints,
+    ColorMemorized = ColorMemorized,
+    ColorFactorial = ColorFactorial,
+    LabelParent = LabelParent,
+    LabelMemorized = LabelMemorized,
+    LabelTabClicked = LabelTabClicked,
+    LabelFactCont = LabelFactCont,
+    ColorParents = ColorParents,
+    x = shiny::reactive({shiny::req(input$x2)}),
+    y = shiny::reactive({shiny::req(input$y32)}),
+    plot_points_data_complement = plot_points_data_complement,
+    key = key,
+    nice_Numbers = nice_Numbers,
+    xlabel = xlabel,
+    grid = grid,
+    circlestyle = circlestyle,
+    memorized_Data = memorized_Data,
+    show_ref_line = show_ref_line,
+    add_custom_ref_line  = add_custom_ref_line,
+    value_custom_ref_line  = value_custom_ref_line,
+    show_favour_arrows = show_favour_arrows,
+    favour_direction = favour_direction,
+    favour_verum_name = favour_verum_name,
+    favour_comparator_name = favour_comparator_name,
+    add_funnel = add_funnel,
+    exclude_funnel = exclude_funnel,
+    alpha_funnel = alpha_funnel
+  )
+  
+  mod_graph_vars33 <- shiny::callModule(
+    module = mod_graph_server,
+    id = "graph33",
+    results = results,
+    plot_point = shiny::reactive({plot_points_data33()}),
+    YRange = shiny::reactive({shiny::req(input$YRange33)}),
+    XRange = shiny::reactive({NULL}),
+    plot_type = shiny::reactive({shiny::req(input$plot_type33)}),
+    point_size = point_size,
+    #pch_value = pch_value,
+    color = color,
+    ColorBGplot = ColorBGplot,
+    ColorTabClicked = ColorTabClicked,
+    ColorReference = ColorReference,
+    ColorCustomReference = ColorCustomReference,
+    ColorPoints = ColorPoints,
+    ColorMemorized = ColorMemorized,
+    ColorFactorial = ColorFactorial,
+    LabelParent = LabelParent,
+    LabelMemorized = LabelMemorized,
+    LabelTabClicked = LabelTabClicked,
+    LabelFactCont = LabelFactCont,
+    ColorParents = ColorParents,
+    x = shiny::reactive({shiny::req(input$x2)}),
+    y = shiny::reactive({shiny::req(input$y33)}),
+    plot_points_data_complement = plot_points_data_complement,
+    key = key,
+    nice_Numbers = nice_Numbers,
+    xlabel = xlabel,
+    grid = grid,
+    circlestyle = circlestyle,
+    memorized_Data = memorized_Data,
+    show_ref_line = show_ref_line,
+    add_custom_ref_line  = add_custom_ref_line,
+    value_custom_ref_line  = value_custom_ref_line,
+    show_favour_arrows = show_favour_arrows,
+    favour_direction = favour_direction,
+    favour_verum_name = favour_verum_name,
+    favour_comparator_name = favour_comparator_name,
+    add_funnel = add_funnel,
+    exclude_funnel = exclude_funnel,
+    alpha_funnel = alpha_funnel
+  )
+  
+  mod_graph_vars34 <- shiny::callModule(
+    module = mod_graph_server,
+    id = "graph34",
+    results = results,
+    plot_point = shiny::reactive({plot_points_data34()}),
+    YRange = shiny::reactive({shiny::req(input$YRange34)}),
+    XRange = shiny::reactive({NULL}),
+    plot_type = shiny::reactive({shiny::req(input$plot_type34)}),
+    point_size = point_size,
+    #pch_value = pch_value,
+    color = color,
+    ColorBGplot = ColorBGplot,
+    ColorTabClicked = ColorTabClicked,
+    ColorReference = ColorReference,
+    ColorCustomReference = ColorCustomReference,
+    ColorPoints = ColorPoints,
+    ColorMemorized = ColorMemorized,
+    ColorFactorial = ColorFactorial,
+    LabelParent = LabelParent,
+    LabelMemorized = LabelMemorized,
+    LabelTabClicked = LabelTabClicked,
+    LabelFactCont = LabelFactCont,
+    ColorParents = ColorParents,
+    x = shiny::reactive({shiny::req(input$x2)}),
+    y = shiny::reactive({shiny::req(input$y34)}),
+    plot_points_data_complement = plot_points_data_complement,
+    key = key,
+    nice_Numbers = nice_Numbers,
+    xlabel = xlabel,
+    grid = grid,
+    circlestyle = circlestyle,
+    memorized_Data = memorized_Data,
+    show_ref_line = show_ref_line,
+    add_custom_ref_line  = add_custom_ref_line,
+    value_custom_ref_line  = value_custom_ref_line,
+    show_favour_arrows = show_favour_arrows,
+    favour_direction = favour_direction,
+    favour_verum_name = favour_verum_name,
+    favour_comparator_name = favour_comparator_name,
+    add_funnel = add_funnel,
+    exclude_funnel = exclude_funnel,
+    alpha_funnel = alpha_funnel
+  )
+  
   mod_graph_vars4 <- shiny::callModule(
     module = mod_bubble_server,
     id = "graph4",
@@ -560,17 +1296,29 @@ mod_comparer_server <- function(input, output, session,
     grid = grid,
     circlestyle = circlestyle
   )
-
- return(
+  
+  return(
     list(
       clicked_points2 = shiny::reactive({mod_graph_vars2$clicked_points()}),
       plot_clicked2 = shiny::reactive({mod_graph_vars2$plot_click()}),
       clicked_points3 = shiny::reactive({mod_graph_vars3$clicked_points()}),
       plot_clicked3 = shiny::reactive({mod_graph_vars3$plot_click()}),
+      clicked_points31 = shiny::reactive({mod_graph_vars31$clicked_points()}),
+      plot_clicked31 = shiny::reactive({mod_graph_vars31$plot_click()}),
+      clicked_points32 = shiny::reactive({mod_graph_vars32$clicked_points()}),
+      plot_clicked32 = shiny::reactive({mod_graph_vars32$plot_click()}),
+      clicked_points33 = shiny::reactive({mod_graph_vars33$clicked_points()}),
+      plot_clicked33 = shiny::reactive({mod_graph_vars33$plot_click()}),
+      clicked_points34 = shiny::reactive({mod_graph_vars34$clicked_points()}),
+      plot_clicked34 = shiny::reactive({mod_graph_vars34$plot_click()}),
       clicked_points4 = shiny::reactive({mod_graph_vars4$clicked_points()}),
       plot_clicked4 = shiny::reactive({mod_graph_vars4$plot_click()}),
       selected_SGIDs2 = shiny::reactive({mod_graph_vars2$selected_SGIDs()}),
       selected_SGIDs3 = shiny::reactive({mod_graph_vars3$selected_SGIDs()}),
+      selected_SGIDs31 = shiny::reactive({mod_graph_vars31$selected_SGIDs()}),
+      selected_SGIDs32 = shiny::reactive({mod_graph_vars32$selected_SGIDs()}),
+      selected_SGIDs33 = shiny::reactive({mod_graph_vars33$selected_SGIDs()}),
+      selected_SGIDs34 = shiny::reactive({mod_graph_vars34$selected_SGIDs()}),
       selected_SGIDs4 = shiny::reactive({mod_graph_vars4$selected_SGIDs()})
     )
   )

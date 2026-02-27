@@ -127,6 +127,7 @@ mod_graph_server <- function(
       } else {
         title <- paste(key()[1], " to ", key()[2], "-Factorial Subgroups (", length(data[[x()]]), ")", sep = "")
       }
+      title <- paste0(title, "        (",y(), ")")
 
       # add column for color information
       data$point_color <- color()[1:dim(data)[1]]
