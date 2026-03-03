@@ -185,7 +185,6 @@ app_server <- function(input, output, session) {
     }
   })
 
-  shinyjs::useShinyjs(debug = TRUE)
   shinyjs::disable("ColorImportance")
 
   #### Observe: enable ColorImportance ####

@@ -685,6 +685,39 @@
       "Maintainer": "Carson Sievert <carson@posit.co>",
       "Repository": "RSPM"
     },
+    "dashboardthemes": {
+      "Package": "dashboardthemes",
+      "Version": "1.1.6",
+      "Source": "Repository",
+      "Type": "Package",
+      "Title": "Customise the Appearance of 'shinydashboard' Applications using Themes",
+      "Authors@R": "person(\"Nik\", \"Lilovski\", email = \"nik.lilovski@outlook.com\", role = c(\"aut\", \"cre\"))",
+      "Maintainer": "Nik Lilovski <nik.lilovski@outlook.com>",
+      "Description": "Allows manual creation of themes and logos to be used in applications created using the 'shinydashboard' package. Removes the need to change the underlying css code by wrapping it into a set of convenient R functions.",
+      "URL": "https://github.com/nik01010/dashboardthemes",
+      "BugReports": "https://github.com/nik01010/dashboardthemes/issues",
+      "Depends": [
+        "R (>= 3.2.3)"
+      ],
+      "Imports": [
+        "htmltools (>= 0.3.5)"
+      ],
+      "Suggests": [
+        "testthat",
+        "lintr",
+        "knitr",
+        "rmarkdown",
+        "glue",
+        "covr"
+      ],
+      "License": "MIT + file LICENSE",
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.2.0",
+      "VignetteBuilder": "knitr",
+      "NeedsCompilation": "no",
+      "Author": "Nik Lilovski [aut, cre]",
+      "Repository": "CRAN"
+    },
     "data.table": {
       "Package": "data.table",
       "Version": "1.17.8",
@@ -3046,9 +3079,35 @@
       "Maintainer": "Victor Perrier <victor.perrier@dreamrs.fr>",
       "Repository": "CRAN"
     },
+    "shinydashboard": {
+      "Package": "shinydashboard",
+      "Version": "0.7.3",
+      "Source": "Repository",
+      "Title": "Create Dashboards with 'Shiny'",
+      "Authors@R": "c( person(\"Winston\", \"Chang\", , \"winston@posit.co\", role = c(\"aut\", \"cre\")), person(\"Barbara\", \"Borges Ribeiro\", role = \"aut\"), person(, \"Posit Software, PBC\", role = \"cph\"), person(, \"Almasaeed Studio\", role = c(\"ctb\", \"cph\"), comment = \"AdminLTE theme for Bootstrap\"), person(, \"Adobe Systems Incorporated\", role = c(\"ctb\", \"cph\"), comment = \"Source Sans Pro font\") )",
+      "Description": "Create dashboards with 'Shiny'. This package provides a theme on top of 'Shiny', making it easy to create attractive dashboards.",
+      "License": "MIT + file LICENSE",
+      "URL": "https://rstudio.github.io/shinydashboard/, https://github.com/rstudio/shinydashboard",
+      "BugReports": "https://github.com/rstudio/shinydashboard/issues",
+      "Depends": [
+        "R (>= 3.0)"
+      ],
+      "Imports": [
+        "htmltools (>= 0.2.6)",
+        "promises",
+        "shiny (>= 1.0.0)",
+        "utils"
+      ],
+      "Encoding": "UTF-8",
+      "RoxygenNote": "7.3.2",
+      "NeedsCompilation": "no",
+      "Author": "Winston Chang [aut, cre], Barbara Borges Ribeiro [aut], Posit Software, PBC [cph], Almasaeed Studio [ctb, cph] (AdminLTE theme for Bootstrap), Adobe Systems Incorporated [ctb, cph] (Source Sans Pro font)",
+      "Maintainer": "Winston Chang <winston@posit.co>",
+      "Repository": "CRAN"
+    },
     "shinyjs": {
       "Package": "shinyjs",
-      "Version": "2.1.0",
+      "Version": "2.1.1",
       "Source": "Repository",
       "Title": "Easily Improve the User Experience of Your Shiny Apps in Seconds",
       "Authors@R": "person(\"Dean\", \"Attali\",  email = \"daattali@gmail.com\", role = c(\"aut\", \"cre\"), comment= c(ORCID=\"0000-0002-5645-3493\"))",
@@ -3073,10 +3132,10 @@
       ],
       "License": "MIT + file LICENSE",
       "VignetteBuilder": "knitr",
-      "RoxygenNote": "7.1.1",
+      "RoxygenNote": "7.3.3",
       "Encoding": "UTF-8",
       "NeedsCompilation": "no",
-      "Author": "Dean Attali [aut, cre] (<https://orcid.org/0000-0002-5645-3493>)",
+      "Author": "Dean Attali [aut, cre] (ORCID: <https://orcid.org/0000-0002-5645-3493>)",
       "Maintainer": "Dean Attali <daattali@gmail.com>",
       "Repository": "CRAN"
     },

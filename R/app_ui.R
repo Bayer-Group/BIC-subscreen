@@ -48,6 +48,11 @@ app_ui <- function(request) {
       body =
         ##### Plots #####
       shinydashboard::dashboardBody(
+          shinyjs::useShinyjs(debug = TRUE),
+          shinyjs::extendShinyjs(
+                  script = "www/tabs.js",
+                  functions = c("disableTab", "enableTab")
+                ),
         dashboardthemes::shinyDashboardThemes(
           theme = "grey_dark"
         ),
@@ -175,4 +180,3 @@ golem_add_external_resources <- function() {
     # for example, you can add shinyalert::useShinyalert()
   )
 }
-
