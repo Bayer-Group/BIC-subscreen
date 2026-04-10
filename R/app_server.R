@@ -16,45 +16,20 @@ app_server <- function(input, output, session) {
 
   #### OBSERVEEVENTS ####
 
-  #open interaction plot when subgroup is clicked and is (pseudo-)complete
-  shiny::observeEvent(new_selected_ids$val, {
-
-    if (!is.null(scresults_tmp$dat)) {
-      #if factorial context calc was performed
-      if(any(startsWith(colnames(scresults_tmp$dat$sge),"FCID_complete_"))) {
-      tmp <- scresults_tmp$dat$sge[
-        scresults_tmp$dat$sge$SGID == as.numeric(new_selected_ids$val) ,
-        c(paste0("FCID_complete_",input$y),paste0("FCID_incomplete_",input$y),paste0("FCID_pseudo_",input$y))
-      ]
-      if(
-        tmp[paste0("FCID_complete_",input$y)] != "Not complete" |
-        tmp[paste0("FCID_pseudo_",input$y)] != "No Pseudo"
-      ) {
-        shinyWidgets::updatePrettyToggle(
-          session,
-          inputId = 'showPanel2',
-          value = TRUE
-        )
-      } else {
-
-      }
-      }
-    }
-  })
   #### ObserveEvent: scresults_tmp$dat ####
-  ## If the upload tab is actived, update TabsetPanel to start with Explorer-tab
+  ## If the upload tab is active, select Explorer or Upload in the navbar
   shiny::observeEvent(scresults_tmp$dat, {
     if (is.null(scresults_tmp$dat)) {
-      shiny::updateTabsetPanel(
-        session,
-        inputId = "navpanel",
-        selected = "SubscreenUpload"
+      bslib::nav_select(
+        id = "navpanel",
+        selected = "SubscreenUpload",
+        session = session
       )
     } else {
-      shiny::updateTabsetPanel(
-        session,
-        inputId = "navpanel",
-        selected = "SubscreenExplorer"
+      bslib::nav_select(
+        id = "navpanel",
+        selected = "SubscreenExplorer",
+        session = session
       )
     }
   }, ignoreNULL = FALSE)
@@ -673,39 +648,6 @@ app_server <- function(input, output, session) {
       }
     })
     }
-  })
-
-   output$interactionPanel <- shiny::renderUI({
-    shiny::absolutePanel(
-      id = "interactionPanel",
-      class = "modal-content",
-      fixed = TRUE,
-      draggable = TRUE,
-      shiny::HTML(paste0(
-        "<div style='background-color: #424242'>"
-      )),
-      shiny::HTML('
-        <button style =
-        "background: #424242;
-        color:#ffffff",
-        data-toggle="collapse" data-target="#demo" style="color:white;">
-        <i class="fa-solid fa-chart-line"></i> Interaction plot </button>'
-      ),
-      top = 85,
-      left = "auto",
-      right = 100,
-      bottom = "auto",
-      width = 600,
-      height = "auto",
-      shiny::tags$div(
-        id = 'demo',
-        class = "collapse",
-        shiny::fluidRow(
-          shiny::uiOutput("interaction_panel")
-        )
-      ),
-      style = "z-index: 10;"
-    )
   })
 
   #### ObserveEvent: input$filter, input$filter2, input$VarChosen, input$VarChosen2, scresults_tmp$dat, input$y,backgroundColor() ####

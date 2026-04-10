@@ -6,30 +6,32 @@
 #'
 #' @noRd
 #'
-mod_mosaic_ui <- function(id) {
+mod_mosaic_sidebar_ui <- function(id) {
   ns <- shiny::NS(id)
+  shiny::uiOutput(ns("PanelMosaic"))
+}
+
+mod_mosaic_main_ui <- function(id) {
+  ns <- shiny::NS(id)
+  shiny::div(
+    style = "position:relative",
+    shiny::uiOutput(ns("helptext_mosaic")),
+    shiny::plotOutput(
+      outputId = ns("mosaic"),
+      hover = shiny::hoverOpts(id = ns("plot_hover"), delay = 200, delayType = "debounce"),
+      height = 600,
+      width = 1000
+    ),
+    shiny::uiOutput(ns("hover_info"))
+  )
+}
+
+mod_mosaic_ui <- function(id) {
   shiny::tagList(
     shiny::fluidPage(
       shiny::fluidRow(
-          col_3(
-          # Option and variable panel
-          shiny::uiOutput(ns('PanelMosaic'))
-        ),
-        col_8(
-          shiny::div(style = "position:relative",
-            shiny::uiOutput(ns('helptext_mosaic')),
-            # Mosaic plot
-
-            shiny::plotOutput(
-              outputId = ns("mosaic"),
-              # hover options
-              hover = shiny::hoverOpts(id = ns('plot_hover'), delay = 200, delayType = 'debounce'),
-              height = 600,
-              width = 1000
-            ),
-            shiny::uiOutput(ns("hover_info"))
-          )
-        )
+        col_3(mod_mosaic_sidebar_ui(id)),
+        col_8(mod_mosaic_main_ui(id))
       )
     )
   )

@@ -7,119 +7,133 @@
 #' @noRd
 #'
 
-mod_comparer_ui <- function(id) {
+mod_comparer_sidebar_ui <- function(id) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    shiny::fluidRow(
-      col_3(
-        shiny::wellPanel(
-          shiny::div(
-            style = "position:absolute;right:2em;",
-            bsplus::bs_embed_tooltip(
-              tag = bsplus::shiny_iconlink("question"),
-              title = "Variable plotted on the y-axis (upper plot).",
-              placement = "top",
-              expanded = TRUE
-            )
-          ),
-          shiny::uiOutput(ns("y1")),
-          shiny::div(
-            style = "position:absolute;right:2em;",
-            bsplus::bs_embed_tooltip(
-              tag = bsplus::shiny_iconlink("question"),
-              title = "Change the scale on the y-axis (upper plot).",
-              placement = "top",
-              expanded = TRUE
-            )
-          ),
-          shiny::uiOutput(ns("plot_type2")),
-          shiny::div(
-            style = "position:absolute;right:2em;",
-            bsplus::bs_embed_tooltip(
-              tag = bsplus::shiny_iconlink("question"),
-              title = "Change the y-axis limits (upper plot).",
-              placement = "top",
-              expanded = TRUE
-            )
-          ),
-          shiny::uiOutput(ns("YRange2")),
-          bsplus::use_bs_popover(),
-          bsplus::use_bs_tooltip()
-        ),
-        shiny::wellPanel(
-          shiny::div(
-            style = "position:absolute;right:2em;",
-            bsplus::bs_embed_tooltip(
-              tag = bsplus::shiny_iconlink("question"),
-              title = "Variable t obe plotted on the y-axis (lower plot).",
-              placement = "top",
-              expanded = TRUE
-            )
-          ),
-          shiny::uiOutput(ns("y2")),
-          shiny::div(
-            style = "position:absolute;right:2em;",
-            bsplus::bs_embed_tooltip(
-              tag = bsplus::shiny_iconlink("question"),
-              title = "Change the scale on the y-axis (lower plot).",
-              placement = "top",
-              expanded = TRUE
-            )
-          ),
-          shiny::uiOutput(ns("plot_type3")),
-          shiny::div(
-            style = "position:absolute;right:2em;",
-            bsplus::bs_embed_tooltip(
-              tag = bsplus::shiny_iconlink("question"),
-              title = "Change y-axis limits (lower plot).",
-              placement = "top",
-              expanded = TRUE
-            )
-          ),
-          shiny::uiOutput(ns("YRange3")),
-          bsplus::use_bs_popover(),
-          bsplus::use_bs_tooltip()
-        ),
-        shiny::wellPanel(
-          shiny::div(style = "position:absolute;right:2em;",
-            bsplus::bs_embed_tooltip(tag = bsplus::shiny_iconlink("question"),
-            title = "Variable plotted on the x-axes.",
-            placement = "top",
-            expanded = TRUE
-            )
-          ),
-          shiny::uiOutput(ns("x2"))
+    shiny::wellPanel(
+      shiny::div(
+        style = "position:absolute;right:2em;",
+        bsplus::bs_embed_tooltip(
+          tag = bsplus::shiny_iconlink("question"),
+          title = "Variable plotted on the y-axis (upper plot).",
+          placement = "top",
+          expanded = TRUE
         )
       ),
-      shiny::mainPanel(
-        shiny::tabsetPanel(type = "tabs",
-          shiny::tabPanel("Compare",
-            mod_legend_ui(ns("legend2")),
-            col_7(
-              mod_graph_ui(ns("graph2"),
-               plotHeight = 390,
-               plotWidth = 1100
-              )
-            ),
-            col_7(
-              mod_graph_ui(ns("graph3"),
-                plotHeight = 390,
-                plotWidth = 1100
-              )
-            )
-          ),
-          ####.. Bubble plot####
-          shiny::tabPanel("Bubble plot",
-            mod_legend_ui(ns("legend3")),
-            col_7(
-              mod_bubble_ui(ns("graph4"),
-                plotHeight = 780,
-                plotWidth = 1100
-              )
-            )
-          )
+      shiny::uiOutput(ns("y1")),
+      shiny::div(
+        style = "position:absolute;right:2em;",
+        bsplus::bs_embed_tooltip(
+          tag = bsplus::shiny_iconlink("question"),
+          title = "Change the scale on the y-axis (upper plot).",
+          placement = "top",
+          expanded = TRUE
+        )
+      ),
+      shiny::uiOutput(ns("plot_type2")),
+      shiny::div(
+        style = "position:absolute;right:2em;",
+        bsplus::bs_embed_tooltip(
+          tag = bsplus::shiny_iconlink("question"),
+          title = "Change the y-axis limits (upper plot).",
+          placement = "top",
+          expanded = TRUE
+        )
+      ),
+      shiny::uiOutput(ns("YRange2")),
+      bsplus::use_bs_popover(),
+      bsplus::use_bs_tooltip()
+    ),
+    shiny::wellPanel(
+      shiny::div(
+        style = "position:absolute;right:2em;",
+        bsplus::bs_embed_tooltip(
+          tag = bsplus::shiny_iconlink("question"),
+          title = "Variable t obe plotted on the y-axis (lower plot).",
+          placement = "top",
+          expanded = TRUE
+        )
+      ),
+      shiny::uiOutput(ns("y2")),
+      shiny::div(
+        style = "position:absolute;right:2em;",
+        bsplus::bs_embed_tooltip(
+          tag = bsplus::shiny_iconlink("question"),
+          title = "Change the scale on the y-axis (lower plot).",
+          placement = "top",
+          expanded = TRUE
+        )
+      ),
+      shiny::uiOutput(ns("plot_type3")),
+      shiny::div(
+        style = "position:absolute;right:2em;",
+        bsplus::bs_embed_tooltip(
+          tag = bsplus::shiny_iconlink("question"),
+          title = "Change y-axis limits (lower plot).",
+          placement = "top",
+          expanded = TRUE
+        )
+      ),
+      shiny::uiOutput(ns("YRange3")),
+      bsplus::use_bs_popover(),
+      bsplus::use_bs_tooltip()
+    ),
+    shiny::wellPanel(
+      shiny::div(
+        style = "position:absolute;right:2em;",
+        bsplus::bs_embed_tooltip(
+          tag = bsplus::shiny_iconlink("question"),
+          title = "Variable plotted on the x-axes.",
+          placement = "top",
+          expanded = TRUE
+        )
+      ),
+      shiny::uiOutput(ns("x2"))
+    )
+  )
+}
+
+mod_comparer_tabs_ui <- function(id) {
+  ns <- shiny::NS(id)
+  shiny::tabsetPanel(
+    type = "tabs",
+    shiny::tabPanel(
+      "Compare",
+      mod_legend_ui(ns("legend2")),
+      col_7(
+        mod_graph_ui(
+          ns("graph2"),
+          plotHeight = 390,
+          plotWidth = 1100
+        )
+      ),
+      col_7(
+        mod_graph_ui(
+          ns("graph3"),
+          plotHeight = 390,
+          plotWidth = 1100
         )
       )
+    ),
+    shiny::tabPanel(
+      "Bubble plot",
+      mod_legend_ui(ns("legend3")),
+      col_7(
+        mod_bubble_ui(
+          ns("graph4"),
+          plotHeight = 780,
+          plotWidth = 1100
+        )
+      )
+    )
+  )
+}
+
+mod_comparer_ui <- function(id) {
+  shiny::tagList(
+    shiny::fluidRow(
+      col_3(mod_comparer_sidebar_ui(id)),
+      shiny::mainPanel(mod_comparer_tabs_ui(id))
     )
   )
 }
