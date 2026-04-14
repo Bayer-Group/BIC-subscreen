@@ -12,7 +12,7 @@ app_server <- function(input, output, session) {
   shinyjs::js$disableTab("SubscreenExplorer")
   shinyjs::js$disableTab("SubscreenComparer")
   shinyjs::js$disableTab("SubscreenMosaic")
-  shinyjs::js$disableTab("SubscreenAsmus")
+  #shinyjs::js$disableTab("SubscreenAsmus")
 
   #### OBSERVEEVENTS ####
 
@@ -164,11 +164,11 @@ app_server <- function(input, output, session) {
   shinyjs::disable("ColorImportance")
 
   #### Observe: enable ColorImportance ####
-  shiny::observe({
-    if (!is.null(variable_importance_tmp$dat)) {
-      shinyjs::enable("ColorImportance")
-    }
-  })
+  # shiny::observe({
+  #   if (!is.null(variable_importance_tmp$dat)) {
+  #     shinyjs::enable("ColorImportance")
+  #   }
+  # })
 
   shinyjs::disable("ColorParents")
 
@@ -424,6 +424,14 @@ app_server <- function(input, output, session) {
     plot_color$val <- create_color_function
     }
   })
+  
+  #### Observe: Sidebar Toggle ####
+  observe({
+    bslib::sidebar_toggle(
+      id = "sidebar",
+      open = input$navpanel == "Upload"
+    )
+  })
 
   # plot_filter_group <-reactiveValues(val = NULL)
   #### Observe (enable tabs) ####
@@ -432,14 +440,14 @@ app_server <- function(input, output, session) {
       shinyjs::js$enableTab("SubscreenExplorer")
       shinyjs::js$enableTab("SubscreenComparer")
       shinyjs::js$enableTab("SubscreenMosaic")
-      shinyjs::js$enableTab("SubscreenAsmus")
+      #shinyjs::js$enableTab("SubscreenAsmus")
     }
   })
 
   #### ObserveEvent: upload_data$parameter2() ####
-  shiny::observeEvent(upload_data$parameter2(), {
-    variable_importance_tmp$dat <- upload_data$parameter2()
-  })
+  # shiny::observeEvent(upload_data$parameter2(), {
+  #   variable_importance_tmp$dat <- upload_data$parameter2()
+  # })
 
 
   #### Observe (Interaction) ####
@@ -1175,15 +1183,15 @@ if (app_options$showTables) {
   })
 
   #### Reactive: vi_names() ####
-  vi_names <- shiny::reactive({
-    if (is.data.frame(variable_importance_tmp$dat)) {
-      "NULL"
-    } else if (is.list(variable_importance_tmp$dat)) {
-      names(variable_importance_tmp$dat)
-    } else  {
-      "NULL"
-    }
-  })
+  # vi_names <- shiny::reactive({
+  #   if (is.data.frame(variable_importance_tmp$dat)) {
+  #     "NULL"
+  #   } else if (is.list(variable_importance_tmp$dat)) {
+  #     names(variable_importance_tmp$dat)
+  #   } else  {
+  #     "NULL"
+  #   }
+  # })
 
   #### REACTIVEVALUES ####
   #### ReactiveValues: scresults_tmp$dat ####
@@ -1206,9 +1214,9 @@ if (app_options$showTables) {
 
 
   #### ReactiveValues: variable_importance_tmp$dat ####
-  variable_importance_tmp <- shiny::reactiveValues(
-    dat = app_options$variable_importance
-  )
+  # variable_importance_tmp <- shiny::reactiveValues(
+  #   dat = app_options$variable_importance
+  # )
 
   #### ReactiveValues: colthemeCol$... ####
   colthemeCol <- shiny::reactiveValues(
@@ -1360,10 +1368,10 @@ if (app_options$showTables) {
   })
 
   #### Output: Importance Availability ####
-  output$importanceenabled <- shiny::reactive({
-    !is.null(variable_importance_tmp$dat)
-  })
-  shiny::outputOptions(output, "importanceenabled", suspendWhenHidden = FALSE)
+  # output$importanceenabled <- shiny::reactive({
+  #   !is.null(variable_importance_tmp$dat)
+  # })
+  # shiny::outputOptions(output, "importanceenabled", suspendWhenHidden = FALSE)
 
   #### Output: Funnel Availability ####
   output$funnelenabled <- shiny::reactive({
@@ -1465,12 +1473,12 @@ if (app_options$showTables) {
   )
 
   #### Module call: variable_importance_server ####
-  importance_ <- shiny::callModule(
-    mod_variable_importance_server,
-    "vi",
-    variable_importance = shiny::reactive({variable_importance_tmp$dat}),
-    results = shiny::reactive({scresults_tmp$dat})
-  )
+  # importance_ <- shiny::callModule(
+  #   mod_variable_importance_server,
+  #   "vi",
+  #   variable_importance = shiny::reactive({variable_importance_tmp$dat}),
+  #   results = shiny::reactive({scresults_tmp$dat})
+  # )
 
   #### Module call: comparer_server ####
   # 2. Comparer
@@ -1531,15 +1539,15 @@ if (app_options$showTables) {
 
   #### Module call: asmus2_module_server ####
   # 4. ASMUS
-  shiny::callModule(
-    asmus2_module_server,
-    "asmus2",
-    results = shiny::reactive({scresults_tmp$dat}),
-    ColorReference = colthemeCol$ColorReference,
-    ColorBGplot = shiny::reactive({backgroundColor()}),
-    ColorPoints = shiny::reactive({colthemeCol$ColorPoints}),
-    nice_Numbers = app_options$nice_numbers
-  )
+  # shiny::callModule(
+  #   asmus2_module_server,
+  #   "asmus2",
+  #   results = shiny::reactive({scresults_tmp$dat}),
+  #   ColorReference = colthemeCol$ColorReference,
+  #   ColorBGplot = shiny::reactive({backgroundColor()}),
+  #   ColorPoints = shiny::reactive({colthemeCol$ColorPoints}),
+  #   nice_Numbers = app_options$nice_numbers
+  # )
 
   #### Module call: upload_tab_server ####
   # 5.Upload

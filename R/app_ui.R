@@ -63,6 +63,7 @@ app_ui <- function(request) {
       window_title = "Subgroup Explorer",
       sidebar = bslib::sidebar(
         title = NULL,
+        id = "sidebar",
         width = 380,
         bslib::accordion(
           id = "app_sidebar_accordion",
@@ -87,12 +88,12 @@ app_ui <- function(request) {
             shiny::wellPanel(mod_color_ui("color")),
             bsplus::use_bs_popover(),
             bsplus::use_bs_tooltip()
-          ),
-          bslib::accordion_panel(
-            title = "Importance Tab",
-            value = "ImportanceTab",
-            mod_variable_importance_ui("vi")
-          )
+          )#,
+          # bslib::accordion_panel(
+          #   title = "Importance Tab",
+          #   value = "ImportanceTab",
+          #   mod_variable_importance_ui("vi")
+          # )
         )
       ),
       bslib::nav_panel(
@@ -160,28 +161,28 @@ app_ui <- function(request) {
           )
         )
       ),
-      bslib::nav_panel(
-        title = "ASMUS",
-        value = "SubscreenAsmus",
-        icon = shiny::icon("tasks"),
-        bslib::layout_sidebar(
-          height = "auto",
-          fillable = TRUE,
-          sidebar = bslib::sidebar(
-            title = NULL,
-            width = 300,
-            position = "left",
-            shiny::helpText(
-              "ASMUS: use the target variable, plot type, and factorial",
-              "selection controls in the main panel."
-            )
-          ),
-          bslib::card(
-            full_height = TRUE,
-            asmus2_module_ui("asmus2")
-          )
-        )
-      ),
+      # bslib::nav_panel(
+      #   title = "ASMUS",
+      #   value = "SubscreenAsmus",
+      #   icon = shiny::icon("tasks"),
+      #   bslib::layout_sidebar(
+      #     height = "auto",
+      #     fillable = TRUE,
+      #     sidebar = bslib::sidebar(
+      #       title = NULL,
+      #       width = 300,
+      #       position = "left",
+      #       shiny::helpText(
+      #         "ASMUS: use the target variable, plot type, and factorial",
+      #         "selection controls in the main panel."
+      #       )
+      #     ),
+      #     bslib::card(
+      #       full_height = TRUE,
+      #       asmus2_module_ui("asmus2")
+      #     )
+      #   )
+      # ),
       bslib::nav_panel(
         title = "Upload",
         value = "SubscreenUpload",
