@@ -8,19 +8,10 @@ app_server <- function(input, output, session) {
 
   shiny::observeEvent(input$app_theme_mode, {
     shiny::req(input$app_theme_mode)
-    bootswatch <- if (identical(input$app_theme_mode, "dark")) {
-      "darkly"
-    } else {
-      "flatly"
-    }
-    cur <- tryCatch(session$getCurrentTheme(), error = function(e) NULL)
-    if (inherits(cur, "bs_theme")) {
-      session$setCurrentTheme(bslib::bs_theme_update(cur, bootswatch = bootswatch))
-    } else {
-      session$setCurrentTheme(
-        bslib::bs_theme(version = 5, bootswatch = bootswatch)
-      )
-    }
+    mode <- if (identical(input$app_theme_mode, "dark")) "dark" else "light"
+    shinyjs::runjs(
+      sprintf("document.documentElement.setAttribute('data-bs-theme', '%s');", mode)
+    )
   }, ignoreNULL = TRUE)
 
   options(shiny.maxRequestSize = 300*1024^2)
