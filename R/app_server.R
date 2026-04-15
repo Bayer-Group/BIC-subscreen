@@ -6,7 +6,28 @@ app_server <- function(input, output, session) {
   app_options <- golem::get_golem_options()
   shinyjs::logjs("Welcome to Subscreen Explorer!")
 
+  shiny::observeEvent(input$app_theme_mode, {
+    shiny::req(input$app_theme_mode)
+    theme <- if (identical(input$app_theme_mode, "dark")) {
+      bslib::bs_theme(version = 5, bootswatch = "darkly")
+    } else {
+      bslib::bs_theme(version = 5, bootswatch = "flatly")
+    }
+    session$setCurrentTheme(theme)
+  }, ignoreNULL = TRUE)
+
   options(shiny.maxRequestSize = 300*1024^2)
+
+  #### Module call: color_server (early: plot_bg and observers depend on it) ####
+  mod_color_vars <- shiny::callModule(
+    mod_color_server,
+    "color"
+  )
+
+  #### Reactive: plot_bg() — plot and table chrome from Colour Options ####
+  plot_bg <- shiny::reactive({
+    mod_color_vars$colthemeCol()$ColorBGplot
+  })
 
   #disable tab until data are observed (scresults_tmp$dat)
   shinyjs::js$disableTab("SubscreenExplorer")
@@ -207,12 +228,12 @@ app_server <- function(input, output, session) {
     new_selected_ids$val <- mod_comparer_vars$selected_SGIDs4()
   }, ignoreNULL = FALSE)
 
-  #### ObserveEvent: click_points_data$xy, scresults_tmp$dat, backgroundColor() ####
+  #### ObserveEvent: click_points_data$xy, scresults_tmp$dat, plot_bg() ####
 
   if (app_options$showTables) {
   shiny::observeEvent(c(
     new_selected_ids$val,
-    scresults_tmp$dat, backgroundColor()), {
+    scresults_tmp$dat, plot_bg()), {
     shiny::req(scresults_tmp$dat)
     if(!is.null(new_selected_ids$val)) {
       table_row <- scresults_tmp$dat$sge[scresults_tmp$dat$sge$SGID == new_selected_ids$val ,]
@@ -249,9 +270,9 @@ app_server <- function(input, output, session) {
           initComplete = DT::JS(
             "function(settings, json) {",
             paste0("$(this.api().table().header()).css({'background-color': '",
-               backgroundColor(),
+               plot_bg(),
                "', 'color': '",
-               font_color(different_hues(backgroundColor())),
+               font_color(different_hues(plot_bg())),
                "'});"
             ),"}"
           ),
@@ -279,8 +300,8 @@ app_server <- function(input, output, session) {
         table = tmp,
         columns = seq_len(ncol(empty_data)),
         target = "cell",
-        backgroundColor = different_hues(backgroundColor()),
-        border = paste0('.5px solid ', backgroundColor())
+        backgroundColor = different_hues(plot_bg()),
+        border = paste0('.5px solid ', plot_bg())
       )
 
     }
@@ -306,9 +327,9 @@ app_server <- function(input, output, session) {
           initComplete = DT::JS(
             "function(settings, json) {",
             paste0("$(this.api().table().header()).css({'background-color': '",
-                   backgroundColor(),
+                   plot_bg(),
                    "', 'color': '",
-                   font_color(different_hues(backgroundColor())),
+                   font_color(different_hues(plot_bg())),
                    "'});"
             ),"}"
           ),
@@ -335,8 +356,8 @@ app_server <- function(input, output, session) {
         table = tmp,
         columns = 1:(ncol(table_row) + 1),
         target = "cell",
-        backgroundColor = different_hues(backgroundColor()),
-        border = paste0('.5px solid ', backgroundColor())
+        backgroundColor = different_hues(plot_bg()),
+        border = paste0('.5px solid ', plot_bg())
       )
       tmp.sglev <- levels(
         stats::relevel(
@@ -346,8 +367,8 @@ app_server <- function(input, output, session) {
       )
       colXY <- which(colnames(table_row) %in% c('SGID', names(scresults_tmp$dat$results_total), 'nfactors')) + 1
 
-      col.tabFont <- font_color(different_hues(backgroundColor()))
-      col.tabBack <- backgroundColor()
+      col.tabFont <- font_color(different_hues(plot_bg()))
+      col.tabBack <- plot_bg()
 
       tmp <- DT::formatStyle(
         table = tmp,
@@ -477,35 +498,35 @@ app_server <- function(input, output, session) {
           ybottom = graphics::grconvertY(0,'ndc','user') - 1000,
           ytop = graphics::grconvertY(1,'ndc','user') + 1000,
           border = NA,
-          col = backgroundColor(),
+          col = plot_bg(),
           xpd = TRUE
         )
         graphics::text(
           0.5,
           0.5,
           "Please select a Subgroup!",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 1.4
         )
         graphics::text(
           0.5,
           0.4,
           "(Click on a point in the graphic",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 0.9
         )
         graphics::text(
           0.5,
           0.3,
           "and then select a subgroup in the",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 0.9
         )
         graphics::text(
           0.5,
           0.2,
           "'Selected Subgroup'-table by clicking on)",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 0.9
         )
 
@@ -526,21 +547,21 @@ app_server <- function(input, output, session) {
             ybottom = graphics::grconvertY(0,'ndc','user') - 1000,
             ytop = graphics::grconvertY(1,'ndc','user') + 1000,
             border = NA,
-            col = backgroundColor(),
+            col = plot_bg(),
             xpd = TRUE
           )
           graphics::text(
             0.5,
             0.5,
            "Please use package version (> 4.0.0)",
-            col = font_color(backgroundColor()),
+            col = font_color(plot_bg()),
             cex = 1.4
           )
           graphics::text(
             0.5,
             0.4,
             " of subscreencalc to use the Interaction Plot.",
-            col = font_color(backgroundColor()),
+            col = font_color(plot_bg()),
             cex = 1.4
           )
 
@@ -561,28 +582,28 @@ app_server <- function(input, output, session) {
           ybottom = graphics::grconvertY(0,'ndc','user') - 1000,
           ytop = graphics::grconvertY(1, 'ndc', 'user') + 1000,
           border = NA,
-          col = backgroundColor(),
+          col = plot_bg(),
           xpd = TRUE
         )
         graphics::text(
           0.5,
           0.5,
           "Incomplete factorial context!",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 1.4
         )
         graphics::text(
           0.5,
           0.4,
           "(This graphic is not available",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 0.9
         )
         graphics::text(
           0.5,
           0.3,
           "for incomplete factorial contexts)",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 0.9
         )
 
@@ -603,28 +624,28 @@ app_server <- function(input, output, session) {
           ybottom = graphics::grconvertY(0,'ndc','user') - 1000,
           ytop = graphics::grconvertY(1, 'ndc', 'user') + 1000,
           border = NA,
-          col = backgroundColor(),
+          col = plot_bg(),
           xpd = TRUE
         )
         graphics::text(
           0.5,
           0.5,
           "Too many factors!",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 1.4
         )
         graphics::text(
           0.5,
           0.4,
           "(This graphic is not available",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 0.9
         )
         graphics::text(
           0.5,
           0.3,
           "for 4 or more subgroup levels)",
-          col = font_color(backgroundColor()),
+          col = font_color(plot_bg()),
           cex = 0.9
         )
 
@@ -644,12 +665,12 @@ app_server <- function(input, output, session) {
           fac2 = factor_used[2],
           fac3 = factor_used[3],
           response = input$y,
-          bg.col = backgroundColor(),
-          bg.col2 = different_hues(backgroundColor()),
-          font.col = font_color(backgroundColor()),
+          bg.col = plot_bg(),
+          bg.col2 = different_hues(plot_bg()),
+          font.col = font_color(plot_bg()),
           y.min = y_axe[1],
           y.max = y_axe[2],
-          box.col = font_color(backgroundColor()),
+          box.col = font_color(plot_bg()),
           plot_type = type
         )
 
@@ -658,9 +679,9 @@ app_server <- function(input, output, session) {
     }
   })
 
-  #### ObserveEvent: input$filter, input$filter2, input$VarChosen, input$VarChosen2, scresults_tmp$dat, input$y,backgroundColor() ####
+  #### ObserveEvent: input$filter, input$filter2, input$VarChosen, input$VarChosen2, scresults_tmp$dat, input$y, plot_bg() ####
   #create filtered subgroups table in subgroup explorer-tab
-  shiny::observeEvent(c(input$filter, input$filter2, input$VarChosen, input$VarChosen2, scresults_tmp$dat, input$y,backgroundColor()), {
+  shiny::observeEvent(c(input$filter, input$filter2, input$VarChosen, input$VarChosen2, scresults_tmp$dat, input$y, plot_bg()), {
     #requirements
     shiny::req(input$key)
     shiny::req(input$x)
@@ -673,7 +694,7 @@ app_server <- function(input, output, session) {
       results = scresults_tmp$dat,
       y = input$y,
       x = input$x,
-      bg.color = backgroundColor(),
+      bg.color = plot_bg(),
       key = input$key
     )
     # render table with DT
@@ -709,9 +730,9 @@ app_server <- function(input, output, session) {
             initComplete = DT::JS(
              "function(settings, json) {",
              paste0("$(this.api().table().header()).css({'background-color': '",
-                    backgroundColor(),
+                    plot_bg(),
                     "', 'color': '",
-                    font_color(different_hues(backgroundColor())),
+                    font_color(different_hues(plot_bg())),
                     "'});"
              ),
              "}"
@@ -737,8 +758,8 @@ app_server <- function(input, output, session) {
             ), ref = 'Not used'
           )
         )
-        col.tabFont <- font_color(different_hues(backgroundColor()))
-        col.tabBack <- backgroundColor()
+        col.tabFont <- font_color(different_hues(plot_bg()))
+        col.tabBack <- plot_bg()
 
         if(input$navpanel == "SubscreenExplorer") {
           curr_x <- shiny::req(input$x)
@@ -760,9 +781,9 @@ app_server <- function(input, output, session) {
             initComplete = DT::JS(
              "function(settings, json) {",
              paste0("$(this.api().table().header()).css({'background-color': '",
-                    backgroundColor(),
+                    plot_bg(),
                     "', 'color': '",
-                    font_color(different_hues(backgroundColor())),
+                    font_color(different_hues(plot_bg())),
                     "'});"
              ),
              "}"
@@ -797,8 +818,8 @@ app_server <- function(input, output, session) {
           table = tmp,
           columns = seq_len(ncol(df_fac)),
           target = "cell",
-          backgroundColor = different_hues(backgroundColor()),
-          border = paste0('.5px solid ', backgroundColor())
+          backgroundColor = different_hues(plot_bg()),
+          border = paste0('.5px solid ', plot_bg())
         )
       }
       output$factorial <- DT::renderDataTable(tmp)
@@ -840,9 +861,9 @@ if (app_options$showTables) {
             initComplete = DT::JS(
               "function(settings, json) {",
               paste0("$(this.api().table().header()).css({'background-color': '",
-                backgroundColor(),
+                plot_bg(),
                 "', 'color': '",
-                font_color(different_hues(backgroundColor())),
+                font_color(different_hues(plot_bg())),
                 "'});"
               ),
               "}"
@@ -858,11 +879,11 @@ if (app_options$showTables) {
           table = tmp,
           columns = 1:(ncol(dat) + 1),
           target = "cell",
-          backgroundColor = different_hues(backgroundColor()),
-          border = paste0('.5px solid ', backgroundColor())
+          backgroundColor = different_hues(plot_bg()),
+          border = paste0('.5px solid ', plot_bg())
         )
-        col.tabFont <- font_color(different_hues(backgroundColor()))
-        col.tabBack <- backgroundColor()
+        col.tabFont <- font_color(different_hues(plot_bg()))
+        col.tabBack <- plot_bg()
 
         tmp <- DT::formatStyle(
           table = tmp,
@@ -882,9 +903,9 @@ if (app_options$showTables) {
             initComplete = DT::JS(
               "function(settings, json) {",
               paste0("$(this.api().table().header()).css({'background-color': '",
-                     backgroundColor(),
+                     plot_bg(),
                      "', 'color': '",
-                     font_color(different_hues(backgroundColor())),
+                     font_color(different_hues(plot_bg())),
                      "'});"
               ),
               "}"
@@ -970,9 +991,9 @@ if (app_options$showTables) {
           initComplete = DT::JS(
             "function(settings, json) {",
             paste0("$(this.api().table().header()).css({'background-color': '",
-              backgroundColor(),
+              plot_bg(),
               "', 'color': '",
-              font_color(different_hues(backgroundColor())),
+              font_color(different_hues(plot_bg())),
               "'});"
             ),
             "}"
@@ -1001,9 +1022,9 @@ if (app_options$showTables) {
           initComplete = DT::JS(
             "function(settings, json) {",
             paste0("$(this.api().table().header()).css({'background-color': '",
-              backgroundColor(),
+              plot_bg(),
               "', 'color': '",
-              font_color(different_hues(backgroundColor())),
+              font_color(different_hues(plot_bg())),
               "'});"
             ),
             "}"
@@ -1026,8 +1047,8 @@ if (app_options$showTables) {
           table = tmp,
           columns = 1:(ncol(df_m$data[, -1]) + 1),
           target = "cell",
-          backgroundColor = different_hues(backgroundColor()),
-          border = paste0('.5px solid ',backgroundColor())
+          backgroundColor = different_hues(plot_bg()),
+          border = paste0('.5px solid ',plot_bg())
         )
 
 
@@ -1043,8 +1064,8 @@ if (app_options$showTables) {
         )
         colXY <- which(colnames(df_m$data[, -1]) %in% c('SGID', names(scresults_tmp$dat$results_total), 'nfactors')) + 1
 
-        col.tabFont <- font_color(different_hues(backgroundColor()))
-        col.tabBack <- backgroundColor()
+        col.tabFont <- font_color(different_hues(plot_bg()))
+        col.tabBack <- plot_bg()
 
         tmp <- DT::formatStyle(
           table = tmp,
@@ -1089,7 +1110,7 @@ if (app_options$showTables) {
       y = input$y,
       x = input$x,
       x2 = input$x2,
-      bg.color = backgroundColor(),
+      bg.color = plot_bg(),
       navpanel = input$navpanel
     )
     #### Output: parents ####
@@ -1126,11 +1147,6 @@ if (app_options$showTables) {
     scresults_tmp$dat$results_total[, c(input$y)]
   })
 
-
-  #### Reactive: backgroundColor() ####
-  backgroundColor <- shiny::reactive({
-    ifelse(mod_color_vars$button() == "app version","#383838","#f2f2f2")
-  })
 
   #### Reactive: y_axe_Int() ####
   y_axe_Int <- shiny::reactive({
@@ -1256,7 +1272,7 @@ if (app_options$showTables) {
   #### Output: interaction_panel ####
   output$interaction_panel <- shiny::renderUI({
     shiny::wellPanel(
-      style = paste0("background:" , backgroundColor()),
+      style = paste0("background:" , plot_bg()),
       shiny::fluidRow(
         shiny::plotOutput(outputId = 'interaction')
       ),
@@ -1422,7 +1438,7 @@ if (app_options$showTables) {
       LabelTabClicked = shiny::reactive({mod_color_vars$LabelTabClicked()}),
       LabelFactCont = shiny::reactive({mod_color_vars$LabelFactCont()}),
       color = shiny::reactive({plot_color$val}),
-      ColorBGplot = shiny::reactive({backgroundColor()}),
+      ColorBGplot = shiny::reactive({plot_bg()}),
       ColorTabClicked = shiny::reactive({colthemeCol$ColorTabClicked}),
       ColorPoints = shiny::reactive({colthemeCol$ColorPoints}),
       ColorReference = shiny::reactive({colthemeCol$ColorReference}),
@@ -1466,12 +1482,6 @@ if (app_options$showTables) {
     )
   })
 
-  #### Module call: color_server ####
-  mod_color_vars <- shiny::callModule(
-    mod_color_server,
-    "color"
-  )
-
   #### Module call: variable_importance_server ####
   # importance_ <- shiny::callModule(
   #   mod_variable_importance_server,
@@ -1499,7 +1509,7 @@ if (app_options$showTables) {
     LabelFactCont = shiny::reactive({mod_color_vars$LabelFactCont()}),
     ColorParents = shiny::reactive({colthemeCol$ColorParents}),
     colthemeCol = shiny::reactive({colthemeCol}),
-    ColorBGplot = shiny::reactive({backgroundColor()}),
+    ColorBGplot = shiny::reactive({plot_bg()}),
     ColorTabClicked = shiny::reactive({colthemeCol$ColorTabClicked}),
     ColorReference = shiny::reactive({colthemeCol$ColorReference}),
     ColorCustomReference = shiny::reactive({colthemeCol$ColorCustomReference}),
@@ -1533,7 +1543,7 @@ if (app_options$showTables) {
     mod_mosaic_server,
     "mosaic",
     results = shiny::reactive({scresults_tmp$dat}),
-    ColorBGplot = shiny::reactive({backgroundColor()}),
+    ColorBGplot = shiny::reactive({plot_bg()}),
     nice_Numbers = app_options$nice_numbers
   )
 
@@ -1544,7 +1554,7 @@ if (app_options$showTables) {
   #   "asmus2",
   #   results = shiny::reactive({scresults_tmp$dat}),
   #   ColorReference = colthemeCol$ColorReference,
-  #   ColorBGplot = shiny::reactive({backgroundColor()}),
+  #   ColorBGplot = shiny::reactive({plot_bg()}),
   #   ColorPoints = shiny::reactive({colthemeCol$ColorPoints}),
   #   nice_Numbers = app_options$nice_numbers
   # )
@@ -1557,6 +1567,12 @@ if (app_options$showTables) {
     dat = app_options$scresults,
     dat_name = app_options$scresults_name,
     vi = app_options$variable_importance,
-    font_col = shiny::reactive({ifelse(mod_color_vars$button() == "app version","#f2f2f2","#383838")})
+    font_col = shiny::reactive({
+      if (!is.null(input$app_theme_mode) && identical(input$app_theme_mode, "dark")) {
+        "#f8f9fa"
+      } else {
+        "#212529"
+      }
+    })
   )
 }

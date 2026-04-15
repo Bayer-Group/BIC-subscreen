@@ -39,7 +39,7 @@ Imports:
     plyr,
     ranger,
     rlang,
-    shiny,
+    shiny (>= 1.7.0),
     shinyjs,
     shinyWidgets,
     stringr,

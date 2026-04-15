@@ -22,27 +22,25 @@ uploadFileInput <- function(id, label) {
 #' @description A shiny Module.
 #'
 #' @param id,input,output,session Internal parameters for {shiny}.
-#' @param bg.col background color
+#' @param bg.col Optional background reference colour used only to tune body text
+#'   contrast when set; if `NULL`, text colour follows the active bslib theme.
 #' @noRd
 #'
 #'
 
 
-upload_tab_ui <- function(id, bg.col) {
+upload_tab_ui <- function(id, bg.col = NULL) {
   ns <- shiny::NS(id)
   shiny::tagList(
-    list(
+    if (!is.null(bg.col)) {
       shiny::tags$head(
         shiny::tags$style(
-          paste(
-            "body { color: ",
-            font_color(bg.col),
-            "}",
-            sep = ""
-          )
+          paste0("body { color: ", font_color(bg.col), "}")
         )
       )
-    ),
+    } else {
+      NULL
+    },
     shiny::h3("Welcome to"),
     shiny::uiOutput(ns("myImage")),
     col_3(
@@ -53,7 +51,7 @@ upload_tab_ui <- function(id, bg.col) {
           uploadFileInput(ns("results_file"), "Choose results data file (created with subscreencalc())"),
           shinyWidgets::materialSwitch(
             inputId = ns("switch_vi_file"),
-            label = shiny::HTML("<span style = 'color: white;'> Add variable importance file or press 'Upload data' </span>"),
+            label = "Add variable importance file or press 'Upload data'",
             status = "success"
           ),
           shiny::conditionalPanel(condition = "input.switch_vi_file == true", ns = ns,

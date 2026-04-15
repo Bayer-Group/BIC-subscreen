@@ -61,6 +61,7 @@ app_ui <- function(request) {
       title = shiny::uiOutput("logofile"),
       id = "navpanel",
       window_title = "Subgroup Explorer",
+      theme = bslib::bs_theme(version = 5, bootswatch = "flatly"),
       sidebar = bslib::sidebar(
         title = NULL,
         id = "sidebar",
@@ -187,10 +188,31 @@ app_ui <- function(request) {
         title = "Upload",
         value = "SubscreenUpload",
         icon = shiny::icon("upload"),
-        upload_tab_ui("upload_tab_ui_1", bg.col = "#383838")
+        upload_tab_ui("upload_tab_ui_1")
       ),
       bslib::nav_spacer(),
-      bslib::nav_item(bslib::input_dark_mode(id = "dark_mode", mode = "light"))
+      bslib::nav_item(
+        shinyWidgets::dropdownButton(
+          inputId = "app_theme_dropdown",
+          label = "",
+          icon = shiny::icon("palette"),
+          status = "secondary",
+          size = "sm",
+          circle = TRUE,
+          inline = TRUE,
+          margin = "0 8px 0 0",
+          shiny::tags$div(
+            class = "px-2 py-1",
+            shiny::radioButtons(
+              inputId = "app_theme_mode",
+              label = "Appearance",
+              choiceNames = c("Light", "Dark"),
+              choiceValues = c("light", "dark"),
+              selected = "light"
+            )
+          )
+        )
+      )
     )
   )
 }
