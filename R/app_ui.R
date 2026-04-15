@@ -50,13 +50,18 @@ app_ui <- function(request) {
     NULL
   }
 
-  # page_navbar must be the top-level UI tag so Shiny registers bs_theme(version = 5)
-  # for session$setCurrentTheme(); a wrapping tagList() leaves the session theme unset.
-  bslib::page_navbar(
+  # Shiny only attaches a versioned bs_theme to the session when a *Page() layer
+  # (e.g. page_fluid) sets theme=; page_navbar alone is not enough in practice.
+  # Pass the same theme into both so setCurrentTheme() sees Bootstrap 5.
+  theme_default <- bslib::bs_theme(version = 5, bootswatch = "flatly")
+  bslib::page_fluid(
+    theme = theme_default,
+    class = "p-0 m-0",
+    bslib::page_navbar(
       title = shiny::uiOutput("logofile"),
       id = "navpanel",
       window_title = "Subgroup Explorer",
-      theme = bslib::bs_theme(version = 5, bootswatch = "flatly"),
+      theme = theme_default,
       header = shiny::tagList(
         golem_add_external_resources(),
         shinyjs::useShinyjs(debug = TRUE),
@@ -217,6 +222,7 @@ app_ui <- function(request) {
         )
       )
     )
+  )
 }
 
 #' Add external Resources to the Application
