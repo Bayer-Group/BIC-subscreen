@@ -50,18 +50,21 @@ app_ui <- function(request) {
     NULL
   }
 
-  shiny::tagList(
-    golem_add_external_resources(),
-    shinyjs::useShinyjs(debug = TRUE),
-    shinyjs::extendShinyjs(
-      script = "www/tabs.js",
-      functions = c("disableTab", "enableTab")
-    ),
-    bslib::page_navbar(
+  # page_navbar must be the top-level UI tag so Shiny registers bs_theme(version = 5)
+  # for session$setCurrentTheme(); a wrapping tagList() leaves the session theme unset.
+  bslib::page_navbar(
       title = shiny::uiOutput("logofile"),
       id = "navpanel",
       window_title = "Subgroup Explorer",
       theme = bslib::bs_theme(version = 5, bootswatch = "flatly"),
+      header = shiny::tagList(
+        golem_add_external_resources(),
+        shinyjs::useShinyjs(debug = TRUE),
+        shinyjs::extendShinyjs(
+          script = "www/tabs.js",
+          functions = c("disableTab", "enableTab")
+        )
+      ),
       sidebar = bslib::sidebar(
         title = NULL,
         id = "sidebar",
@@ -200,7 +203,7 @@ app_ui <- function(request) {
           size = "sm",
           circle = TRUE,
           inline = TRUE,
-          margin = "0 8px 0 0",
+          #margin = "0 8px 0 0",
           shiny::tags$div(
             class = "px-2 py-1",
             shiny::radioButtons(
@@ -214,7 +217,6 @@ app_ui <- function(request) {
         )
       )
     )
-  )
 }
 
 #' Add external Resources to the Application
