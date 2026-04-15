@@ -50,26 +50,21 @@ app_ui <- function(request) {
     NULL
   }
 
-  # Shiny only attaches a versioned bs_theme to the session when a *Page() layer
-  # (e.g. page_fluid) sets theme=; page_navbar alone is not enough in practice.
-  # Pass the same theme into both so setCurrentTheme() sees Bootstrap 5.
   theme_default <- bslib::bs_theme(version = 5, bootswatch = "flatly")
-  bslib::page_fluid(
+  bslib::page_navbar(
+    title = shiny::uiOutput("logofile"),
+    id = "navpanel",
+    window_title = "Subgroup Explorer",
     theme = theme_default,
-    class = "p-0 m-0",
-    bslib::page_navbar(
-      title = shiny::uiOutput("logofile"),
-      id = "navpanel",
-      window_title = "Subgroup Explorer",
-      theme = theme_default,
-      header = shiny::tagList(
-        golem_add_external_resources(),
-        shinyjs::useShinyjs(debug = TRUE),
-        shinyjs::extendShinyjs(
-          script = "www/tabs.js",
-          functions = c("disableTab", "enableTab")
-        )
+    header = shiny::tagList(
+      golem_add_external_resources(),
+      shinyjs::useShinyjs(debug = TRUE),
+      shinyjs::extendShinyjs(
+        script = "www/tabs.js",
+        functions = c("disableTab", "enableTab")
       ),
+      shiny::tags$style("body { padding: 0; margin: 0; }")
+    ),
       sidebar = bslib::sidebar(
         title = NULL,
         id = "sidebar",
@@ -222,7 +217,6 @@ app_ui <- function(request) {
         )
       )
     )
-  )
 }
 
 #' Add external Resources to the Application
