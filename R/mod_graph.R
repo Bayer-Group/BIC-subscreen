@@ -108,7 +108,7 @@ mod_graph_server <- function(
   alpha_funnel = 0.1
   ) {
 
-  xmin <- xmax <- point_color <- memorizedText <- SGID <- text <- font.col <- NULL
+  xmin <- xmax <- point_color <- memorizedText <- SGID <- text <- font.col <- font_color2 <- font.col2 <- background_color <- NULL
   ns <- session$ns
 
     #### graph ####
