@@ -387,7 +387,7 @@ mod_bubble_server <- function(input, output, session,
           "left:", left_px, "px; top:", top_px, "px; border: 0px;"
       )
 
-          res_and_color <- cbind(results()$sge[results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2],], font.col = color())
+    res_and_color <- cbind(results()$sge[results()$sge$nfactors >= key()[1] & results()$sge$nfactors <= key()[2],], font.col = color())
     tmp <- res_and_color[res_and_color$SGID %in% point$ID, ]
 
     tmp$text <- apply(
@@ -395,43 +395,105 @@ mod_bubble_server <- function(input, output, session,
       1,
       function(x){paste(paste0(names(which(x != "Not used")),":", x[which(x != "Not used")]), collapse = ", ")}
     )
-    tmp2 <- tmp %>%
+    # tmp2 <- tmp %>%
+    #   dplyr::mutate(
+    #     text2 = paste0("ID:", SGID,", ", .data$text),
+    #     text3 =paste("<p>",
+    #                  ifelse(nrow(tmp) > 1,
+    #                         paste0("<b style = 'color: ",
+    #                  ColorPoints() ,
+    #                 "'> List of: ",nrow(tmp)," </b></br> <ul>"),
+    #                         paste0("")
+    #                   ),
+    #                   ifelse(nrow(tmp) > 1,
+    #                      paste(
+    #                        "<li> <b style = 'color: ",font.col,"'> SGID:", SGID, ", ",x() ,":", !!rlang::sym(x()),", ",y() ,":",!!rlang::sym(y()),
+    #                        "</br>", .data$text, "</b> </li><br>"
+    #                        ,collapse = ""
+    #                      ),
+    #                      paste(
+    #                        "<b style = 'color: ",font.col,"'> SGID:", SGID, ", ",x() ,":", !!rlang::sym(x()),", ",y() ,":",!!rlang::sym(y()),
+    #                        "</br>", .data$text, "</b><br>"
+    #                        ,collapse = ""
+    #                      )
+    #                   ),
+    #                 ifelse(nrow(tmp) > 1,"</ul>",""),
+    #                 "</p>",
+    #      collapse ="")
+    #   )
+    
+    tmp2 <- tmp %>% 
+      dplyr::select(SGID, !!rlang::sym(x()), !!rlang::sym(y()),!!rlang::sym(y2()), .data$text, font.col) %>%
       dplyr::mutate(
-        text2 = paste0("ID:", SGID,", ", .data$text),
-        text3 =paste("<p>",
-                     ifelse(nrow(tmp) > 1,
-                            paste0("<b style = 'color: ",
-                     ColorPoints() ,
-                    "'> List of: ",nrow(tmp)," </b></br> <ul>"),
-                            paste0("")
-                      ),
-                      ifelse(nrow(tmp) > 1,
-                         paste(
-                           "<li> <b style = 'color: ",font.col,"'> SGID:", SGID, ", ",x() ,":", !!rlang::sym(x()),", ",y() ,":",!!rlang::sym(y()),
-                           "</br>", .data$text, "</b> </li><br>"
-                           ,collapse = ""
-                         ),
-                         paste(
-                           "<b style = 'color: ",font.col,"'> SGID:", SGID, ", ",x() ,":", !!rlang::sym(x()),", ",y() ,":",!!rlang::sym(y()),
-                           "</br>", .data$text, "</b><br>"
-                           ,collapse = ""
-                         )
-                      ),
-                    ifelse(nrow(tmp) > 1,"</ul>",""),
-                    "</p>",
-         collapse ="")
-      )
-    if(length(tmp2$text3)!= 0) {
-
+        background_color = dplyr::case_when(
+          substr(ColorPoints(),1,7) != substr(font.col, 1,7) ~ substr(font.col, 1,7),
+          substr(ColorPoints(),1,7) == substr(font.col, 1,7) ~ ""
+        ),
+      ) %>%
+      dplyr::rowwise() %>%
+      dplyr::mutate(
+        font.col2 = dplyr::case_when(
+          substr(ColorPoints(),1,7) != substr(font.col, 1,7) ~ font_color(font.col),
+          substr(ColorPoints(),1,7) == substr(font.col, 1,7) ~ substr(font.col,1,7)
+        )
+      ) %>% 
+      dplyr::ungroup() %>% 
+      dplyr::mutate(
+        html_text = paste0(
+          "<p style = 'color: ",
+          .data$font.col2,
+          "; background-color:",
+          .data$background_color,
+          "; border-color: #000; border-style: solid; border-width: 0.1px",
+          ";'> ",
+          y(),
+          ":", 
+          !!rlang::sym(y()),
+          ", ",
+          y2(),
+          ":",
+          !!rlang::sym(y2()),
+          ", ",
+          "</br>",
+          x(),
+          ":", 
+          !!rlang::sym(x()),
+          ", ",
+          "</br>",
+          tmp$text,
+          "</p>"
+        )
+      ) %>% 
+      dplyr::arrange(dplyr::desc(.data$background_color))
+    
+    html_text <- paste(
+      "<p>",
+      paste(
+        tmp2$html_text
+      ),
+      "</p>",
+      collapse ="")
+    
+        
     shiny::wellPanel(
       style = style,
-       shiny::p(
+      shiny::p(
         shiny::HTML(
-          as.character(tmp2$text3[1])
+          as.character(html_text)
         )
       )
     )
-    }
+    # if(length(tmp2$text3)!= 0) {
+
+    # shiny::wellPanel(
+    #   style = style,
+    #    shiny::p(
+    #     shiny::HTML(
+    #       as.character(tmp2$text3[1])
+    #     )
+    #   )
+    # )
+    # }
     # point <- point[1,]
     #
     # tmp1 <- colnames(results()$sge[which(results()$sge$SGID == point$ID), results()$factors])[which(results()$sge[which(results()$sge$SGID == point$ID), results()$factors] != "Not used")]
