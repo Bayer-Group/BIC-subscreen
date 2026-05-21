@@ -2816,6 +2816,61 @@
       "Maintainer": "Kirill Müller <kirill@cynkra.com>",
       "Repository": "CRAN"
     },
+    "rsconnect": {
+      "Package": "rsconnect",
+      "Version": "1.8.0",
+      "Source": "Repository",
+      "Priority": null,
+      "Depends": [
+        "R (>= 3.5.0)"
+      ],
+      "Imports": [
+        "cli",
+        "curl",
+        "digest",
+        "httr2",
+        "jsonlite",
+        "lifecycle",
+        "openssl (>=\n2.0.0)",
+        "PKI",
+        "packrat (>= 0.6)",
+        "renv (>= 1.0.0)",
+        "rlang (>=\n1.0.0)",
+        "rstudioapi (>= 0.18.0)",
+        "snowflakeauth",
+        "tools",
+        "yaml (>=\n2.1.5)",
+        "utils"
+      ],
+      "LinkingTo": [
+        null
+      ],
+      "Suggests": [
+        "Biobase",
+        "BiocManager",
+        "foreign",
+        "knitr",
+        "MASS",
+        "plumber (>=\n0.3.2)",
+        "quarto",
+        "reticulate",
+        "rmarkdown (>= 1.1)",
+        "shiny",
+        "testthat\n(>= 3.1.9)",
+        "webfakes",
+        "withr"
+      ],
+      "Enhances": [
+        null
+      ],
+      "License": "GPL-2",
+      "License_is_FOSS": null,
+      "License_restricts_use": null,
+      "OS_type": null,
+      "NeedsCompilation": "no",
+      "Repository": "CRAN",
+      "Type": "source"
+    },
     "sass": {
       "Package": "sass",
       "Version": "0.4.10",
