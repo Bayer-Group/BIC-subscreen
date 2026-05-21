@@ -22,7 +22,6 @@ attachment::att_amend_desc()
 renv::install("package")
 ## DON'T FORGET to add it back to the DESCRIPTION
 usethis::use_package("package")
-usethis::use_package("rsconnect")
 
 ## We generally use functions as package::fun(), but if you prefer
 ## to just use fun(), you will need to importFrom package using this:

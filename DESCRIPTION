@@ -38,7 +38,6 @@ Imports:
     plyr,
     ranger,
     rlang,
-    rsconnect,
     shiny,
     shinyjs,
     shinyWidgets,
