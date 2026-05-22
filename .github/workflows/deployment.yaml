@@ -54,6 +54,7 @@ jobs:
       - name: Create manifest.json
         shell: Rscript {0}
         run: |
+          renv::restore(prompt = FALSE, clean = TRUE)
           rsconnect::writeManifest()
           
       - name: Publish Connect content
