@@ -52,12 +52,11 @@ jobs:
         uses: r-lib/actions/setup-renv@v2
       
       - name: Install extra dependencies
-        run: Rscript -e 'renv::install(c("any::rsconnect"))'
+        run: Rscript -e 'renv::install("rsconnect@1.8.0")'
 
       - name: Create manifest.json
         shell: Rscript {0}
         run: |
-          renv::snapshot(prompt = FALSE)
           rsconnect::writeManifest()
           
       - name: Publish Connect content
