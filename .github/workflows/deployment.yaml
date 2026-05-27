@@ -52,7 +52,7 @@ check:
         uses: r-lib/actions/setup-renv@v2
       
       - name: Install extra dependencies
-        run: Rscript -e 'renv::install("rsconnect@1.8.0")'
+        run: Rscript -e 'renv::install("rsconnect")'
 
       - name: Create manifest.json
         shell: Rscript {0}
