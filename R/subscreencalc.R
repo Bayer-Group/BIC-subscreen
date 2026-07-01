@@ -200,10 +200,10 @@ subscreencalc <- function(
   }
 
   #Parameter: eval_function
-  if (!is.function(eval_function) & !is.function(match.fun(eval_function))) {
+  if (!is.function(eval_function) && !is.function(match.fun(eval_function))) {
     stop("parameter eval_function has to be a function name! ")
   } else if (
-    !is.function(eval_function) & is.function(match.fun(eval_function))
+    !is.function(eval_function) && is.function(match.fun(eval_function))
   ) {
     eval_function <- match.fun(eval_function)
   }
@@ -227,7 +227,7 @@ subscreencalc <- function(
     ))
   }
 
-  if (any(is.na(eval_function(data))) & !all(is.na(eval_function(data)))) {
+  if (anyNA(eval_function(data)) && !all(is.na(eval_function(data)))) {
     subscreencalc_notes <- c(
       subscreencalc_notes,
       paste0(
@@ -336,16 +336,16 @@ subscreencalc <- function(
   }
 
   sugruCalc <- function(i) {
-    m <- M[i, ]
+    m <- M[i, ] # ! No M in function scope
     S <- character()
-    S <- append(S, names(FFF)[(1:length(m)) * m])
+    S <- append(S, names(FFF)[(seq_along(m)) * m])
     # if (methods::is(tryCatch(plyr::ddply(cbind(FFF, TTT), S, eval_function), error=function(e) e, warning = function(w) w),"error")) {
     #   print(paste("Error in calculation eval_function for subgroup factor(s combination): ", paste(S,collapse =",")))
     #   print(tryCatch(plyr::ddply(cbind(FFF, TTT), S, eval_function), error=function(e) e, warning = function(w) w))
     # }
 
     d <- plyr::ddply(cbind(FFF, TTT), S, eval_function)
-    if (use_complement == TRUE) {
+    if (use_complement) {
       d_comp <- plyr::ddply(cbind(FFF, TTT), S, function(x) {
         eval_function(dplyr::anti_join(cbind(FFF, TTT), x, by = colnames(FFF)))
       })
@@ -359,7 +359,7 @@ subscreencalc <- function(
       data.frame(N.of.subjects)
     })
     d <- merge(d, d_N)
-    if (use_complement == TRUE) {
+    if (use_complement) {
       d <- merge(d, d_comp)
     }
     nfactors <- sum(m)
@@ -414,7 +414,7 @@ subscreencalc <- function(
 
   TTT <- data[, (!colnames(data) %in% c(factors))]
   FFF <- data[, (colnames(data) %in% factors), drop = FALSE]
-  if (verbose == TRUE) {
+  if (verbose) {
     cat(
       "\n",
       "subscreencalc started at ",
@@ -439,7 +439,7 @@ subscreencalc <- function(
   pt1 <- proc.time()
   rowsM <- dim(M)[1]
 
-  if (verbose == TRUE) {
+  if (verbose) {
     cat(
       "\n",
       "Number of Subjects                     ",
@@ -483,16 +483,16 @@ subscreencalc <- function(
     max(StAn[names(StAn) %in% colnames(x)[which(colnames(x) %in% factors)]])
   })
   pc_df <- data.frame(max_level = unlist(pc_max_levels))
-  pc_df$FCID_all <- 1:nrow(pc_df)
+  pc_df$FCID_all <- seq_len(nrow(pc_df))
   z <- numeric()
 
-  for (i in 1:length(h)) {
+  for (i in seq_along(h)) {
     z[i] <- dim(h[[i]])[1]
   }
 
   pt2 <- proc.time()
 
-  if (verbose == TRUE) {
+  if (verbose) {
     cat(
       "\n",
       "Non-existent/empty Subgroups           ",
@@ -507,7 +507,7 @@ subscreencalc <- function(
   }
 
   h <- lapply(h, function(x) {
-    if (any(is.na(x[, colnames(x)[colnames(x) %in% factors]]))) {
+    if (anyNA(x[, colnames(x)[colnames(x) %in% factors]])) {
       x[, colnames(x)[colnames(x) %in% factors]][is.na(x[, colnames(x)[
         colnames(x) %in% factors
       ]])] <- "No data"
@@ -539,7 +539,7 @@ subscreencalc <- function(
 
   pt3 <- proc.time()
 
-  if (verbose == TRUE) {
+  if (verbose) {
     cat("\n", "Time for creating Data Frames (s)      ", pt3 - pt2)
   }
 
@@ -551,12 +551,12 @@ subscreencalc <- function(
 
   pt3a <- proc.time()
 
-  if (verbose == TRUE) {
+  if (verbose) {
     cat("\n", "Time for calculating N.of.subjects (s) ", pt3a - pt3)
   }
 
-  if (factorial == TRUE) {
-    for (i in 1:length(colnames(evfu))) {
+  if (factorial) {
+    for (i in seq_along(colnames(evfu))) {
       H <- pseudo_contexts(
         data = H,
         endpoint = colnames(evfu)[i],
@@ -570,7 +570,7 @@ subscreencalc <- function(
 
   pt4 <- proc.time()
 
-  if (verbose == TRUE) {
+  if (verbose) {
     cat(
       "\n",
       "Time for factorial context (s)         ",
@@ -597,7 +597,7 @@ subscreencalc <- function(
   )
   class(H) <- "SubScreenResult"
 
-  if (verbose == TRUE) {
+  if (verbose) {
     cat(
       "\n",
       "subscreencalc stopped at ",

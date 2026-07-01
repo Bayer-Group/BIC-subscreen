@@ -227,7 +227,7 @@ mod_comparer_server <- function(
     shiny::req(key(), input$y1, input$y2)
     if (
       input$y1 %in%
-        colnames(results()$sge) &
+        colnames(results()$sge) &&
         input$y2 %in% colnames(results()$sge)
     ) {
       data.frame(
@@ -556,7 +556,7 @@ mod_comparer_server <- function(
     colthemeCol = colthemeCol,
     rowwise = TRUE,
     complement = shiny::reactive({
-      ifelse(!is.null(plot_points_data_complement()), TRUE, FALSE)
+      !is.null(plot_points_data_complement())
     }) #,
     # point_brightness = point_brightness
   )

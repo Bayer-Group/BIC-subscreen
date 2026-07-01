@@ -41,7 +41,7 @@ mod_legend_server <- function(
         grDevices::adjustcolor(p.col, alpha = 0.1)
       )
     )
-    if (rowwise == FALSE) {
+    if (!rowwise) {
       shiny::req(plot_color())
       shiny::tagList(
         if (colour[1] %in% plot_color()) {

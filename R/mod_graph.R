@@ -311,7 +311,7 @@ mod_graph_server <- function(
           odd_list <- stripesx[seq(2, length(stripesx), by = 2)]
           rect_data <- data.frame(
             xmin = stripesx[seq(1, length(stripesx), by = 2)[
-              1:length(odd_list)
+              seq_along(odd_list)
             ]],
             xmax = odd_list
           )
@@ -448,19 +448,19 @@ mod_graph_server <- function(
           if (exclude_funnel()) {
             data <- data %>%
               dplyr::filter(
-                .data$outlier == TRUE |
-                  ((.data$outlier == FALSE &
+                .data$outlier |
+                  ((!.data$outlier &
                     data$point_color != ColorPoints()) &
-                    (.data$outlier == FALSE &
+                    (!.data$outlier &
                       data$point_color !=
                         grDevices::adjustcolor(ColorPoints(), alpha = 0.75)) &
-                    (.data$outlier == FALSE &
+                    (!.data$outlier &
                       data$point_color !=
                         grDevices::adjustcolor(ColorPoints(), alpha = 0.5)) &
-                    (.data$outlier == FALSE &
+                    (!.data$outlier &
                       data$point_color !=
                         grDevices::adjustcolor(ColorPoints(), alpha = 0.25)) &
-                    (.data$outlier == FALSE &
+                    (!.data$outlier &
                       data$point_color !=
                         grDevices::adjustcolor(ColorPoints(), alpha = 0.1)))
               )
@@ -591,9 +591,9 @@ mod_graph_server <- function(
             )
           )
 
-        if (show_ref_line() == TRUE) {
+        if (show_ref_line()) {
           if (
-            YRange[1] <= results()$results_total[, c(y())] &
+            YRange[1] <= results()$results_total[, c(y())] &&
               YRange[2] >= results()$results_total[, c(y())]
           ) {
             p <- p +
@@ -613,11 +613,11 @@ mod_graph_server <- function(
               )
           }
         }
-        if (add_custom_ref_line() == TRUE) {
+        if (add_custom_ref_line()) {
           if (!is.null(add_custom_ref_line())) {
             if (!is.na(value_custom_ref_line())) {
               if (
-                YRange[1] <= value_custom_ref_line() &
+                YRange[1] <= value_custom_ref_line() &&
                   YRange[2] >= value_custom_ref_line()
               ) {
                 p <- p +
@@ -720,12 +720,12 @@ mod_graph_server <- function(
             ) {
               if (
                 YRange[1] <=
-                  plot_points_data_complement()[[paste0("Complement_", y())]] &
+                  plot_points_data_complement()[[paste0("Complement_", y())]] &&
                   YRange[2] >=
                     plot_points_data_complement()[[paste0(
                       "Complement_",
                       y()
-                    )]] &
+                    )]] &&
                   ifelse(!is.null(XRange()), XRange[2], max(rect_data)) >=
                     plot_points_data_complement()[["N.of.subjects.complement"]]
               ) {
@@ -753,10 +753,10 @@ mod_graph_server <- function(
             ggplot2::geom_point(
               data = data %>%
                 dplyr::arrange(plyr::desc(point_color)) %>%
-                dplyr::filter(.data$outlier == TRUE),
+                dplyr::filter(.data$outlier),
               fill = data %>%
                 dplyr::arrange(plyr::desc(point_color)) %>%
-                dplyr::filter(.data$outlier == TRUE) %>%
+                dplyr::filter(.data$outlier) %>%
                 dplyr::pull(point_color),
               shape = 21,
               size = point_size(),
@@ -999,21 +999,21 @@ mod_graph_server <- function(
       ) %>%
       dplyr::mutate(
         background_color = dplyr::case_when(
-          substr(ColorPoints(), 1, 7) != substr(font.col, 1, 7) ~ substr(
+          !startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ substr(
             font.col,
             1,
             7
           ),
-          substr(ColorPoints(), 1, 7) == substr(font.col, 1, 7) ~ ""
+          startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ ""
         )
       ) %>%
       dplyr::rowwise() %>%
       dplyr::mutate(
         font.col2 = dplyr::case_when(
-          substr(ColorPoints(), 1, 7) != substr(font.col, 1, 7) ~ font_color(
+          !startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ font_color(
             font.col
           ),
-          substr(ColorPoints(), 1, 7) == substr(font.col, 1, 7) ~ substr(
+          startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ substr(
             font.col,
             1,
             7

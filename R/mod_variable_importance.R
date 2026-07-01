@@ -131,12 +131,12 @@ mod_variable_importance_server <- function(
     if (is.null(variable_importance())) {
       NULL
     } else if (
-      !is.null(variable_importance()) &
+      !is.null(variable_importance()) &&
         input$select_importance_variable == "NULL"
     ) {
       variable_importance()
     } else if (
-      !is.null(variable_importance()) &
+      !is.null(variable_importance()) &&
         input$select_importance_variable != "NULL"
     ) {
       variable_importance()[[input$select_importance_variable]]
@@ -151,6 +151,9 @@ mod_variable_importance_server <- function(
   })
   shiny::observe({
     val <- input$Impo_opt
+    if (is.null(val)) {
+      val <- 0
+    }
     if (val == 1) {
       im <- import_reac$reactive
 
@@ -163,7 +166,7 @@ mod_variable_importance_server <- function(
         tmp1 <- NULL
 
         if (length(vek1) > 0) {
-          for (i in 1:length(vek1)) {
+          for (i in seq_along(vek1)) {
             tmp1 <- rbind(
               tmp1,
               results()$sge[
@@ -204,7 +207,7 @@ mod_variable_importance_server <- function(
         vek2 <- vek2[vek2 %in% results()$factors]
         tmp2 <- NULL
         if (length(vek2) > 0) {
-          for (i in 1:length(vek2)) {
+          for (i in seq_along(vek2)) {
             tmp2 <- rbind(
               tmp2,
               results()$sge[

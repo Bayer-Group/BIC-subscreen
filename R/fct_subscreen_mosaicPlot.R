@@ -29,7 +29,7 @@ subscreen_mosaicPlot <- function(
   if (mos.y == 'no selection') {
     mos.y <- NULL
   }
-  if (mos.y2 == 'no selection' | is.null(mos.y)) {
+  if (mos.y2 == 'no selection' || is.null(mos.y)) {
     mos.y2 <- NULL
   }
   if (!is.null(mos.y)) {
@@ -38,7 +38,7 @@ subscreen_mosaicPlot <- function(
     }
   }
   if (!is.null(mos.y2)) {
-    if (mos.x == mos.y2 | mos.y == mos.y2) {
+    if (mos.x == mos.y2 || mos.y == mos.y2) {
       mos.y2 <- NULL
     }
   }
@@ -229,10 +229,10 @@ subscreen_mosaicPlot <- function(
       colnames(val.z) <- names(mid.x)
       rownames(val.z) <- rownames(mid.y)
 
-      for (i in 1:length(mid.x)) {
+      for (i in seq_along(mid.x)) {
         tmp <- tmp_2factors %>%
           dplyr::filter(!!rlang::sym(mos.x) == tmp_x2[i, mos.x])
-        for (j in 1:nrow(mid.y)) {
+        for (j in seq_len(nrow(mid.y))) {
           level <- tmp_y[j, mos.y]
           if (dim(dplyr::filter(tmp, !!rlang::sym(mos.y) == level))[1] > 0) {
             tmp1 <- dplyr::filter(tmp, !!rlang::sym(mos.y) == level)
@@ -309,8 +309,8 @@ subscreen_mosaicPlot <- function(
     )
 
     if (is.null(mos.y)) {
-      for (i in 1:length(mid.x)) {
-        for (j in 1:length(mid.y)) {
+      for (i in seq_along(mid.x)) {
+        for (j in seq_along(mid.y)) {
           val.z.ij <- val.z[j, i]
           col.z.ij <- ifelse(
             is.na(val.z.ij),
@@ -337,7 +337,7 @@ subscreen_mosaicPlot <- function(
           val.z <- log(val.z)
         }
       }
-      for (i in 1:length(mid.x)) {
+      for (i in seq_along(mid.x)) {
         for (j in 1:dim(mid.y)[1]) {
           val.z.ij <- val.z[j, i]
           col.z.ij <- ifelse(
@@ -362,7 +362,7 @@ subscreen_mosaicPlot <- function(
     }
     label_text_x <- names(mid.x)
 
-    for (i in 1:length(mid.x)) {
+    for (i in seq_along(mid.x)) {
       if (names(mid.x)[i] %>% nchar() < 25) {
         label_text_x[i] <- names(mid.x)[i]
       } else {
@@ -399,7 +399,7 @@ subscreen_mosaicPlot <- function(
       }
 
       graphics::text(
-        y = apply(mid.y, 1, mean),
+        y = rowMeans(mid.y),
         x = -0.3,
         xpd = NA,
         adj = c(0, 0.5),

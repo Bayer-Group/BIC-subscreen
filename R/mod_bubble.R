@@ -109,7 +109,7 @@ mod_bubble_server <- function(
 
   output$bubble <- shiny::renderPlot({
     # if logarithmic x-axis is selected
-    if (plot_type() == "lin" & plot_type2() == "lin") {
+    if (plot_type() == "lin" && plot_type2() == "lin") {
       graphics::par(
         oma = c(0, 0, 0, 0),
         mar = c(3, 3, 1, 1),
@@ -184,7 +184,7 @@ mod_bubble_server <- function(
       }
     }
 
-    if (plot_type() == "log" & plot_type2() == "lin") {
+    if (plot_type() == "log" && plot_type2() == "lin") {
       graphics::par(
         oma = c(0, 0, 0, 0),
         mar = c(3, 3, 1, 1),
@@ -241,7 +241,7 @@ mod_bubble_server <- function(
       )
     }
 
-    if (plot_type() == "lin" & plot_type2() == "log") {
+    if (plot_type() == "lin" && plot_type2() == "log") {
       graphics::par(
         oma = c(0, 0, 0, 0),
         mar = c(3, 3, 1, 1),
@@ -294,7 +294,7 @@ mod_bubble_server <- function(
       )
     }
 
-    if (plot_type() == "log" & plot_type2() == "log") {
+    if (plot_type() == "log" && plot_type2() == "log") {
       graphics::par(
         oma = c(0, 0, 0, 0),
         mar = c(3, 3, 1, 1),
@@ -511,21 +511,21 @@ mod_bubble_server <- function(
       ) %>%
       dplyr::mutate(
         background_color = dplyr::case_when(
-          substr(ColorPoints(), 1, 7) != substr(font.col, 1, 7) ~ substr(
+          !startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ substr(
             font.col,
             1,
             7
           ),
-          substr(ColorPoints(), 1, 7) == substr(font.col, 1, 7) ~ ""
+          startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ ""
         ),
       ) %>%
       dplyr::rowwise() %>%
       dplyr::mutate(
         font.col2 = dplyr::case_when(
-          substr(ColorPoints(), 1, 7) != substr(font.col, 1, 7) ~ font_color(
+          !startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ font_color(
             font.col
           ),
-          substr(ColorPoints(), 1, 7) == substr(font.col, 1, 7) ~ substr(
+          startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ substr(
             font.col,
             1,
             7

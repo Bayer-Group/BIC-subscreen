@@ -38,7 +38,7 @@ subscreenfunnel <- function(
   if (!is.logical(verbose) || is.na(verbose)) {
     stop("parameter verbose needs to be logical (TRUE/FALSE) and non-missing!")
   }
-  if (verbose == TRUE) {
+  if (verbose) {
     cat(
       "\n",
       "subscreenfunnel started at ",
@@ -121,7 +121,7 @@ subscreenfunnel <- function(
 
   H$funnel_quantiles <- data.frame(tmp3)
   pt2 <- Sys.time()
-  if (verbose == TRUE) {
+  if (verbose) {
     cat("\n", "Time for funnel calculation(s): ", pt2 - pt1)
   }
   return(H)

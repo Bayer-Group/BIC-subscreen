@@ -88,8 +88,8 @@ interaction_plot2 <- function(
 
   # sort factor levels and level values with most levels in case of two (or three) factors
   #  used to create fewer plots than lines
-  if (!is.null(fac2) & is.null(fac3)) {
-    if (length(lev2) == 1 & length(lev1) != 1) {
+  if (!is.null(fac2) && is.null(fac3)) {
+    if (length(lev2) == 1 && length(lev1) != 1) {
       lev2_tmp <- lev2
       lev2_values_tmp <- lev2_values
       fac2_tmp <- fac2
@@ -101,7 +101,7 @@ interaction_plot2 <- function(
       fac1 <- fac2_tmp
     }
   }
-  if (!is.null(fac2) & !is.null(fac3)) {
+  if (!is.null(fac2) && !is.null(fac3)) {
     #save current levels temporary
     lev1_tmp <- lev1
     lev1_values_tmp <- lev1_values
@@ -125,7 +125,7 @@ interaction_plot2 <- function(
   }
 
   #create plots depending on number of factors:
-  if (is.null(fac2) & is.null(fac3)) {
+  if (is.null(fac2) && is.null(fac3)) {
     plot(
       # use ordered x and y values for plot
       # as.numeric(factor(lev1)),
@@ -197,7 +197,7 @@ interaction_plot2 <- function(
       col.main = font.col,
       col.lab = font.col
     )
-  } else if (!is.null(fac2) & is.null(fac3)) {
+  } else if (!is.null(fac2) && is.null(fac3)) {
     graphics::layout(
       matrix(c(1, 1, 2, 2), 2, 2, byrow = TRUE),
       heights = c(8, 2)
@@ -209,7 +209,7 @@ interaction_plot2 <- function(
 
     # change order of for loop to order of levels of lev1_values
     # for (i in 1:length(lev1)) {
-    for (i in 1:length(unique(as.character(sort(lev1_values))))) {
+    for (i in seq_along(unique(as.character(sort(lev1_values))))) {
       dat <- df_data[df_data[fac1] == levels(lev1_values)[i], ]
 
       # reorder dataframe based on levels of lev2_values
@@ -322,14 +322,14 @@ interaction_plot2 <- function(
     )
 
     graphics::par(mfrow = c(1, 1), mar = c(5.1, 4.1, 4.1, 2.1))
-  } else if (!is.null(fac2) & !is.null(fac3)) {
+  } else if (!is.null(fac2) && !is.null(fac3)) {
     data_cols <- grDevices::rgb(
       f_col(seq(0, 1, length = length(lev1))),
       maxColorValue = 255
     )
     graphics::layout(
       matrix(
-        c(1:length(lev3), rep(length(lev3) + 1, length(lev3))),
+        c(seq_along(lev3), rep(length(lev3) + 1, length(lev3))),
         2,
         length(lev3),
         byrow = TRUE
@@ -338,11 +338,11 @@ interaction_plot2 <- function(
     )
 
     # change order of for loop to order of levels of lev3_values
-    for (j in 1:length(unique(as.character(sort(lev3_values))))) {
+    for (j in seq_along(unique(as.character(sort(lev3_values))))) {
       df_data_tmp <- df_data[df_data[fac3] == levels(lev3_values)[j], ]
 
       # change order of for loop to order of levels of lev1_values
-      for (i in 1:length(unique(as.character(sort(lev1_values))))) {
+      for (i in seq_along(unique(as.character(sort(lev1_values))))) {
         dat <- df_data_tmp[df_data_tmp[fac1] == levels(lev1_values)[i], ]
 
         # create new variable dat_ordered_lev2 for reorderd data with levels of lev2_values
