@@ -1468,8 +1468,7 @@ asmus2_module_server <- function(
             !is.na(input$fuzzy_multiplicity_value)
         ) {
           d <- Sys.time()
-          rr <- !(
-            rem * rel < fuzzy_multiplicity_value | is.na(rem * rel))
+          rr <- !(rem * rel < fuzzy_multiplicity_value | is.na(rem * rel))
         } else {
           rr <- NULL
         }

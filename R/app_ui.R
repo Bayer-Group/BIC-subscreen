@@ -197,7 +197,7 @@ app_ui <- function(request) {
           #   )
           # ),
           #### Tables  ####
-          if (app_options$showTables) {
+          if (isTRUE(app_options$showTables)) {
             shiny::fluidRow(
               col_12(
                 shiny::tabsetPanel(

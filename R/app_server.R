@@ -274,7 +274,7 @@ app_server <- function(input, output, session) {
 
   #### ObserveEvent: click_points_data$xy, scresults_tmp$dat, backgroundColor() ####
 
-  if (app_options$showTables) {
+  if (isTRUE(app_options$showTables)) {
     shiny::observeEvent(
       c(
         new_selected_ids$val,
@@ -806,7 +806,7 @@ app_server <- function(input, output, session) {
     }
   )
 
-  if (app_options$showTables) {
+  if (isTRUE(app_options$showTables)) {
     shiny::observeEvent(c(new_selected_ids$val), ignoreNULL = FALSE, {
       if (!is.null(scresults_tmp$dat)) {
         SGID_clicked <- new_selected_ids$val
@@ -972,7 +972,7 @@ app_server <- function(input, output, session) {
   }
   #### ObserveEvent: new_selected_ids$val, input$selectedSG_rows_selected, plot_points_data_complement() ####
 
-  if (app_options$showTables) {
+  if (isTRUE(app_options$showTables)) {
     shiny::observeEvent(
       c(
         new_selected_ids$val,
@@ -1098,7 +1098,7 @@ app_server <- function(input, output, session) {
   })
 
   #### ObserveEvent: select_button_reac$val, scresults_tmp$dat ####
-  if (app_options$showTables) {
+  if (isTRUE(app_options$showTables)) {
     shiny::observeEvent(c(select_button_reac$val, scresults_tmp$dat), {
       if (!is.null(shiny::req(select_button_reac$val))) {
         selectedRow <- as.numeric(strsplit(select_button_reac$val, "_")[[1]][2])
@@ -1124,7 +1124,7 @@ app_server <- function(input, output, session) {
   }
 
   #### ObserveEvent: select_button_reac$val, input$remove_button, scresults_tmp$dat ####
-  if (app_options$showTables) {
+  if (isTRUE(app_options$showTables)) {
     shiny::observeEvent(
       c(select_button_reac$val, input$remove_button, scresults_tmp$dat),
       {
@@ -1260,7 +1260,7 @@ app_server <- function(input, output, session) {
 
   #### ObserveEvent: new_selected_ids$val, click_points_data$xy ####
 
-  if (app_options$showTables) {
+  if (isTRUE(app_options$showTables)) {
     shiny::observeEvent(
       c(
         new_selected_ids$val #, click_points_data$xy
