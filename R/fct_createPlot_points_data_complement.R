@@ -11,25 +11,40 @@ createPlot_points_data_complement <- function(
   y,
   sel_ids
 ) {
-
   if (!is.null(results_tmp)) {
     if (
       y != "N.of.subjects" &
-      any(startsWith(colnames(results_tmp$sge), "Complement_"))
+        any(startsWith(colnames(results_tmp$sge), "Complement_"))
     ) {
       IDs <- sel_ids
       if (!is.null(IDs)) {
         if (!is.integer0(IDs)) {
           if (!is.na(IDs)) {
-            tmp <- results_tmp$sge[,c("SGID","N.of.subjects", colnames(results_tmp$sge[startsWith(colnames(results_tmp$sge), "Complement_")]))]
+            tmp <- results_tmp$sge[, c(
+              "SGID",
+              "N.of.subjects",
+              colnames(results_tmp$sge[startsWith(
+                colnames(results_tmp$sge),
+                "Complement_"
+              )])
+            )]
             tmp$color <- "#fffb00"
             tmp <- tmp[tmp$SGID %in% IDs, ]
             tmp$ID <- paste0("Complement of SGID ", IDs)
-            tmp$N.of.subjects.complement <- results_tmp$results_total$N.of.subjects - tmp$N.of.subjects
+            tmp$N.of.subjects.complement <- results_tmp$results_total$N.of.subjects -
+              tmp$N.of.subjects
             tmp
-          } else {NULL}
-        } else {NULL}
-      } else {NULL}
-    } else {NULL}
+          } else {
+            NULL
+          }
+        } else {
+          NULL
+        }
+      } else {
+        NULL
+      }
+    } else {
+      NULL
+    }
   }
 }

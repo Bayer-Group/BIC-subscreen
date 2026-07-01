@@ -22,28 +22,20 @@ golem::fill_desc(
   pkg_name = "subscreen", # The name of the golem package containing the app (typically lowercase, no underscore or periods)
   pkg_title = "Systematic Screening of Study Data for Subgroup Effects", # What the Package Does (One Line, Title Case, No Period)
   pkg_description = "Identifying outcome relevant subgroups has now become as simple as possible! The formerly lengthy and tedious search for the needle in a haystack will be replaced by a single, comprehensive and coherent presentation. The central result of a subgroup screening is a diagram in which each single dot stands for a subgroup. The diagram may show thousands of them. The position of the dot in the diagram is determined by the sample size of the subgroup and the statistical measure of the treatment effect in that subgroup. The sample size is shown on the horizontal axis while the treatment effect is displayed on the vertical axis. Furthermore, the diagram shows the line of no effect and the overall study results. For small subgroups, which are found on the left side of the plot, larger random deviations from the mean study effect are expected, while for larger subgroups only small deviations from the study mean can be expected to be chance findings. So for a study with no conspicuous subgroup effects, the dots in the figure are expected to form a kind of funnel. Any deviations from this funnel shape hint to conspicuous subgroups.", # What the package does (one paragraph).
-  authors = c(person(given = "Bodo",
-                   family = "Kirsch",
-                     role = c("aut", "cre"),
-                    email = "kirschbodo@gmail.com"),
-             person(given = "Steffen",
-                   family = "Jeske",
-                     role = "aut"),
-             person(given = "Julia",
-                   family = "Eichhorn",
-                     role = "aut"),
-             person(given = "Susanne",
-                   family = "Lippert",
-                     role = "aut"),
-             person(given = "Thomas",
-                   family = "Schmelter",
-                     role = "aut"),
-             person(given = "Christoph",
-                   family = "Muysers",
-                     role = "aut"),
-             person(given = "Hermann",
-                   family = "Kulmann",
-                     role = "aut")),
+  authors = c(
+    person(
+      given = "Bodo",
+      family = "Kirsch",
+      role = c("aut", "cre"),
+      email = "kirschbodo@gmail.com"
+    ),
+    person(given = "Steffen", family = "Jeske", role = "aut"),
+    person(given = "Julia", family = "Eichhorn", role = "aut"),
+    person(given = "Susanne", family = "Lippert", role = "aut"),
+    person(given = "Thomas", family = "Schmelter", role = "aut"),
+    person(given = "Christoph", family = "Muysers", role = "aut"),
+    person(given = "Hermann", family = "Kulmann", role = "aut")
+  ),
   repo_url = "https://github.com/Bayer-Group/BIC-subscreen", # The URL of the GitHub repo (optional),
   pkg_version = "4.1.1", # The version of the package containing the app
   set_options = TRUE # Set the global golem options

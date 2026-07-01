@@ -51,32 +51,35 @@ subscreenvi <- function(data, y, cens = NULL, x = NULL, trt = NULL) {
   Importance <- NULL
   # transform character to factor
   if (any(sapply(data, is.character))) {
-    data[sapply(data, is.character)] <- lapply(data[sapply(data, is.character)], factor)
+    data[sapply(data, is.character)] <- lapply(
+      data[sapply(data, is.character)],
+      factor
+    )
   }
 
   # build formula
-  if (is.null(x)) x <- setdiff(colnames(data), c(trt, y, cens))
+  if (is.null(x)) {
+    x <- setdiff(colnames(data), c(trt, y, cens))
+  }
 
   x.form <- paste(x, collapse = '+')
 
-  if (!is.null(cens)){
+  if (!is.null(cens)) {
     mod.form <- paste0('Surv(', y, ', ', cens, ')~', x.form)
-  }else{
+  } else {
     mod.form <- paste0(y, '~', x.form)
   }
   # empty list for results
 
   outcome <- list()
   # fit random forest for each treatment level and save variable importance
-  for (j in 1:length(mod.form)){
+  for (j in 1:length(mod.form)) {
     result <- list()
     tmp <- list()
-    if (!is.null(trt)){
-
+    if (!is.null(trt)) {
       trt.lev <- levels(factor(data[, trt]))
 
-      for (i in 1:length(trt.lev)){
-
+      for (i in 1:length(trt.lev)) {
         fit <- ranger::ranger(
           stats::as.formula(mod.form[j]),
           data = data[data[, trt] == trt.lev[i], ],
@@ -98,7 +101,7 @@ subscreenvi <- function(data, y, cens = NULL, x = NULL, trt = NULL) {
 
     # summarize trt level results: rank variability over treatment levels
     tmp <- plyr::join_all(tmp, by = 'Variable', type = 'full')
-    tmp$'Importance' <- apply(tmp[,-1], MARGIN = 1, FUN = stats::var)
+    tmp$'Importance' <- apply(tmp[, -1], MARGIN = 1, FUN = stats::var)
     tmp <- plyr::arrange(tmp, plyr::desc(Importance))
     result[['VI.RV.trt']] <- tmp[, c('Variable', 'Importance')]
 
@@ -107,4 +110,3 @@ subscreenvi <- function(data, y, cens = NULL, x = NULL, trt = NULL) {
   names(outcome) <- y
   return(outcome)
 }
-

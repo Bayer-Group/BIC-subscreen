@@ -20,7 +20,7 @@ not_na <- Negate(is.na)
 #' drop_nulls <- function(x) {
 #'   x[!sapply(x, is.null)]
 #' }
-#' 
+#'
 #' #' If x is `NULL`, return y, otherwise return x
 #' #'
 #' #' @param x,y Two elements to test, one potentially `NULL`
@@ -36,7 +36,7 @@ not_na <- Negate(is.na)
 #'     x
 #'   }
 #' }
-#' 
+#'
 #' #' If x is `NA`, return y, otherwise return x
 #' #'
 #' #' @param x,y Two elements to test, one potentially `NA`
@@ -52,7 +52,7 @@ not_na <- Negate(is.na)
 #'     x
 #'   }
 #' }
-#' 
+#'
 #' #' Typing reactiveValues is too long
 #' #'
 #' #' @inheritParams reactiveValues

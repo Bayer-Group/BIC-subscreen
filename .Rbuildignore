@@ -21,3 +21,5 @@ $run_dev.*
 ^app\.R$
 ^rsconnect$
 ^\.rscignore$
+^[.]?air[.]toml$
+^\.vscode$

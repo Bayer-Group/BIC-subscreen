@@ -10,8 +10,6 @@
 #'
 #' @keywords internal
 
-
-
 createParentTable <- function(
   results,
   parents,
@@ -21,32 +19,35 @@ createParentTable <- function(
   bg.color,
   navpanel
 ) {
-
-if (is.null(dim(parents$Parents)) || dim(parents$Parents)[1] == 0) {
+  if (is.null(dim(parents$Parents)) || dim(parents$Parents)[1] == 0) {
     empty_data <- results$sge[0, c("SGID", colnames(results$results_total))]
     if (!is.null(empty_data)) {
       if (dim(empty_data)[2] > 5) {
-          empty_data <- empty_data[,1:5]
+        empty_data <- empty_data[, 1:5]
       }
     }
     tmp <- DT::datatable(
       data = empty_data,
       extensions = 'Buttons',
       options = list(
-        language = list(emptyTable = 'Select a subgroup by clicking on a row in the "Selected Subgroups"-list!'),
+        language = list(
+          emptyTable = 'Select a subgroup by clicking on a row in the "Selected Subgroups"-list!'
+        ),
         initComplete = DT::JS(
-        "function(settings, json) {",
-        paste0("$(this.api().table().header()).css({'background-color': '",
-          bg.color,
-          "', 'color': '",
-          font_color(different_hues(bg.color)),
-          "'});"
-        ),"}"
-      ),
-      dom = 'Brtip',
-      buttons = c('copy','print','pageLength',I('colvis')),
-      lengthMenu = list(c(6, 12, -1), c("6", "12", "All")),
-      pageLength = 6
+          "function(settings, json) {",
+          paste0(
+            "$(this.api().table().header()).css({'background-color': '",
+            bg.color,
+            "', 'color': '",
+            font_color(different_hues(bg.color)),
+            "'});"
+          ),
+          "}"
+        ),
+        dom = 'Brtip',
+        buttons = c('copy', 'print', 'pageLength', I('colvis')),
+        lengthMenu = list(c(6, 12, -1), c("6", "12", "All")),
+        pageLength = 6
       ),
       class = 'cell-border stripe',
       rownames = FALSE,
@@ -65,26 +66,32 @@ if (is.null(dim(parents$Parents)) || dim(parents$Parents)[1] == 0) {
       select = c("SGID", x = curr_x, y = y, "nfactors", results$factors)
     )
 
-    col2hide <- which(sapply(df_par, FUN = function(x){all(x == 'Not used')})) - 1
+    col2hide <- which(sapply(df_par, FUN = function(x) {
+      all(x == 'Not used')
+    })) -
+      1
     names(col2hide) <- NULL
 
     tmp <- DT::datatable(
       data = df_par,
       extensions = 'Buttons',
-      options = list(initComplete = DT::JS(
-        "function(settings, json) {",
-        paste0("$(this.api().table().header()).css({'background-color': '",
-         bg.color,
-         "', 'color': '",
-         font_color(different_hues(bg.color)),
-         "'});"
-        ),"}"
-      ),
-      columnDefs = list(list(targets = col2hide, visible = FALSE)),
-      dom = 'Brtip',
-      buttons = c('copy','print','pageLength',I('colvis')),
-      lengthMenu = list(c(6, 12, -1), c("6", "12", "All")),
-      pageLength = 6
+      options = list(
+        initComplete = DT::JS(
+          "function(settings, json) {",
+          paste0(
+            "$(this.api().table().header()).css({'background-color': '",
+            bg.color,
+            "', 'color': '",
+            font_color(different_hues(bg.color)),
+            "'});"
+          ),
+          "}"
+        ),
+        columnDefs = list(list(targets = col2hide, visible = FALSE)),
+        dom = 'Brtip',
+        buttons = c('copy', 'print', 'pageLength', I('colvis')),
+        lengthMenu = list(c(6, 12, -1), c("6", "12", "All")),
+        pageLength = 6
       ),
       class = 'cell-border stripe',
       rownames = FALSE,
@@ -100,9 +107,14 @@ if (is.null(dim(parents$Parents)) || dim(parents$Parents)[1] == 0) {
       border = paste0('.5px solid ', bg.color)
     )
 
-    tmp.sglev <- levels(stats::relevel(factor(unlist(lapply(df_par[, results$factors], as.character))), ref = 'Not used'))
+    tmp.sglev <- levels(stats::relevel(
+      factor(unlist(lapply(df_par[, results$factors], as.character))),
+      ref = 'Not used'
+    ))
 
-    colXY <- which(colnames(df_par) %in% c('SGID', names(results$results_total), 'nfactors'))
+    colXY <- which(
+      colnames(df_par) %in% c('SGID', names(results$results_total), 'nfactors')
+    )
 
     col.tabFont <- font_color(different_hues(bg.color))
     col.tabBack <- bg.color
@@ -116,7 +128,8 @@ if (is.null(dim(parents$Parents)) || dim(parents$Parents)[1] == 0) {
       table = tmp,
       columns = results$factors,
       color = DT::styleEqual(
-        tmp.sglev, c(col.tabBack, rep(col.tabFont, length(tmp.sglev) - 1))
+        tmp.sglev,
+        c(col.tabBack, rep(col.tabFont, length(tmp.sglev) - 1))
       )
     )
   }

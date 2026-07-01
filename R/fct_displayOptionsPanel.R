@@ -3,31 +3,34 @@
 #' @keywords internal
 
 displayOptionsPanel <- function(
-    custom_ref_line_at_start,
-    custom_ref_line_value,
-    favour_label_at_start,
-    favour_direction
-  ) {
+  custom_ref_line_at_start,
+  custom_ref_line_value,
+  favour_label_at_start,
+  favour_direction
+) {
   shiny::tagList(
-    shiny::conditionalPanel(condition = "output.funnelenabled == true",
+    shiny::conditionalPanel(
+      condition = "output.funnelenabled == true",
       shiny::checkboxInput(
         inputId = "add_funnel",
         label = "Draw reference funnel",
         value = FALSE
       )
     ),
-    shiny::conditionalPanel(condition = "input.add_funnel == true",
+    shiny::conditionalPanel(
+      condition = "input.add_funnel == true",
       shiny::checkboxInput(
         inputId = "exclude_funnel",
         label = "Dots in funnel",
         value = FALSE
       )
     ),
-    shiny::conditionalPanel(condition = "input.add_funnel == true",
+    shiny::conditionalPanel(
+      condition = "input.add_funnel == true",
       shiny::radioButtons(
         inputId = "alpha_funnel",
         label = "Select alpha",
-        choices = c(0.1,0.01),
+        choices = c(0.1, 0.01),
         selected = 0.1,
         inline = TRUE
       )
@@ -50,8 +53,8 @@ displayOptionsPanel <- function(
     #   ticks = FALSE
     # ),
 
-
-    shiny::div(style = "position:absolute;right:2em;",
+    shiny::div(
+      style = "position:absolute;right:2em;",
       bsplus::bs_embed_tooltip(
         tag = bsplus::shiny_iconlink("question"),
         title = "Change the dot size.
@@ -64,14 +67,15 @@ displayOptionsPanel <- function(
       condition = "input.circlestyle == 'standard'",
       shiny::sliderInput(
         inputId = "pointsize",
-        label = "Choose dot size" ,
+        label = "Choose dot size",
         min = 0.1,
         max = 4,
         value = 2,
         step = 0.2
       )
     ),
-    shiny::div(style = "position:absolute;right:2em;",
+    shiny::div(
+      style = "position:absolute;right:2em;",
       bsplus::bs_embed_tooltip(
         tag = bsplus::shiny_iconlink("question"),
         title = "Use the Subgroup size as given size or display
@@ -125,20 +129,21 @@ displayOptionsPanel <- function(
       value = FALSE
     ),
     shiny::checkboxInput(
-      inputId ="add_ref_line",
-      label ="Show reference line",
+      inputId = "add_ref_line",
+      label = "Show reference line",
       value = TRUE
     ),
     shiny::fluidRow(
       col_6(
         shiny::checkboxInput(
-          inputId ="add_custom_ref_line",
-          label ="Add custom reference line",
+          inputId = "add_custom_ref_line",
+          label = "Add custom reference line",
           value = custom_ref_line_at_start
         )
       ),
       col_6(
-        shiny::conditionalPanel(condition = "input.add_custom_ref_line == true",
+        shiny::conditionalPanel(
+          condition = "input.add_custom_ref_line == true",
           shiny::numericInput(
             inputId = "custom_ref_line",
             label = "Value for custom reference line",
@@ -156,7 +161,8 @@ displayOptionsPanel <- function(
         )
       ),
       col_6(
-        shiny::conditionalPanel(condition = "input.add_favour_arrows == true",
+        shiny::conditionalPanel(
+          condition = "input.add_favour_arrows == true",
           shinyWidgets::prettyToggle(
             inputId = "favour_direction",
             label_on = "High values favour verum",
