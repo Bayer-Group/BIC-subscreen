@@ -139,7 +139,7 @@ createFilteredTable <- function(
 
     tmp <- DT::formatStyle(
       table = tmp,
-      columns = 1:ncol(df_filt),
+      columns = seq_len(ncol(df_filt)),
       target = "cell",
       backgroundColor = different_hues(bg.color),
       border = paste0('.5px solid ', bg.color)

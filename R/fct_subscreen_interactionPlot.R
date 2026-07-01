@@ -209,7 +209,7 @@ interaction_plot2 <- function(
 
     # change order of for loop to order of levels of lev1_values
     # for (i in 1:length(lev1)) {
-    for (i in 1:length(unique(as.character(sort(lev1_values))))) {
+    for (i in seq_along(unique(as.character(sort(lev1_values))))) {
       dat <- df_data[df_data[fac1] == levels(lev1_values)[i], ]
 
       # reorder dataframe based on levels of lev2_values
@@ -329,7 +329,7 @@ interaction_plot2 <- function(
     )
     graphics::layout(
       matrix(
-        c(1:length(lev3), rep(length(lev3) + 1, length(lev3))),
+        c(seq_along(lev3), rep(length(lev3) + 1, length(lev3))),
         2,
         length(lev3),
         byrow = TRUE
@@ -338,11 +338,11 @@ interaction_plot2 <- function(
     )
 
     # change order of for loop to order of levels of lev3_values
-    for (j in 1:length(unique(as.character(sort(lev3_values))))) {
+    for (j in seq_along(unique(as.character(sort(lev3_values))))) {
       df_data_tmp <- df_data[df_data[fac3] == levels(lev3_values)[j], ]
 
       # change order of for loop to order of levels of lev1_values
-      for (i in 1:length(unique(as.character(sort(lev1_values))))) {
+      for (i in seq_along(unique(as.character(sort(lev1_values))))) {
         dat <- df_data_tmp[df_data_tmp[fac1] == levels(lev1_values)[i], ]
 
         # create new variable dat_ordered_lev2 for reorderd data with levels of lev2_values

@@ -421,13 +421,13 @@ asmus2_module_server <- function(
         data$factors
       ])[which(data$sge[data$sge$SGID == SGID, data$factors] != "Not used")]
       tmp2 <- data$sge[
-        apply(data$sge[, c("SGID", "nfactors", tmp)] != "Not used", 1, sum) ==
+        rowSums(data$sge[, c("SGID", "nfactors", tmp)] != "Not used") ==
           (2 + nfac),
       ]
       tmp3 <- tmp2[tmp2$nfactors == nfac, ]
       ges <- 1
       if (length(tmp) > 0) {
-        for (i in 1:length(tmp)) {
+        for (i in seq_along(tmp)) {
           ges <- sum(levels(data$sge[[tmp[i]]]) != "Not used") * ges
         }
       } else {
@@ -1468,11 +1468,8 @@ asmus2_module_server <- function(
             !is.na(input$fuzzy_multiplicity_value)
         ) {
           d <- Sys.time()
-          rr <- ifelse(
-            rem * rel < fuzzy_multiplicity_value | is.na(rem * rel),
-            FALSE,
-            TRUE
-          )
+          rr <- !(
+            rem * rel < fuzzy_multiplicity_value | is.na(rem * rel))
         } else {
           rr <- NULL
         }

@@ -73,13 +73,13 @@ subscreenvi <- function(data, y, cens = NULL, x = NULL, trt = NULL) {
 
   outcome <- list()
   # fit random forest for each treatment level and save variable importance
-  for (j in 1:length(mod.form)) {
+  for (j in seq_along(mod.form)) {
     result <- list()
     tmp <- list()
     if (!is.null(trt)) {
       trt.lev <- levels(factor(data[, trt]))
 
-      for (i in 1:length(trt.lev)) {
+      for (i in seq_along(trt.lev)) {
         fit <- ranger::ranger(
           stats::as.formula(mod.form[j]),
           data = data[data[, trt] == trt.lev[i], ],
@@ -93,7 +93,7 @@ subscreenvi <- function(data, y, cens = NULL, x = NULL, trt = NULL) {
         rownames(res.df) <- NULL
         result[[paste0('VI.trt.', trt.lev[i])]] <- res.df
 
-        res.df[, 2] <- 1:nrow(res.df)
+        res.df[, 2] <- seq_len(nrow(res.df))
         colnames(res.df)[2] <- paste0('rank', i)
         tmp[[paste0('VI.trt.', trt.lev[i])]] <- res.df
       }

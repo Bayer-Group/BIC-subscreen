@@ -163,7 +163,7 @@ mod_variable_importance_server <- function(
         tmp1 <- NULL
 
         if (length(vek1) > 0) {
-          for (i in 1:length(vek1)) {
+          for (i in seq_along(vek1)) {
             tmp1 <- rbind(
               tmp1,
               results()$sge[
@@ -204,7 +204,7 @@ mod_variable_importance_server <- function(
         vek2 <- vek2[vek2 %in% results()$factors]
         tmp2 <- NULL
         if (length(vek2) > 0) {
-          for (i in 1:length(vek2)) {
+          for (i in seq_along(vek2)) {
             tmp2 <- rbind(
               tmp2,
               results()$sge[

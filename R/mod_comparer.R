@@ -556,7 +556,7 @@ mod_comparer_server <- function(
     colthemeCol = colthemeCol,
     rowwise = TRUE,
     complement = shiny::reactive({
-      ifelse(!is.null(plot_points_data_complement()), TRUE, FALSE)
+      !is.null(plot_points_data_complement())
     }) #,
     # point_brightness = point_brightness
   )

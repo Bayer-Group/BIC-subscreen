@@ -1811,7 +1811,7 @@ app_server <- function(input, output, session) {
         colthemeCol
       }),
       complement = shiny::reactive({
-        ifelse(!is.null(plot_points_data_complement()), TRUE, FALSE)
+        !is.null(plot_points_data_complement())
       })
     )
   })

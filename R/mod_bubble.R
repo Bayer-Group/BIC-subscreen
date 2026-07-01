@@ -511,21 +511,21 @@ mod_bubble_server <- function(
       ) %>%
       dplyr::mutate(
         background_color = dplyr::case_when(
-          substr(ColorPoints(), 1, 7) != substr(font.col, 1, 7) ~ substr(
+          !startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ substr(
             font.col,
             1,
             7
           ),
-          substr(ColorPoints(), 1, 7) == substr(font.col, 1, 7) ~ ""
+          startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ ""
         ),
       ) %>%
       dplyr::rowwise() %>%
       dplyr::mutate(
         font.col2 = dplyr::case_when(
-          substr(ColorPoints(), 1, 7) != substr(font.col, 1, 7) ~ font_color(
+          !startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ font_color(
             font.col
           ),
-          substr(ColorPoints(), 1, 7) == substr(font.col, 1, 7) ~ substr(
+          startsWith(ColorPoints(), substr(font.col, 1, 7)) ~ substr(
             font.col,
             1,
             7

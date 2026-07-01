@@ -10,7 +10,7 @@
 parents <- function(data, SGID) {
   if (is.null(SGID) | is.integer0(SGID)) {} else {
     Parents_start <- NULL
-    for (k in 1:length(SGID)) {
+    for (k in seq_along(SGID)) {
       start <- data$sge[data$sge$SGID == SGID[k], ]
       if (start$nfactors == 1) {
         Parents_start <- NULL
@@ -28,7 +28,7 @@ parents <- function(data, SGID) {
           )
         )
         colnames(M1) <- colnames(tmp2)
-        for (i in 1:length(ind)) {
+        for (i in seq_along(ind)) {
           M1[M1[, i] == 0, i] <- "Not used"
           M1[M1[, i] == 1, i] <- as.character(start[, ind[i]])
         }
