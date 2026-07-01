@@ -562,7 +562,7 @@ mod_mosaic_server <- function(
     }
     mean.z <- ifelse(
       shiny::req(input$logmosaic) == "lin",
-      mean.z <- results()$results_total[, input$var3],
+      results()$results_total[, input$var3],
       log(results()$results_total[, input$var3])
     )
     tr.mean.z <- (mean.z - rg.z[1]) / diff(rg.z)

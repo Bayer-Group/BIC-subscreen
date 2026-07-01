@@ -249,9 +249,9 @@ col_12 <- function(...) {
   shiny::column(12, ...)
 }
 
-col_11 <- function(...) {
-  shiny::column(11, ...)
-}
+# col_11 <- function(...) {
+#   shiny::column(11, ...)
+# }
 
 col_10 <- function(...) {
   shiny::column(10, ...)
