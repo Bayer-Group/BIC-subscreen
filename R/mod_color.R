@@ -22,21 +22,20 @@ mod_color_ui <- function(id) {
         colourpicker::colourInput(
           inputId = ns("ColorSelected"),
           label = "Choose a colour for the filtered subgroup(s)",
-          value  = "#89D329",
+          value = "#89D329",
           allowTransparent = TRUE
         )
       )
     ),
     shiny::fluidRow(
-       col_6(
+      col_6(
         shiny::checkboxInput(
           inputId = ns("LabelTabClicked"),
           label = "Labels",
           value = FALSE
         )
       ),
-      col_6(
-      )
+      col_6()
     ),
     shiny::fluidRow(
       col_6(
@@ -56,7 +55,7 @@ mod_color_ui <- function(id) {
       ),
     ),
     shiny::fluidRow(
-       col_6(
+      col_6(
         shiny::checkboxInput(
           inputId = ns("LabelParents"),
           label = "Labels",
@@ -108,7 +107,7 @@ mod_color_ui <- function(id) {
       )
     ),
     shiny::fluidRow(
-       col_6(
+      col_6(
         shiny::checkboxInput(
           inputId = ns("LabelFactCont"),
           label = "Labels",
@@ -129,7 +128,7 @@ mod_color_ui <- function(id) {
         shiny::selectInput(
           inputId = ns('select_col'),
           label = "Select standard color theme:",
-          choices = list('app version', 'print version'),#, 'bay version'),
+          choices = list('app version', 'print version'), #, 'bay version'),
           selected = 'app version'
         )
       )
@@ -147,8 +146,7 @@ mod_color_ui <- function(id) {
 #' @noRd
 
 mod_color_server <- function(input, output, session) {
-
-   colthemeCol <- shiny::reactiveValues(
+  colthemeCol <- shiny::reactiveValues(
     col.bg = '#383838',
     font.col = '#ffffff',
     panel.col = '#6b6b6b',
@@ -178,39 +176,39 @@ mod_color_server <- function(input, output, session) {
     }
   })
 
-  shiny::observeEvent(input$ColorBGplot,{
-      colthemeCol$col.bg <- input$ColorBGplot
+  shiny::observeEvent(input$ColorBGplot, {
+    colthemeCol$col.bg <- input$ColorBGplot
   })
   shiny::observeEvent(input$ColorSelected, {
-      colthemeCol$ColorSelected <- input$ColorSelected
+    colthemeCol$ColorSelected <- input$ColorSelected
   })
   shiny::observeEvent(input$ColorFactCont, {
-      colthemeCol$ColorFactCont <- input$ColorFactCont
+    colthemeCol$ColorFactCont <- input$ColorFactCont
   })
   shiny::observeEvent(input$ColorParents, {
-      colthemeCol$ColorParents <- input$ColorParents
+    colthemeCol$ColorParents <- input$ColorParents
   })
   shiny::observeEvent(input$ColorTabClicked, {
-      colthemeCol$ColorTabClicked <- input$ColorTabClicked
+    colthemeCol$ColorTabClicked <- input$ColorTabClicked
   })
   shiny::observeEvent(input$ColorImportance, {
-      colthemeCol$ColorImportance <- input$ColorImportance
+    colthemeCol$ColorImportance <- input$ColorImportance
   })
 
   shiny::observeEvent(input$ColorReference, {
-      colthemeCol$ColorReference <- input$ColorReference
+    colthemeCol$ColorReference <- input$ColorReference
   })
   shiny::observeEvent(input$ColorCustomReference, {
-      colthemeCol$ColorCustomReference <- input$ColorCustomReference
+    colthemeCol$ColorCustomReference <- input$ColorCustomReference
   })
   shiny::observeEvent(input$ColorBGplot, {
-      colthemeCol$ColorBGplot <- input$ColorBGplot
+    colthemeCol$ColorBGplot <- input$ColorBGplot
   })
   shiny::observeEvent(input$ColorPoints, {
-      colthemeCol$ColorPoints <- input$ColorPoints
+    colthemeCol$ColorPoints <- input$ColorPoints
   })
   shiny::observeEvent(input$ColorMemorized, {
-      colthemeCol$ColorMemorized <- input$ColorMemorized
+    colthemeCol$ColorMemorized <- input$ColorMemorized
   })
 
   ColorBGplotlight <- shiny::reactiveValues(
@@ -233,12 +231,24 @@ mod_color_server <- function(input, output, session) {
 
   return(
     list(
-      colthemeCol = shiny::reactive({colthemeCol}),
-      button = shiny::reactive({input$select_col}),
-      LabelTabClicked = shiny::reactive({input$LabelTabClicked}),
-      LabelParents = shiny::reactive({input$LabelParents}),
-      LabelMemorized = shiny::reactive({input$LabelMemorized}),
-      LabelFactCont = shiny::reactive({input$LabelFactCont})
+      colthemeCol = shiny::reactive({
+        colthemeCol
+      }),
+      button = shiny::reactive({
+        input$select_col
+      }),
+      LabelTabClicked = shiny::reactive({
+        input$LabelTabClicked
+      }),
+      LabelParents = shiny::reactive({
+        input$LabelParents
+      }),
+      LabelMemorized = shiny::reactive({
+        input$LabelMemorized
+      }),
+      LabelFactCont = shiny::reactive({
+        input$LabelFactCont
+      })
     )
   )
 }

@@ -5,7 +5,7 @@
 #     '<span>Enter your name here<span style="color:red">*</span></span>'
 #   )
 # })
-# 
+#
 # test_that("Test list_to_li works", {
 #   expect_s3_class(list_to_li(c("a", "b")), "shiny.tag.list")
 #   expect_equal(
@@ -17,7 +17,7 @@
 #     '<li class="my_li">a</li>\n<li class="my_li">b</li>'
 #   )
 # })
-# 
+#
 # test_that("Test list_to_p works", {
 #   expect_s3_class(
 #     list_to_p(c(
@@ -48,7 +48,7 @@
 #     '<p class="my_li">This is the first paragraph</p>\n<p class="my_li">this is the second paragraph</p>'
 #   )
 # })
-# 
+#
 # test_that("Test named_to_li works", {
 #   expect_s3_class(named_to_li(list(a = "a", b = "b")), "shiny.tag.list")
 #   expect_equal(
@@ -60,7 +60,7 @@
 #     '<li class="mylist"><b>a:</b> a</li>\n<li class="mylist"><b>b:</b> b</li>'
 #   )
 # })
-# 
+#
 # test_that("Test tagRemoveAttributes works", {
 #   a_with_tag <- shiny::tags$p(src = "plop", "pouet")
 #   expect_s3_class(a_with_tag, "shiny.tag")
@@ -68,7 +68,7 @@
 #     as.character(a_with_tag),
 #     '<p src="plop">pouet</p>'
 #   )
-# 
+#
 #   a_without_tag <- tagRemoveAttributes(a_with_tag, "src")
 #   expect_s3_class(a_without_tag, "shiny.tag")
 #   expect_equal(
@@ -76,7 +76,7 @@
 #     "<p>pouet</p>"
 #   )
 # })
-# 
+#
 # test_that("Test undisplay works", {
 #   a <- shiny::tags$p(src = "plop", "pouet")
 #   expect_s3_class(a, "shiny.tag")
@@ -90,7 +90,7 @@
 #     as.character(a_undisplay),
 #     '<p src="plop" style="display: none;">pouet</p>'
 #   )
-# 
+#
 #   b <- shiny::actionButton("go_filter", "go")
 #   expect_s3_class(b, "shiny.tag")
 #   expect_equal(
@@ -103,7 +103,7 @@
 #     as.character(b_undisplay),
 #     '<button id="go_filter" type="button" class="btn btn-default action-button" style="display: none;">\n  <span class="action-label">go</span>\n</button>'
 #   )
-# 
+#
 #   c <- shiny::tags$p(src = "plop", style = "some_style", "pouet")
 #   expect_s3_class(c, "shiny.tag")
 #   expect_equal(
@@ -117,7 +117,7 @@
 #     '<p src="plop" style="display: none; some_style">pouet</p>'
 #   )
 # })
-# 
+#
 # test_that("Test display works", {
 #   a_undisplay <- shiny::tags$p(src = "plop", "pouet", style = "display: none;")
 #   expect_s3_class(a_undisplay, "shiny.tag")
@@ -132,7 +132,7 @@
 #     '<p src="plop" style="">pouet</p>'
 #   )
 # })
-# 
+#
 # test_that("Test jq_hide works", {
 #   expect_s3_class(jq_hide("golem"), "shiny.tag")
 #   expect_equal(
@@ -140,7 +140,7 @@
 #     "<script>$('#golem').hide()</script>"
 #   )
 # })
-# 
+#
 # test_that("Test rep_br works", {
 #   expect_s3_class(rep_br(5), "html")
 #   expect_equal(
@@ -148,7 +148,7 @@
 #     "<br/> <br/> <br/> <br/> <br/>"
 #   )
 # })
-# 
+#
 # test_that("Test enurl works", {
 #   expect_s3_class(enurl("https://www.thinkr.fr", "ThinkR"), "shiny.tag")
 #   expect_equal(

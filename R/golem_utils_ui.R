@@ -69,7 +69,7 @@
 #'     shiny::tagList(res)
 #'   }
 #' }
-#' 
+#'
 #' named_to_li <- function(list, class = NULL) {
 #'   if (is.null(class)) {
 #'     res <- mapply(
@@ -110,7 +110,7 @@
 #'     shiny::tagList(res)
 #'   }
 #' }
-#' 
+#'
 #' #' Remove a tag attribute
 #' #'
 #' #' @param tag the tag
@@ -129,7 +129,7 @@
 #'   }
 #'   tag
 #' }
-#' 
+#'
 #' #' Hide or display a tag
 #' #'
 #' #' @param tag the tag
@@ -158,7 +158,7 @@
 #'   }
 #'   tag
 #' }
-#' 
+#'
 #' display <- function(tag) {
 #'   if (
 #'     !is.null(tag$attribs$style) &&
@@ -172,7 +172,7 @@
 #'   }
 #'   tag
 #' }
-#' 
+#'
 #' #' Hide an elements by calling jquery hide on it
 #' #'
 #' #' @param id the id of the element to hide
@@ -182,7 +182,7 @@
 #' jq_hide <- function(id) {
 #'   shiny::tags$script(sprintf("$('#%s').hide()", id))
 #' }
-#' 
+#'
 #' #' Add a red star at the end of the text
 #' #'
 #' #' Adds a red star at the end of the text
@@ -208,8 +208,8 @@
 #'     )
 #'   )
 #' }
-#' 
-#' 
+#'
+#'
 
 #' #' Repeat tags$br
 #' #'
@@ -223,7 +223,7 @@
 #' rep_br <- function(times = 1) {
 #'   shiny::HTML(rep("<br/>", times = times))
 #' }
-#' 
+#'
 #' #' Create an url
 #' #'
 #' #' @param url the URL
@@ -293,8 +293,6 @@ col_1 <- function(...) {
   shiny::column(1, ...)
 }
 
-
-
 #' #' Make the current tag behave like an action button
 #' #'
 #' #' Only works with compatible tags like button or links
@@ -336,7 +334,7 @@ col_1 <- function(...) {
 #'     stop("tag does not have any id. Please use inputId to be able to
 #'            access it on the server side.")
 #'   }
-#' 
+#'
 #'   # handle id
 #'   if (!is.null(inputId)) {
 #'     if (!is.null(tag$attribs$id)) {
@@ -351,7 +349,7 @@ col_1 <- function(...) {
 #'       tag$attribs$id <- inputId
 #'     }
 #'   }
-#' 
+#'
 #'   # handle class
 #'   if (is.null(tag$attribs$class)) {
 #'     tag$attribs$class <- "action-button"
@@ -361,8 +359,8 @@ col_1 <- function(...) {
 #'   # return tag
 #'   tag
 #' }
-#' 
-#' 
+#'
+#'
 #' # UNCOMMENT AND USE
 #' #
 #' # attachment::att_amend_desc()

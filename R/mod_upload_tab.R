@@ -13,7 +13,7 @@ uploadFileInput <- function(id, label) {
     inputId = id,
     label = label,
     multiple = TRUE,
-    accept = c(".RData",".rds")
+    accept = c(".RData", ".rds")
   )
 }
 
@@ -26,7 +26,6 @@ uploadFileInput <- function(id, label) {
 #' @noRd
 #'
 #'
-
 
 upload_tab_ui <- function(id, bg.col) {
   ns <- shiny::NS(id)
@@ -49,29 +48,49 @@ upload_tab_ui <- function(id, bg.col) {
       shiny::h4("Please upload your prepared data or use the demo data set."),
       shiny::uiOutput(ns("mode")),
       shiny::fluidPage(
-        shiny::conditionalPanel(condition = "input.mode == 'rdata'", ns = ns,
-          uploadFileInput(ns("results_file"), "Choose results data file (created with subscreencalc())"),
+        shiny::conditionalPanel(
+          condition = "input.mode == 'rdata'",
+          ns = ns,
+          uploadFileInput(
+            ns("results_file"),
+            "Choose results data file (created with subscreencalc())"
+          ),
           shinyWidgets::materialSwitch(
             inputId = ns("switch_vi_file"),
-            label = shiny::HTML("<span style = 'color: white;'> Add variable importance file or press 'Upload data' </span>"),
+            label = shiny::HTML(
+              "<span style = 'color: white;'> Add variable importance file or press 'Upload data' </span>"
+            ),
             status = "success"
           ),
-          shiny::conditionalPanel(condition = "input.switch_vi_file == true", ns = ns,
-            uploadFileInput(ns("vi_file"), "Choose variable importance file (optional/created with subscreenvi())")
+          shiny::conditionalPanel(
+            condition = "input.switch_vi_file == true",
+            ns = ns,
+            uploadFileInput(
+              ns("vi_file"),
+              "Choose variable importance file (optional/created with subscreenvi())"
+            )
           ),
           #internal function
-          uploadButton(ns('apply_rdata_files'),'Upload data',"upload")
+          uploadButton(ns('apply_rdata_files'), 'Upload data', "upload")
         ),
-        shiny::conditionalPanel(condition = "input.mode == 'demo'", ns = ns,
-          uploadButton(ns('apply_demo_data'),'Use demo data',"hdd")
+        shiny::conditionalPanel(
+          condition = "input.mode == 'demo'",
+          ns = ns,
+          uploadButton(ns('apply_demo_data'), 'Use demo data', "hdd")
         ),
-        shiny::conditionalPanel(condition = "input.mode == 'uploaded'", ns = ns,
-          uploadButton(ns('apply_uploaded_data'),'Use uploaded data',"download")
+        shiny::conditionalPanel(
+          condition = "input.mode == 'uploaded'",
+          ns = ns,
+          uploadButton(
+            ns('apply_uploaded_data'),
+            'Use uploaded data',
+            "download"
+          )
         )
       )
     ),
     col_3(
-      shiny::uiOutput(ns("variable_filter_selection"))#,
+      shiny::uiOutput(ns("variable_filter_selection")) #,
       #shiny::actionButton(ns('apply_filter'),'Update selection')
     ),
     col_6(
@@ -82,19 +101,22 @@ upload_tab_ui <- function(id, bg.col) {
 
 # helper functions server
 uploadInformationOutput <- function(
-    previewScresults = preview_scresults_tmp$dat,
-    mode = input$mode,
-    resultsFile = input$results_file,
-    dataSetName = dat_name,
-    font = font_col
-  ) {
+  previewScresults = preview_scresults_tmp$dat,
+  mode = input$mode,
+  resultsFile = input$results_file,
+  dataSetName = dat_name,
+  font = font_col
+) {
   preview_scresults_tmp <- input <- dat_name <- font_col <- NULL
   if (!is.null(previewScresults)) {
-      if(methods::is(previewScresults) == "SubScreenResult") {
+    if (methods::is(previewScresults) == "SubScreenResult") {
       shinyjs::enable("apply_rdata_files")
       shiny::HTML(
-        paste0("
-        <p style = 'color: ",font,"'>
+        paste0(
+          "
+        <p style = 'color: ",
+          font,
+          "'>
           Dataset: <b style='font-size: 130%; color: #428bca'> ",
           if (mode == "demo") {
             "results.rda"
@@ -102,30 +124,61 @@ uploadInformationOutput <- function(
             resultsFile$name
           } else if (mode == "uploaded") {
             dataSetName
-          }
-          ,"</b><br>
-          Number of subjects: <b style='font-size: 130%; color: #428bca'>", previewScresults$results_total$N.of.subjects," </b><br>
-          Number of subgroups: <b style='font-size: 130%; color: #428bca'>",max(previewScresults$sge$SGID),"</b><br>
-          Number target variables: <b style='font-size: 130%; color: #428bca'>",length(previewScresults$results_total)-1,"</b>  <b style='font-size: 100%; color: ",font,"'>(",paste(names(previewScresults$results_total)[names(previewScresults$results_total)!="N.of.subjects"], collapse = ", "),")</b><br>
-          Number factors: <b style='font-size: 130%; color: #428bca'>",length(previewScresults$factors),"</b> <b style='font-size: 100%; color: ",font,"'>(",paste(previewScresults$factors, collapse = ", "),")</b><br>
-          Number factor combinations: <b style='font-size: 130%; color: #428bca'>",length(previewScresults$min_comb:previewScresults$max_comb)," </b> (",previewScresults$min_comb,"-",previewScresults$max_comb,") <br>
+          },
+          "</b><br>
+          Number of subjects: <b style='font-size: 130%; color: #428bca'>",
+          previewScresults$results_total$N.of.subjects,
+          " </b><br>
+          Number of subgroups: <b style='font-size: 130%; color: #428bca'>",
+          max(previewScresults$sge$SGID),
+          "</b><br>
+          Number target variables: <b style='font-size: 130%; color: #428bca'>",
+          length(previewScresults$results_total) - 1,
+          "</b>  <b style='font-size: 100%; color: ",
+          font,
+          "'>(",
+          paste(
+            names(previewScresults$results_total)[
+              names(previewScresults$results_total) != "N.of.subjects"
+            ],
+            collapse = ", "
+          ),
+          ")</b><br>
+          Number factors: <b style='font-size: 130%; color: #428bca'>",
+          length(previewScresults$factors),
+          "</b> <b style='font-size: 100%; color: ",
+          font,
+          "'>(",
+          paste(previewScresults$factors, collapse = ", "),
+          ")</b><br>
+          Number factor combinations: <b style='font-size: 130%; color: #428bca'>",
+          length(previewScresults$min_comb:previewScresults$max_comb),
+          " </b> (",
+          previewScresults$min_comb,
+          "-",
+          previewScresults$max_comb,
+          ") <br>
 
           <br>
 
           Factorial context calculation performed: ",
-          if (any(startsWith(colnames(previewScresults$sge),"FCID_complete_"))) {
+          if (
+            any(startsWith(colnames(previewScresults$sge), "FCID_complete_"))
+          ) {
             "<i class='fa-solid fa-check' style ='color: #5cb85c; font-size: 150%'></i>"
           } else if (any(colnames(previewScresults$sge) == "FCID_complete")) {
             "<i class='fa-solid fa-exclamation' style ='color: #ffffff; font-size: 150%'></i> (Results structure outdated! Please use subscreencalc version >4.0.0)"
           } else {
             "<i class='fa-solid fa-times' style ='color: #ffffff; font-size: 150%'></i>"
-          } ,"<br>
+          },
+          "<br>
           Subgroup complement calculation performed: ",
-          if (any(startsWith(colnames(previewScresults$sge),"Complement_"))) {
+          if (any(startsWith(colnames(previewScresults$sge), "Complement_"))) {
             "<i class='fa-solid fa-check' style ='color: #5cb85c; font-size: 150%'></i>"
           } else {
             "<i class='fa-solid fa-times' style ='color: #fffff; font-size: 150%'></i>"
-          } ,"<br>
+          },
+          "<br>
 
           <br>
 
@@ -134,29 +187,33 @@ uploadInformationOutput <- function(
             is.list(previewScresults),
             "<i class='fa-solid fa-check' style ='color: #5cb85c'></i>",
             "<i class='fa-solid fa-times'></i>"
-          )
-          ,"</b><br>
+          ),
+          "</b><br>
           Check for non-empty list input sge: <b style='font-size: 150%;'>",
           ifelse(
-            dim(previewScresults$sge)[1]>0,
+            dim(previewScresults$sge)[1] > 0,
             "<i class='fa-solid fa-check' style ='color: #5cb85c'></i>",
             "<i class='fa-solid fa-times'></i>"
-          )
-          ,"</b><br>
+          ),
+          "</b><br>
           Check for class SubScreenResult: <b style='font-size: 150%;'>",
-            "<i class='fa-solid fa-check' style ='color: #5cb85c'></i>
+          "<i class='fa-solid fa-check' style ='color: #5cb85c'></i>
             </b><br>
         </p>
-      ")
+      "
+        )
       )
     } else {
       shinyjs::disable("apply_rdata_files")
       shiny::HTML(
-        paste0("
-          <p style = 'color: ",font,"'>
+        paste0(
+          "
+          <p style = 'color: ",
+          font,
+          "'>
             Check for class SubScreenResult:
             <b style='font-size: 150%;'>",
-              "<i class='fa-solid fa-times' style ='color: #f71b4b'></i>
+          "<i class='fa-solid fa-times' style ='color: #f71b4b'></i>
             </b>
           </p>"
         )
@@ -175,7 +232,15 @@ uploadInformationOutput <- function(
 #' @param vi variable importance data set.
 #'
 #' @noRd
-upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_col = "#e3e3e3") {
+upload_tab_server <- function(
+  input,
+  output,
+  session,
+  dat,
+  dat_name,
+  vi,
+  font_col = "#e3e3e3"
+) {
   ns <- session$ns
 
   output$mode <- shiny::renderUI({
@@ -192,7 +257,7 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
       )
     }
 
-    if(exists("studies")) {
+    if (exists("studies")) {
       choices <- c(choices, "Upload from server" = "server")
     }
 
@@ -210,23 +275,43 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
   #   buttons_clicked$dat <- buttons_clicked$dat + 1
   # })
 
-  shiny::observeEvent(c(input$mode,input$results_file), {
+  shiny::observeEvent(c(input$mode, input$results_file), {
     if (input$mode == "rdata") {
       if (!is.null(input$results_file$datapath)) {
-        if (utils::tail(strsplit(input$results_file$datapath,"/.")[[1]], n = 1) %in% c(".rdata",".RData")) {
+        if (
+          utils::tail(
+            strsplit(input$results_file$datapath, "/.")[[1]],
+            n = 1
+          ) %in%
+            c(".rdata", ".RData")
+        ) {
           preview_scresults_tmp$dat <- get(load(input$results_file$datapath))
         }
-        if (utils::tail(strsplit(input$results_file$datapath,"/.")[[1]], n = 1) == ".rds") {
+        if (
+          utils::tail(
+            strsplit(input$results_file$datapath, "/.")[[1]],
+            n = 1
+          ) ==
+            ".rds"
+        ) {
           preview_scresults_tmp$dat <- readRDS(input$results_file$datapath)
         }
       } else {
         preview_scresults_tmp$dat <- NULL
       }
       if (!is.null(input$vi_file$datapath)) {
-        if (utils::tail(strsplit(input$vi_file$datapath,"/.")[[1]], n = 1) %in% c(".rdata",".RData")) {
-          preview_variable_importance_tmp$dat <- get(load(input$vi_file$datapath))
+        if (
+          utils::tail(strsplit(input$vi_file$datapath, "/.")[[1]], n = 1) %in%
+            c(".rdata", ".RData")
+        ) {
+          preview_variable_importance_tmp$dat <- get(load(
+            input$vi_file$datapath
+          ))
         }
-        if (utils::tail(strsplit(input$vi_file$datapath,"/.")[[1]], n = 1) == ".rds") {
+        if (
+          utils::tail(strsplit(input$vi_file$datapath, "/.")[[1]], n = 1) ==
+            ".rds"
+        ) {
           preview_variable_importance_tmp$dat <- readRDS(input$vi_file$datapath)
         }
       } else {
@@ -235,7 +320,6 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
     } else if (input$mode == "demo") {
       preview_scresults_tmp$dat <- results
       preview_variable_importance_tmp$dat <- importance
-
     } else if (input$mode == "uploaded") {
       preview_scresults_tmp$dat <- dat
       preview_variable_importance_tmp$dat <- vi
@@ -245,16 +329,22 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
   output$list_output <- shiny::renderUI({
     shiny::req(preview_scresults_tmp$dat)
     input$results_file
-    uploadInformationOutput(preview_scresults_tmp$dat, input$mode, input$results_file, dat_name, font = font_col())
+    uploadInformationOutput(
+      preview_scresults_tmp$dat,
+      input$mode,
+      input$results_file,
+      dat_name,
+      font = font_col()
+    )
   })
   output$variable_filter_selection <- shiny::renderUI({
     shinyWidgets::pickerInput(
-      inputId =ns("variable_filter_selection"),
+      inputId = ns("variable_filter_selection"),
       label = "Select/Deselect Factors",
       choices = preview_scresults_tmp$dat$factors,
       selected = preview_scresults_tmp$dat$factors,
       options = list(
-      `actions-box` = TRUE
+        `actions-box` = TRUE
       ),
       multiple = TRUE
     )
@@ -274,7 +364,7 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
     dat = dat
   )
 
-   variable_importance_tmp <- shiny::reactiveValues(
+  variable_importance_tmp <- shiny::reactiveValues(
     dat = vi
   )
 
@@ -295,41 +385,70 @@ upload_tab_server <- function(input, output, session, dat, dat_name, vi, font_co
 
   shiny::observeEvent(input$apply_rdata_files, {
     if (!is.null(input$results_file$datapath)) {
-      if (utils::tail(strsplit(input$results_file$datapath,"/.")[[1]], n = 1) %in% c(".rdata",".RData")) {
+      if (
+        utils::tail(
+          strsplit(input$results_file$datapath, "/.")[[1]],
+          n = 1
+        ) %in%
+          c(".rdata", ".RData")
+      ) {
         scresults_tmp$dat <- get(load(input$results_file$datapath))
       }
-      if (utils::tail(strsplit(input$results_file$datapath,"/.")[[1]], n = 1) == ".rds") {
+      if (
+        utils::tail(strsplit(input$results_file$datapath, "/.")[[1]], n = 1) ==
+          ".rds"
+      ) {
         scresults_tmp$dat <- readRDS(input$results_file$datapath)
       }
       if (!is.null(input$vi_file$datapath)) {
-        if (utils::tail(strsplit(input$vi_file$datapath,"/.")[[1]], n = 1) %in% c(".rdata",".RData")) {
+        if (
+          utils::tail(strsplit(input$vi_file$datapath, "/.")[[1]], n = 1) %in%
+            c(".rdata", ".RData")
+        ) {
           variable_importance_tmp$dat <- get(load(input$vi_file$datapath))
         }
-        if (utils::tail(strsplit(input$vi_file$datapath,"/.")[[1]], n = 1) == ".rds") {
+        if (
+          utils::tail(strsplit(input$vi_file$datapath, "/.")[[1]], n = 1) ==
+            ".rds"
+        ) {
           variable_importance_tmp$dat <- readRDS(input$vi_file$datapath)
         }
       }
     }
   })
 
-
-  filtered_scresults_tmp <- shiny::eventReactive(c(input$apply_demo_data,input$apply_uploaded_data,input$apply_rdata_files), {
-    scresults_tmp_copy <- preview_scresults_tmp$dat
-    if(!is.null(input$variable_filter_selection)){
-      remove_factor_vector <- preview_scresults_tmp$dat$factors[!preview_scresults_tmp$dat$factors%in%input$variable_filter_selection]
-      if(length(remove_factor_vector)!=0){
-        for(i in remove_factor_vector) {
-          scresults_tmp_copy$sge <- scresults_tmp_copy$sge %>% dplyr::filter(!!rlang::sym(i) == "Not used")
-          scresults_tmp_copy$factors <- scresults_tmp_copy$factors[-which(scresults_tmp_copy$factors == i)]
+  filtered_scresults_tmp <- shiny::eventReactive(
+    c(
+      input$apply_demo_data,
+      input$apply_uploaded_data,
+      input$apply_rdata_files
+    ),
+    {
+      scresults_tmp_copy <- preview_scresults_tmp$dat
+      if (!is.null(input$variable_filter_selection)) {
+        remove_factor_vector <- preview_scresults_tmp$dat$factors[
+          !preview_scresults_tmp$dat$factors %in%
+            input$variable_filter_selection
+        ]
+        if (length(remove_factor_vector) != 0) {
+          for (i in remove_factor_vector) {
+            scresults_tmp_copy$sge <- scresults_tmp_copy$sge %>%
+              dplyr::filter(!!rlang::sym(i) == "Not used")
+            scresults_tmp_copy$factors <- scresults_tmp_copy$factors[
+              -which(scresults_tmp_copy$factors == i)
+            ]
+          }
         }
       }
+      scresults_tmp_copy
     }
-    scresults_tmp_copy
-  })
+  )
   return(
     list(
       parameter1 = filtered_scresults_tmp,
-      parameter2 = shiny::reactive({variable_importance_tmp$dat})#,
+      parameter2 = shiny::reactive({
+        variable_importance_tmp$dat
+      }) #,
       #parameter3 = shiny::reactive({buttons_clicked$dat})
     )
   )

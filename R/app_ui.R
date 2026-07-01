@@ -23,23 +23,29 @@ app_ui <- function(request) {
               #acitvate javascript code to disable/enable tabs
               shinyjs::useShinyjs(debug = TRUE),
               shinyjs::extendShinyjs(
-                  script = "www/tabs.js",
-                  functions = c("disableTab", "enableTab")
-                ),
+                script = "www/tabs.js",
+                functions = c("disableTab", "enableTab")
+              ),
               #### Variable options-tab ####
-              shiny::tabsetPanel(type = "tabs",
-                shiny::tabPanel("Variable Options",
+              shiny::tabsetPanel(
+                type = "tabs",
+                shiny::tabPanel(
+                  "Variable Options",
                   shiny::wellPanel(
                     variableOptionsPanel()
-                  ), icon = shiny::icon("wrench")
+                  ),
+                  icon = shiny::icon("wrench")
                 ),
                 #### Importance-tab ####
-                shiny::tabPanel("Importance Tab", value = "ImportanceTab",
+                shiny::tabPanel(
+                  "Importance Tab",
+                  value = "ImportanceTab",
                   mod_variable_importance_ui("vi"),
                   icon = shiny::icon("exclamation")
                 ),
                 #### Display options-tab ####
-                shiny::tabPanel("Display Options",
+                shiny::tabPanel(
+                  "Display Options",
                   shiny::wellPanel(
                     displayOptionsPanel(
                       custom_ref_line_at_start = app_options$reference_line_at_start,
@@ -51,7 +57,8 @@ app_ui <- function(request) {
                   icon = shiny::icon('eye')
                 ),
                 #### Color options-tab ####
-                shiny::tabPanel("Colour Options",
+                shiny::tabPanel(
+                  "Colour Options",
                   shiny::wellPanel(
                     mod_color_ui("color")
                   ),
@@ -63,10 +70,7 @@ app_ui <- function(request) {
             ),
             #### Explorer-graph ####
             col_9(
-              mod_graph_ui("graph1",
-                plotHeight = 700,
-                plotWidth = "100%"
-              )
+              mod_graph_ui("graph1", plotHeight = 700, plotWidth = "100%")
             ),
             shiny::uiOutput('interactionPanel'),
             #### Interaction panel ####
@@ -194,58 +198,62 @@ app_ui <- function(request) {
           # ),
           #### Tables  ####
           if (app_options$showTables) {
-          shiny::fluidRow(
-            col_12(
-              shiny::tabsetPanel(
-                type = "tabs",
-                shiny::tabPanel(
-                  "Selected Subgroups",
+            shiny::fluidRow(
+              col_12(
+                shiny::tabsetPanel(
+                  type = "tabs",
+                  shiny::tabPanel(
+                    "Selected Subgroups",
                     DT::DTOutput("selectedSG"),
-                  icon = shiny::tags$i(class = "fa-solid fa-circle")
-                ),
-                shiny::tabPanel(
-                  title = "Filtered Subgroups",
-                  DT::DTOutput("filteredSG"),
-                  icon = shiny::icon("filter")
-                ),
-                shiny::tabPanel(
-                  title = "Parent Subgroups",
-                  value = "ParentSubgroup",
-                  DT::DTOutput("parents"),
-                  icon = shiny::icon("sitemap")
-                ),
-                shiny::tabPanel(
-                  title = "Factorial Contexts",
-                  value = "FactorialSubgroup",
-                  DT::DTOutput("factorial"),
-                  icon = shiny::icon("list")
-                ),
-                shiny::tabPanel(
-                  title ="Subgroup Complement",
-                  value = "ComplementSubgroup",
-                  DT::DTOutput("complement"),
-                  icon = shiny::tags$i(class = "fa-solid fa-times-circle")
-                ),
-                shiny::tabPanel(
-                  title = "Memorized Subgroups",
-                  # col_12(
-                  #   shinyWidgets::prettySwitch(
-                  #     inputId = "memorized_labels_on_off",
-                  #     label = "Show labels for memorized subgroups",
-                  #     value = FALSE,
-                  #     status = "info"
-                  #   )
-                  # ),
-                  col_12(
-                    DT::DTOutput("memorizedSG")
+                    icon = shiny::tags$i(class = "fa-solid fa-circle")
                   ),
-                  icon = shiny::icon("edit")
+                  shiny::tabPanel(
+                    title = "Filtered Subgroups",
+                    DT::DTOutput("filteredSG"),
+                    icon = shiny::icon("filter")
+                  ),
+                  shiny::tabPanel(
+                    title = "Parent Subgroups",
+                    value = "ParentSubgroup",
+                    DT::DTOutput("parents"),
+                    icon = shiny::icon("sitemap")
+                  ),
+                  shiny::tabPanel(
+                    title = "Factorial Contexts",
+                    value = "FactorialSubgroup",
+                    DT::DTOutput("factorial"),
+                    icon = shiny::icon("list")
+                  ),
+                  shiny::tabPanel(
+                    title = "Subgroup Complement",
+                    value = "ComplementSubgroup",
+                    DT::DTOutput("complement"),
+                    icon = shiny::tags$i(class = "fa-solid fa-times-circle")
+                  ),
+                  shiny::tabPanel(
+                    title = "Memorized Subgroups",
+                    # col_12(
+                    #   shinyWidgets::prettySwitch(
+                    #     inputId = "memorized_labels_on_off",
+                    #     label = "Show labels for memorized subgroups",
+                    #     value = FALSE,
+                    #     status = "info"
+                    #   )
+                    # ),
+                    col_12(
+                      DT::DTOutput("memorizedSG")
+                    ),
+                    icon = shiny::icon("edit")
+                  )
                 )
               )
             )
-          )
           }
-        ), fluid = FALSE, position = c("static-top"), inverse = FALSE, icon = shiny::icon("braille")
+        ),
+        fluid = FALSE,
+        position = c("static-top"),
+        inverse = FALSE,
+        icon = shiny::icon("braille")
       ),
       #### 2. COMPARER (UI)####
       shiny::tabPanel(

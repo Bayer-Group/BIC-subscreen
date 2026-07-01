@@ -2,9 +2,10 @@
 #'
 #' @keywords internal
 
-variableOptionsPanel <- function(){
+variableOptionsPanel <- function() {
   shiny::tagList(
-    shiny::div(style = "position:absolute;right:2em;",
+    shiny::div(
+      style = "position:absolute;right:2em;",
       bsplus::bs_embed_tooltip(
         tag = bsplus::shiny_iconlink("question"),
         title = "Variable plotted on the y-axis.",
@@ -17,7 +18,8 @@ variableOptionsPanel <- function(){
       choices = NULL,
       selected = NULL
     ),
-    shiny::div(style = "position:absolute;right:2em;",
+    shiny::div(
+      style = "position:absolute;right:2em;",
       bsplus::bs_embed_tooltip(
         tag = bsplus::shiny_iconlink("question"),
         title = "Variable plotted on the x-axis.",
@@ -33,7 +35,8 @@ variableOptionsPanel <- function(){
     ),
     shiny::fluidRow(
       col_6(
-        shiny::div(style = "position:absolute;right:2em;",
+        shiny::div(
+          style = "position:absolute;right:2em;",
           bsplus::bs_embed_tooltip(
             tag = bsplus::shiny_iconlink("question"),
             title = "Select a filter variable. Subgroups containing this variable are displayed in green (default color).",
@@ -59,23 +62,26 @@ variableOptionsPanel <- function(){
     ),
     shiny::fluidRow(
       col_6(
-        shiny::conditionalPanel(condition = "input.filter != 'no selection'",
+        shiny::conditionalPanel(
+          condition = "input.filter != 'no selection'",
           shiny::selectInput(
-          inputId = "filter2",
-          label = "Subgroup Filter (2)",
-          choices = c("no selection"),
-          selected = c("no selection")
+            inputId = "filter2",
+            label = "Subgroup Filter (2)",
+            choices = c("no selection"),
+            selected = c("no selection")
           )
         )
       ),
       col_6(
-        shiny::conditionalPanel(condition = "input.filter2 != 'no selection' & input.filter != 'no selection'",
+        shiny::conditionalPanel(
+          condition = "input.filter2 != 'no selection' & input.filter != 'no selection'",
           shiny::uiOutput("VarChosen2"),
           selectize = FALSE
         )
       )
     ),
-    shiny::div(style = "position:absolute;right:2em;",
+    shiny::div(
+      style = "position:absolute;right:2em;",
       bsplus::bs_embed_tooltip(
         tag = bsplus::shiny_iconlink("question"),
         title = "Subgroups containing selected number(s) of factor(s) are displayed in the plot.",
@@ -111,10 +117,10 @@ variableOptionsPanel <- function(){
         )
       )
     ),
-      shiny::fluidRow(
-        col_8(
-          shiny::uiOutput("XRange")
-        )
+    shiny::fluidRow(
+      col_8(
+        shiny::uiOutput("XRange")
+      )
     )
   )
 }
