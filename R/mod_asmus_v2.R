@@ -1542,9 +1542,9 @@ asmus2_module_server <- function(
         is.null(input$asmus2_remarkability_1) ||
         is.null(input$asmus2_remarkability_2) ||
         is.null(input$asmus2_reliability_1) ||
-        is.null(input$asmus2_reliability_2) |
+        is.null(input$asmus2_reliability_2) ||
         is.na(input$asmus2_remarkability_1) ||
-        is.na(input$asmus2_remarkability_2) |
+        is.na(input$asmus2_remarkability_2) ||
         is.na(input$asmus2_reliability_1) ||
         is.na(input$asmus2_reliability_2)
     ) {
@@ -1589,7 +1589,10 @@ asmus2_module_server <- function(
       input$asmus2_calculate
     ),
     {
-      if (is.na(input$fuzzy_multiplicity_value)) {
+      if (
+        is.na(input$fuzzy_multiplicity_value) ||
+          is.null(input$fuzzy_multiplicity_value)
+      ) {
         txt3 <- paste0(
           "Warning: Multiplicity value is missing! Please select a value between 0 and 1!"
         )
@@ -1605,10 +1608,14 @@ asmus2_module_server <- function(
       })
 
       if (
-        !is.na(input$asmus2_remarkability_1) &&
-          !is.na(input$asmus2_remarkability_2) &&
-          !is.na(input$asmus2_reliability_1) &&
-          !is.na(input$asmus2_reliability_2)
+        !rlang::is_null(input$asmus2_remarkability_1) &&
+          !rlang::is_null(input$asmus2_remarkability_2) &&
+          !rlang::is_null(input$asmus2_reliability_1) &&
+          !rlang::is_null(input$asmus2_reliability_2) &&
+          !rlang::is_na(input$asmus2_remarkability_1) &&
+          !rlang::is_na(input$asmus2_remarkability_2) &&
+          !rlang::is_na(input$asmus2_reliability_1) &&
+          !rlang::is_na(input$asmus2_reliability_2)
       ) {
         if (
           input$asmus2_remarkability_1 < input$asmus2_remarkability_2 &&

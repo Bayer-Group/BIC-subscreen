@@ -151,6 +151,9 @@ mod_variable_importance_server <- function(
   })
   shiny::observe({
     val <- input$Impo_opt
+    if (is.null(val)) {
+      val <- 0
+    }
     if (val == 1) {
       im <- import_reac$reactive
 
