@@ -167,7 +167,7 @@ mod_mosaic_server <- function(
   })
 
   shiny::observeEvent(input$var2, {
-    if (input$var2 != "no selection" & results()$max_comb > 2) {
+    if (input$var2 != "no selection" && results()$max_comb > 2) {
       show_var22_val$val <- TRUE
     } else {
       shiny::updateSelectInput(
@@ -233,7 +233,7 @@ mod_mosaic_server <- function(
     {
       shiny::req(results())
       if (results()$min_comb == 1) {
-        if (!is.null(input$plot_hover$x) & !is.null(input$plot_hover$y)) {
+        if (!is.null(input$plot_hover$x) && !is.null(input$plot_hover$y)) {
           mos.x <- shiny::req(input$var1)
           mos.y <- shiny::req(input$var2)
           mos.y2 <- shiny::req(input$var22)
@@ -253,7 +253,7 @@ mod_mosaic_server <- function(
           if (mos.y == 'no selection') {
             mos.y <- NULL
           }
-          if (mos.y2 == 'no selection' | is.null(mos.y)) {
+          if (mos.y2 == 'no selection' || is.null(mos.y)) {
             mos.y2 <- NULL
           }
           if (!is.null(mos.y)) {
@@ -262,7 +262,7 @@ mod_mosaic_server <- function(
             }
           }
           if (!is.null(mos.y2)) {
-            if (mos.x == mos.y2 | mos.y == mos.y2) {
+            if (mos.x == mos.y2 || mos.y == mos.y2) {
               mos.y2 <- NULL
             }
           }
@@ -579,7 +579,7 @@ mod_mosaic_server <- function(
         val.z.ij <- log(hoverlabel$value[input$var3])
       }
 
-      if (dim(val.z.ij)[1] > 0 & !is.na(as.numeric(val.z.ij))) {
+      if (dim(val.z.ij)[1] > 0 && !is.na(as.numeric(val.z.ij))) {
         hoverColor <- grDevices::rgb(
           f_colZ((val.z.ij - rg.z[1]) / diff(rg.z)),
           maxColorValue = 255

@@ -13,7 +13,7 @@ createPlot_points_data_complement <- function(
 ) {
   if (!is.null(results_tmp)) {
     if (
-      y != "N.of.subjects" &
+      y != "N.of.subjects" &&
         any(startsWith(colnames(results_tmp$sge), "Complement_"))
     ) {
       IDs <- sel_ids

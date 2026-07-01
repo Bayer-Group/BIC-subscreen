@@ -227,7 +227,7 @@ mod_comparer_server <- function(
     shiny::req(key(), input$y1, input$y2)
     if (
       input$y1 %in%
-        colnames(results()$sge) &
+        colnames(results()$sge) &&
         input$y2 %in% colnames(results()$sge)
     ) {
       data.frame(

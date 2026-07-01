@@ -88,8 +88,8 @@ interaction_plot2 <- function(
 
   # sort factor levels and level values with most levels in case of two (or three) factors
   #  used to create fewer plots than lines
-  if (!is.null(fac2) & is.null(fac3)) {
-    if (length(lev2) == 1 & length(lev1) != 1) {
+  if (!is.null(fac2) && is.null(fac3)) {
+    if (length(lev2) == 1 && length(lev1) != 1) {
       lev2_tmp <- lev2
       lev2_values_tmp <- lev2_values
       fac2_tmp <- fac2
@@ -101,7 +101,7 @@ interaction_plot2 <- function(
       fac1 <- fac2_tmp
     }
   }
-  if (!is.null(fac2) & !is.null(fac3)) {
+  if (!is.null(fac2) && !is.null(fac3)) {
     #save current levels temporary
     lev1_tmp <- lev1
     lev1_values_tmp <- lev1_values
@@ -125,7 +125,7 @@ interaction_plot2 <- function(
   }
 
   #create plots depending on number of factors:
-  if (is.null(fac2) & is.null(fac3)) {
+  if (is.null(fac2) && is.null(fac3)) {
     plot(
       # use ordered x and y values for plot
       # as.numeric(factor(lev1)),
@@ -197,7 +197,7 @@ interaction_plot2 <- function(
       col.main = font.col,
       col.lab = font.col
     )
-  } else if (!is.null(fac2) & is.null(fac3)) {
+  } else if (!is.null(fac2) && is.null(fac3)) {
     graphics::layout(
       matrix(c(1, 1, 2, 2), 2, 2, byrow = TRUE),
       heights = c(8, 2)
@@ -322,7 +322,7 @@ interaction_plot2 <- function(
     )
 
     graphics::par(mfrow = c(1, 1), mar = c(5.1, 4.1, 4.1, 2.1))
-  } else if (!is.null(fac2) & !is.null(fac3)) {
+  } else if (!is.null(fac2) && !is.null(fac3)) {
     data_cols <- grDevices::rgb(
       f_col(seq(0, 1, length = length(lev1))),
       maxColorValue = 255

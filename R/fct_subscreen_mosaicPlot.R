@@ -29,7 +29,7 @@ subscreen_mosaicPlot <- function(
   if (mos.y == 'no selection') {
     mos.y <- NULL
   }
-  if (mos.y2 == 'no selection' | is.null(mos.y)) {
+  if (mos.y2 == 'no selection' || is.null(mos.y)) {
     mos.y2 <- NULL
   }
   if (!is.null(mos.y)) {
@@ -38,7 +38,7 @@ subscreen_mosaicPlot <- function(
     }
   }
   if (!is.null(mos.y2)) {
-    if (mos.x == mos.y2 | mos.y == mos.y2) {
+    if (mos.x == mos.y2 || mos.y == mos.y2) {
       mos.y2 <- NULL
     }
   }

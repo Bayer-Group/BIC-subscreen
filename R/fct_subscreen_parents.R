@@ -8,7 +8,7 @@
 #'
 
 parents <- function(data, SGID) {
-  if (is.null(SGID) | is.integer0(SGID)) {} else {
+  if (is.null(SGID) || is.integer0(SGID)) {} else {
     Parents_start <- NULL
     for (k in seq_along(SGID)) {
       start <- data$sge[data$sge$SGID == SGID[k], ]

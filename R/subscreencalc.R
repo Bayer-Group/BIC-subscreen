@@ -200,10 +200,10 @@ subscreencalc <- function(
   }
 
   #Parameter: eval_function
-  if (!is.function(eval_function) & !is.function(match.fun(eval_function))) {
+  if (!is.function(eval_function) && !is.function(match.fun(eval_function))) {
     stop("parameter eval_function has to be a function name! ")
   } else if (
-    !is.function(eval_function) & is.function(match.fun(eval_function))
+    !is.function(eval_function) && is.function(match.fun(eval_function))
   ) {
     eval_function <- match.fun(eval_function)
   }
@@ -227,7 +227,7 @@ subscreencalc <- function(
     ))
   }
 
-  if (anyNA(eval_function(data)) & !all(is.na(eval_function(data)))) {
+  if (anyNA(eval_function(data)) && !all(is.na(eval_function(data)))) {
     subscreencalc_notes <- c(
       subscreencalc_notes,
       paste0(
@@ -336,7 +336,7 @@ subscreencalc <- function(
   }
 
   sugruCalc <- function(i) {
-    m <- M[i, ]
+    m <- M[i, ] # ! No M in function scope
     S <- character()
     S <- append(S, names(FFF)[(seq_along(m)) * m])
     # if (methods::is(tryCatch(plyr::ddply(cbind(FFF, TTT), S, eval_function), error=function(e) e, warning = function(w) w),"error")) {

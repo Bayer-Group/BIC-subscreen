@@ -131,12 +131,12 @@ mod_variable_importance_server <- function(
     if (is.null(variable_importance())) {
       NULL
     } else if (
-      !is.null(variable_importance()) &
+      !is.null(variable_importance()) &&
         input$select_importance_variable == "NULL"
     ) {
       variable_importance()
     } else if (
-      !is.null(variable_importance()) &
+      !is.null(variable_importance()) &&
         input$select_importance_variable != "NULL"
     ) {
       variable_importance()[[input$select_importance_variable]]

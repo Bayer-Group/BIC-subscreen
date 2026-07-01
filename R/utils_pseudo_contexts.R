@@ -80,9 +80,9 @@ pseudo_contexts <- function(data, endpoint, factors) {
 
   pseudo_cand_ids <- plyr::ddply(data, "FCID_all", function(x) {
     if (
-      unique(x$max_level) > 2 &
-        unique(x$nfactors) >= 2 &
-        sum(is.na(x[, endpoint])) > 0 &
+      unique(x$max_level) > 2 &&
+        unique(x$nfactors) >= 2 &&
+        sum(is.na(x[, endpoint])) > 0 &&
         sum(is.na(x[, endpoint])) <= unique(x$max_level)
     ) {
       unique(x$FCID_all)

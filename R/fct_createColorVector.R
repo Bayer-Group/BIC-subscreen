@@ -57,7 +57,7 @@ createColorVector <- function(
   )[match(f$nfactors, 1:8)]
 
   ##filter selection
-  if (filter1 != "no selection" & filter2 == "no selection") {
+  if (filter1 != "no selection" && filter2 == "no selection") {
     if (!is.null(variableChosen1)) {
       select_points_data <- results$sge[
         which(
@@ -69,7 +69,7 @@ createColorVector <- function(
 
       f$colour[f$SGID %in% select_points_data$SGID] <- filter_color
     }
-  } else if (filter1 != "no selection" & filter2 != "no selection") {
+  } else if (filter1 != "no selection" && filter2 != "no selection") {
     select_points_data <- results$sge[
       which(
         results$sge$nfactors >= key[1] &
@@ -102,7 +102,7 @@ createColorVector <- function(
         ]
 
         if (
-          !any(startsWith(colnames(tmp), "FCID_complete_")) & dim(tmp)[1] != 0
+          !any(startsWith(colnames(tmp), "FCID_complete_")) && dim(tmp)[1] != 0
         ) {
           tmp <- pseudo_contexts(tmp, y, results$factors)
         }

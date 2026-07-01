@@ -109,7 +109,7 @@ mod_bubble_server <- function(
 
   output$bubble <- shiny::renderPlot({
     # if logarithmic x-axis is selected
-    if (plot_type() == "lin" & plot_type2() == "lin") {
+    if (plot_type() == "lin" && plot_type2() == "lin") {
       graphics::par(
         oma = c(0, 0, 0, 0),
         mar = c(3, 3, 1, 1),
@@ -184,7 +184,7 @@ mod_bubble_server <- function(
       }
     }
 
-    if (plot_type() == "log" & plot_type2() == "lin") {
+    if (plot_type() == "log" && plot_type2() == "lin") {
       graphics::par(
         oma = c(0, 0, 0, 0),
         mar = c(3, 3, 1, 1),
@@ -241,7 +241,7 @@ mod_bubble_server <- function(
       )
     }
 
-    if (plot_type() == "lin" & plot_type2() == "log") {
+    if (plot_type() == "lin" && plot_type2() == "log") {
       graphics::par(
         oma = c(0, 0, 0, 0),
         mar = c(3, 3, 1, 1),
@@ -294,7 +294,7 @@ mod_bubble_server <- function(
       )
     }
 
-    if (plot_type() == "log" & plot_type2() == "log") {
+    if (plot_type() == "log" && plot_type2() == "log") {
       graphics::par(
         oma = c(0, 0, 0, 0),
         mar = c(3, 3, 1, 1),

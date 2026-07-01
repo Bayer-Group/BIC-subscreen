@@ -414,7 +414,7 @@ asmus2_module_server <- function(
 
   factorialContext <- function(data, SGID) {
     SGID <- SGID[1]
-    if (is.null(SGID) | is.integer0(SGID)) {} else {
+    if (is.null(SGID) || is.integer0(SGID)) {} else {
       nfac <- data$sge[which(data$sge$SGID == SGID), ]$nfactors
       tmp <- colnames(data$sge[
         which(data$sge$SGID == SGID),
@@ -468,7 +468,7 @@ asmus2_module_server <- function(
   shiny::observeEvent(results(), {
     if (!is.null(results())) {
       if (
-        !any(startsWith(colnames(results()$sge), "FCID_complete_")) &
+        !any(startsWith(colnames(results()$sge), "FCID_complete_")) &&
           (!"FCID_complete" %in% colnames(results()$sge))
       ) {
         cond_panel_val$val <- FALSE
@@ -483,7 +483,7 @@ asmus2_module_server <- function(
         })
       }
       if (
-        !any(startsWith(colnames(results()$sge), "FCID_complete_")) &
+        !any(startsWith(colnames(results()$sge), "FCID_complete_")) &&
           ("FCID_complete" %in% colnames(results()$sge))
       ) {
         cond_panel_val$val <- FALSE
@@ -826,7 +826,7 @@ asmus2_module_server <- function(
       fuzzy_multiplicity_value <- input$fuzzy_multiplicity_value
     }
 
-    if (!is.null(results()) & !is.null(input$asmus2_slider)) {
+    if (!is.null(results()) && !is.null(input$asmus2_slider)) {
       if (any(startsWith(colnames(results()$sge), "FCID_complete_"))) {
         graphics::par(
           oma = c(0, 0, 0, 0),
@@ -938,7 +938,7 @@ asmus2_module_server <- function(
 
         # draw background for remarkability if values are entered
         if (
-          !is.na(input$asmus2_remarkability_1) &
+          !is.na(input$asmus2_remarkability_1) &&
             !is.na(input$asmus2_remarkability_2)
         ) {
           graphics::polygon(
@@ -960,7 +960,7 @@ asmus2_module_server <- function(
         }
         # draw background for reliability if values are entered
         if (
-          !is.na(input$asmus2_reliability_1) &
+          !is.na(input$asmus2_reliability_1) &&
             !is.na(input$asmus2_reliability_2)
         ) {
           graphics::polygon(
@@ -982,10 +982,10 @@ asmus2_module_server <- function(
         }
 
         if (
-          !is.na(input$asmus2_reliability_1) &
-            !is.na(input$asmus2_reliability_2) &
-            !is.na(input$asmus2_remarkability_1) &
-            !is.na(input$asmus2_remarkability_2) &
+          !is.na(input$asmus2_reliability_1) &&
+            !is.na(input$asmus2_reliability_2) &&
+            !is.na(input$asmus2_remarkability_1) &&
+            !is.na(input$asmus2_remarkability_2) &&
             !is.na(input$fuzzy_multiplicity_value)
         ) {
           lower_y_value <- roundDownNice(
@@ -1400,7 +1400,7 @@ asmus2_module_server <- function(
       if (any(startsWith(colnames(results()$sge), "FCID_complete_"))) {
         plot_point <- plot_points_asmus2()
         if (
-          !is.na(input$asmus2_remarkability_1) &
+          !is.na(input$asmus2_remarkability_1) &&
             !is.na(input$asmus2_remarkability_2)
         ) {
           rem <- unlist(lapply(plot_point[, "y"], function(x) {
@@ -1427,7 +1427,7 @@ asmus2_module_server <- function(
         plot_point <- plot_points_asmus2()
 
         if (
-          !is.na(input$asmus2_reliability_1) &
+          !is.na(input$asmus2_reliability_1) &&
             !is.na(input$asmus2_reliability_2)
         ) {
           b <- Sys.time()
@@ -1463,8 +1463,8 @@ asmus2_module_server <- function(
         # (4) fuzzy_multiplicity_value
         plot_point <- plot_points_asmus2()
         if (
-          !is.null(rem) &
-            !is.null(rel) &
+          !is.null(rem) &&
+            !is.null(rel) &&
             !is.na(input$fuzzy_multiplicity_value)
         ) {
           d <- Sys.time()
@@ -1605,13 +1605,13 @@ asmus2_module_server <- function(
       })
 
       if (
-        !is.na(input$asmus2_remarkability_1) &
-          !is.na(input$asmus2_remarkability_2) &
-          !is.na(input$asmus2_reliability_1) &
+        !is.na(input$asmus2_remarkability_1) &&
+          !is.na(input$asmus2_remarkability_2) &&
+          !is.na(input$asmus2_reliability_1) &&
           !is.na(input$asmus2_reliability_2)
       ) {
         if (
-          input$asmus2_remarkability_1 < input$asmus2_remarkability_2 &
+          input$asmus2_remarkability_1 < input$asmus2_remarkability_2 &&
             input$asmus2_reliability_1 < input$asmus2_reliability_2
         ) {
           output$cont2_text <- shiny::renderUI({
@@ -2018,7 +2018,7 @@ asmus2_module_server <- function(
 
               # draw background for remarkability if values are entered
               if (
-                !is.na(input$asmus2_remarkability_1) &
+                !is.na(input$asmus2_remarkability_1) &&
                   !is.na(input$asmus2_remarkability_2)
               ) {
                 graphics::polygon(
@@ -2040,7 +2040,7 @@ asmus2_module_server <- function(
               }
               # draw background for reliability if values are entered
               if (
-                !is.na(input$asmus2_reliability_1) &
+                !is.na(input$asmus2_reliability_1) &&
                   !is.na(input$asmus2_reliability_2)
               ) {
                 graphics::polygon(
@@ -2062,10 +2062,10 @@ asmus2_module_server <- function(
               }
 
               if (
-                !is.na(input$asmus2_reliability_1) &
-                  !is.na(input$asmus2_reliability_2) &
-                  !is.na(input$asmus2_remarkability_1) &
-                  !is.na(input$asmus2_remarkability_2) &
+                !is.na(input$asmus2_reliability_1) &&
+                  !is.na(input$asmus2_reliability_2) &&
+                  !is.na(input$asmus2_remarkability_1) &&
+                  !is.na(input$asmus2_remarkability_2) &&
                   !is.na(input$fuzzy_multiplicity_value)
               ) {
                 calc_y <- function(

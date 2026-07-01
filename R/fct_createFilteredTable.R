@@ -23,7 +23,7 @@ createFilteredTable <- function(
   bg.color,
   key
 ) {
-  if (filter1 != "no selection" & filter2 == "no selection") {
+  if (filter1 != "no selection" && filter2 == "no selection") {
     choice <- variableChosen1
     select_points_data <- results$sge[
       which(
@@ -32,7 +32,7 @@ createFilteredTable <- function(
           results$sge[, c(filter1)] == choice
       ),
     ]
-  } else if (filter1 != "no selection" & filter2 != "no selection") {
+  } else if (filter1 != "no selection" && filter2 != "no selection") {
     choice <- variableChosen1
     choice2 <- variableChosen2
     select_points_data <- results$sge[
@@ -99,7 +99,7 @@ createFilteredTable <- function(
     }
   }
 
-  if (filter1 != "no selection" & !is.null(variableChosen1)) {
+  if (filter1 != "no selection" && !is.null(variableChosen1)) {
     df_filt <- subset(
       select_points_data,
       select = c(x = x, y = y, "nfactors", results$factors)

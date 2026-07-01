@@ -593,7 +593,7 @@ mod_graph_server <- function(
 
         if (show_ref_line()) {
           if (
-            YRange[1] <= results()$results_total[, c(y())] &
+            YRange[1] <= results()$results_total[, c(y())] &&
               YRange[2] >= results()$results_total[, c(y())]
           ) {
             p <- p +
@@ -617,7 +617,7 @@ mod_graph_server <- function(
           if (!is.null(add_custom_ref_line())) {
             if (!is.na(value_custom_ref_line())) {
               if (
-                YRange[1] <= value_custom_ref_line() &
+                YRange[1] <= value_custom_ref_line() &&
                   YRange[2] >= value_custom_ref_line()
               ) {
                 p <- p +
@@ -720,12 +720,12 @@ mod_graph_server <- function(
             ) {
               if (
                 YRange[1] <=
-                  plot_points_data_complement()[[paste0("Complement_", y())]] &
+                  plot_points_data_complement()[[paste0("Complement_", y())]] &&
                   YRange[2] >=
                     plot_points_data_complement()[[paste0(
                       "Complement_",
                       y()
-                    )]] &
+                    )]] &&
                   ifelse(!is.null(XRange()), XRange[2], max(rect_data)) >=
                     plot_points_data_complement()[["N.of.subjects.complement"]]
               ) {

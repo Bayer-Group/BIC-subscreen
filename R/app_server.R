@@ -30,7 +30,7 @@ app_server <- function(input, output, session) {
           )
         ]
         if (
-          tmp[paste0("FCID_complete_", input$y)] != "Not complete" |
+          tmp[paste0("FCID_complete_", input$y)] != "Not complete" ||
             tmp[paste0("FCID_pseudo_", input$y)] != "No Pseudo"
         ) {
           shinyWidgets::updatePrettyToggle(
@@ -590,7 +590,7 @@ app_server <- function(input, output, session) {
 
           # if old data (< 4.0.0 subscreencalc) are uploaded
         } else if (
-          !any(startsWith(colnames(scresults_tmp$dat$sge), "FCID_complete_")) &
+          !any(startsWith(colnames(scresults_tmp$dat$sge), "FCID_complete_")) &&
             ("FCID_complete" %in% colnames(scresults_tmp$dat$sge))
         ) {
           plot(
@@ -982,7 +982,7 @@ app_server <- function(input, output, session) {
       {
         if (!is.null(scresults_tmp$dat)) {
           if (
-            shiny::req(input$y) != "N.of.subjects" &
+            shiny::req(input$y) != "N.of.subjects" &&
               !is.null(plot_points_data_complement())
           ) {
             dat <- data.frame(
@@ -1380,7 +1380,7 @@ app_server <- function(input, output, session) {
       tmp <- scresults_tmp$dat$sge[0, ]
     }
 
-    if (!any(startsWith(colnames(tmp), "FCID_complete_")) & dim(tmp)[1] != 0) {
+    if (!any(startsWith(colnames(tmp), "FCID_complete_")) && dim(tmp)[1] != 0) {
       tmp <- pseudo_contexts(tmp, input$y, scresults_tmp$dat$factors)
     } else {
       df_factorial <- NULL
