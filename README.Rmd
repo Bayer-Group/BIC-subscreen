@@ -7,11 +7,11 @@ output:
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r, include = FALSE}
-  knitr::opts_chunk$set(
-    collapse = TRUE,
-    comment = "#>",
-    fig.path = "man/figures/README-",
-    out.width = "100%"
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
 )
 ```
 
@@ -48,26 +48,6 @@ subscreen::run_app()
 Once loaded, you can select the Demo Data to see a preview of the app working.
 
 To prepare and use real data, please refer to [Package Functions](#package-functions) and [Upload](#upload) where the relevant functions and the app in general are described in more detail.
-
-## About
-
-You are reading the doc about version : `r golem::pkg_version()`
-
-This README has been compiled on the
-
-```{r, echo = FALSE}
-Sys.time()
-```
-
-Here are the tests results and package coverage:
-
-```{r, error = TRUE}
-devtools::check(quiet = TRUE)
-```
-
-```{r echo = FALSE}
-unloadNamespace("subscreen")
-```
 
 ## Getting Started
 

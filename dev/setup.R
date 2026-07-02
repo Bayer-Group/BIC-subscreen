@@ -1,15 +1,23 @@
+# Setup packages
+
+usethis::use_package("devtools", type = "Suggests")
+usethis::use_package("rsconnect", type = "Suggests")
+usethis::use_package("pak", type = "Suggests")
+usethis::use_package("spelling", type = "Suggests")
+usethis::use_package("usethis", type = "Suggests")
+
 # Setup air
 # usethis::use_air()
 
 # Add air GitHub actions
+# usethis::use_github_action()
 
-usethis::use_github_action(
-  url = "https://github.com/posit-dev/setup-air/blob/main/examples/format-check.yaml"
-)
-usethis::use_github_action(
-  url = "https://github.com/etiennebacher/setup-jarl/blob/main/examples/jarl-check.yml"
-)
-
+# usethis::use_github_action(
+#   url = "https://github.com/posit-dev/setup-air/blob/main/examples/format-check.yaml"
+# )
+# usethis::use_github_action(
+#   url = "https://github.com/etiennebacher/setup-jarl/blob/main/examples/jarl-check.yml"
+# )
 
 # Snapshot renv lockfile
 renv::status()
