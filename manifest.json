@@ -5091,9 +5091,6 @@
     ".github/ISSUE_TEMPLATE/FEATURE.yml": {
       "checksum": "6a50daccdb9e51cf9c645f1ce4fb4db0"
     },
-    ".github/workflows/deployment.yaml": {
-      "checksum": "de41675e398476b428ac63c49fa51383"
-    },
     ".github/workflows/format-check.yaml": {
       "checksum": "ead9df69f8cabb9b8af1fa73c776159f"
     },
@@ -5104,10 +5101,10 @@
       "checksum": "83498f25785ca93d9477c422c9844cd9"
     },
     ".Rbuildignore": {
-      "checksum": "3c5faee36f34f273fde7a1f1be35c489"
+      "checksum": "ca9db4ef0a82e42d1e9a66a3af1b6a73"
     },
     ".Rprofile": {
-      "checksum": "8e2a47086b9bafc0ede96e334ed8b300"
+      "checksum": "3b11b14a1841e464db5f6071f83139b1"
     },
     ".vscode/extensions.json": {
       "checksum": "90d7891f1569632ae447aaa2d080d5c7"
@@ -5125,7 +5122,7 @@
       "checksum": "14a63670169deb7ff7b026c14c4122fd"
     },
     "DESCRIPTION": {
-      "checksum": "86fb765ce77462e65b4ab61fc55cca9b"
+      "checksum": "b6bc116fee16c49b72656382a5c0ff90"
     },
     "Dockerfile": {
       "checksum": "f6fb68958ded29de00cce5ec17477a6c"
