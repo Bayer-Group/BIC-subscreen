@@ -1,4 +1,4 @@
-# subscreen (development version)
+# subscreen 4.1.5
 
 * Add air formatter
 * Add Jarl linter
