@@ -1,7 +1,7 @@
 Package: subscreen
 Type: Package
 Title: Systematic Screening of Study Data for Subgroup Effects
-Version: 4.1.4
+Version: 4.1.5
 Authors@R: c(
     person("Bodo", "Kirsch", , "kirschbodo@gmail.com", role = c("aut", "cre")),
     person("Steffen", "Jeske", role = "aut"),
@@ -44,11 +44,17 @@ Imports:
     stringr,
     utils
 Suggests: 
+    devtools,
     knitr,
+    pak,
     rmarkdown,
+    rsconnect,
+    spelling,
     survival,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    usethis
 Config/testthat/edition: 3
 Encoding: UTF-8
-RoxygenNote: 7.3.3
+Language: en-US
 VignetteBuilder: knitr
+Config/roxygen2/version: 8.0.0

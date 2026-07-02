@@ -1,3 +1,17 @@
+# subscreen 4.1.5
+
+* Add air formatter
+* Add Jarl linter
+* Refactor Jarl warnings
+* Update GitHub Actions to use commits instead of version tags
+* Add air, Jarl GitHub Actions
+* Add golem recommended test, refactor to pass
+* Add WORDLIST
+* Add dev packages to SUGGESTS
+* Remove "About" R chunk from `README.Rmd`
+* Update renv lockfile
+* Add manifest.json
+
 # subscreen 4.1.4
 
 * No news in this version, just some deployment-related tasks.

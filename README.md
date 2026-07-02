@@ -2,7 +2,6 @@
 - [`{subscreen}`](#subscreen)
   - [Installation](#installation)
   - [Run](#run)
-  - [About](#about)
   - [Getting Started](#getting-started)
   - [Package Functions](#package-functions)
     - [`subscreencalc` Input](#subscreencalc-input)
@@ -61,28 +60,6 @@ working.
 To prepare and use real data, please refer to [Package
 Functions](#package-functions) and [Upload](#upload) where the relevant
 functions and the app in general are described in more detail.
-
-## About
-
-You are reading the doc about version : 4.1.2
-
-This README has been compiled on the
-
-    #> [1] "2025-09-09 10:53:20 CEST"
-
-Here are the tests results and package coverage:
-
-``` r
-devtools::check(quiet = TRUE)
-#> ℹ Loading subscreen
-#> ── R CMD check results ──────────────────────────────────── subscreen 4.1.2 ────
-#> Duration: 1m 24.5s
-#> 
-#> ❯ checking for future file timestamps ... NOTE
-#>   unable to verify current time
-#> 
-#> 0 errors ✔ | 0 warnings ✔ | 1 note ✖
-```
 
 ## Getting Started
 
