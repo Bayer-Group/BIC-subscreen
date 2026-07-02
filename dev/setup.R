@@ -24,3 +24,8 @@ rsconnect::writeManifest()
 
 # Increment version number
 usethis::use_version("dev")
+
+# Checks
+devtools::load_all()
+devtools::document()
+devtools::check()

@@ -1,2 +1,2 @@
 [lint]
-exclude = ["dev/"]
+exclude = ["dev/", "R/utils_dummy.R"]
