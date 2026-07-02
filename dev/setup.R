@@ -24,6 +24,15 @@ renv::status(dev = TRUE)
 # renv::update(lock = TRUE)
 renv::snapshot(type = "explicit", dev = TRUE)
 
+# Reinstall from lockfile with specific repo
+renv::lockfile_read()$Packages |> 
+  names() |> 
+  data.frame(Packages = _) |> 
+  dplyr::pull(Packages) |> 
+  # utils::install.packages()
+  # pak::pak()
+  renv::install(repos = getOption("repos"), type = "binary", prompt = FALSE, rebuild = TRUE)
+
 # Update wordlist
 spelling::update_wordlist()
 
