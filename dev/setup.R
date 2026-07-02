@@ -20,8 +20,8 @@ usethis::use_package("usethis", type = "Suggests")
 # )
 
 # Snapshot renv lockfile
-renv::status()
-renv::update(lock = TRUE)
+renv::status(dev = TRUE)
+# renv::update(lock = TRUE)
 renv::snapshot(type = "explicit", dev = TRUE)
 
 # Update wordlist

@@ -6,6 +6,11 @@
 * Update GitHub Actions to use commits instead of version tags
 * Add air, Jarl GitHub Actions
 * Add golem recommended test, refactor to pass
+* Add WORDLIST
+* Add dev packages to SUGGESTS
+* Remove "About" R chunk from `README.Rmd`
+* Update renv lockfile
+* Add manifest.json
 
 # subscreen 4.1.4
 
