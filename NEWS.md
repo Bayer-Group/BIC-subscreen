@@ -1,3 +1,11 @@
+# subscreen (development version)
+
+* Add air formatter
+* Add Jarl linter
+* Refactor Jarl warnings
+* Update GitHub Actions to use commits instead of version tags
+* Add air, Jarl GitHub Actions
+
 # subscreen 4.1.4
 
 * No news in this version, just some deployment-related tasks.
