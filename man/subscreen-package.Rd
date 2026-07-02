@@ -21,6 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Bodo Kirsch \email{kirschbodo@gmail.com}
   \item Steffen Jeske
   \item Julia Eichhorn
   \item Susanne Lippert

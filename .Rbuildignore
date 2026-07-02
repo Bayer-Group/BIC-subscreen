@@ -24,3 +24,4 @@ $run_dev.*
 ^[.]?air[.]toml$
 ^\.vscode$
 ^[.]?jarl[.]toml$
+^[.]?manifest[.]json$
