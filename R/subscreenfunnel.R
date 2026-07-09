@@ -107,7 +107,7 @@ subscreenfunnel <- function(
     .options = furrr::furrr_options(seed = TRUE)
   )
 
-  tmp2 <- do.call("rbind.fill", tmp)
+  tmp2 <- dplyr::bind_rows(tmp)
 
   tmp3 <- tmp2 %>%
     dplyr::as_tibble() %>%
