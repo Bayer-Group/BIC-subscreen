@@ -62,7 +62,7 @@ The central result of a subgroup screening is a diagram, in which each dot stand
 The subscreen package consists of four major functions: [`subscreencalc`](#subscreencalc-input), [`subscreenvi`](#subscreenvi), [`subscreenfunnel`](#subscreenfunnel) and [`run_app`](#run_app).
 The first function generates an object of class `SubScreenResult`, which is required for the shiny application.
 The second function performs a variable importance calculation via random forests. This calculation is optional and will unlock the *Variable importance*-tab in the Subgroup Explorer. 
-The third function creates a reference funnel based on non-parametric confidence intervals.
+The third function builds an optional **reference funnel** in the main plot. The funnel shows, for each subgroup size, how far treatment-effect estimates can wander by chance when patients are drawn at random from the study. It is centered on the overall study effect and helps flag subgroups that look unusual for their size.
 The fourth function starts the shiny application Subgroup Explorer. In the current version of the app, run_app can be accessed without data. In this case, demo data can be selected in the ‘upload data’-tab. To upload own data, either the SubScreenResult object is called in run_app or in the Upload Page the SubScreenResult object is uploaded. In the next sections, all three functions are explained in more detail.
 
 ### `subscreencalc` Input
@@ -204,34 +204,28 @@ Using the `subscreenvi`-function is optional. It is not required to be able to s
 
 ### `subscreenfunnel`
 
-The function `subscreenfunnel` adds a `funnel_quantiles` data frame to the `SubScreenResult` object created by [`subscreencalc` Input](#subscreencalc-input). It enables the user to add a reference funnel in the main diagram of the app.
-The funnel can help in the search for conspicuous subgroups as it gives a reference for the area in the plot where `(1-alpha)*100`% of the subgroups are supposed to be. 
+The function `subscreenfunnel` adds a reference funnel to the `SubScreenResult` object from [`subscreencalc`](#subscreencalc-input).
+In the app, this funnel can be shown as a shaded band on the main diagram.
+
+**What it is for.** Small subgroups often look more extreme than large ones, simply because of chance. The funnel marks a typical range of treatment-effect values you might see for a given subgroup size if there were no special subgroup pattern beyond the overall study result. Dots **outside** the band are candidates worth a closer look. The funnel is an exploratory aid only; it does not prove that a subgroup finding is real or clinically important.
 
 <img src='inst/www/sge_funnel.png' width='100%'>
 
-The algorithm used for the calculates the funnel shape separately for each `alpha` and factor combination level.
-It uses the following steps:
+**How it is built.** For many subgroup sizes, the method draws random size-`n` subsets of patients (keeping each patient's treatment and outcome as they are), recalculates the treatment effect, and records how high and how low those chance results tend to go. Those raw limits are then smoothed with LOESS to form the funnel band around the overall study effect. The setting `alpha` controls how wide the band is (smaller `alpha` → tighter band → fewer dots expected outside).
 
+**Main settings**
 
-* create `nperm` permutations of subgroups for each of `n_support_points` different subgroup sizes ranging from `min_start` to the total number of subjects in equidistant steps
-* perform subgroup analysis for each permutation
-* calculate the (`alpha`/2)- and (1-`alpha`/2)-quantile for each of the `n_support_points` subgroup sizes
+- `data`, `H`, `eval_function`: same study data, results, and analysis function as in `subscreencalc`
+- `min_start`: smallest group size used when building the funnel
+- `n_support_points`: how many group sizes are used along the horizontal axis
+- `nperm`: how many random draws are used at each group size (more draws → more stable funnel, slower run)
+- `alpha`: how strict the band is (can be one value or several, e.g. 0.1, 0.01, 0.001); choose which band to display in the app
+- `stratified`: if `FALSE` (default), patients are drawn freely from the full data; if `TRUE`, draws keep roughly equal numbers in each treatment arm (optional balanced resampling)
+- `loess_span`: LOESS span used when smoothing the funnel bounds (default 0.5)
+- `treat`, `endpoints`: treatment and outcome columns used in the draws
+- `verbose`, `nkernel`: progress messages and parallel computing
 
-The following function parameters can be adjusted:
-- `data`: data frame with study data
-- `H`: results file from subscreencalc
-- `eval_function`: eval function used in subscreencalc
-- `min_start`: integer value for minimal subgroup size value for permutation
-- `n_support_points`: integer value for number of supportive points
-- `nperm`: integer value for number of permutations
-- `alpha`: numerical vector
-- `stratified`: logical value (TRUE/FALSE) for stratification
-- `treat`: character value of treatment variable name
-- `endpoints`: character vector of endpoints
-- `verbose`: logical value to switch on/off output of computational information (defaults to TRUE)
-- `nkernel`: integer value for number of kernel used
-
-Using the `subscreenfunnel`-function is optional. It is not required to be able to start the app.
+Using `subscreenfunnel`-function is optional. It is not required to be able to start the app.
 The funnel is currently only available for treatment comparisons of exactly two treatments.
 
 ### `run_app`

@@ -12,11 +12,13 @@ subscreenfunnel(
   n_support_points = 50,
   nperm = 200,
   alpha = 0.001,
-  stratified = TRUE,
+  stratified = FALSE,
   treat = "treat",
   endpoints = NULL,
   verbose = TRUE,
   nkernel = 1,
+  loess_span = 0.5,
+  skip_validation = FALSE,
   ...
 )
 }
@@ -35,7 +37,10 @@ subscreenfunnel(
 
 \item{alpha}{numerical value}
 
-\item{stratified}{logical value (TRUE/FALSE) for stratification}
+\item{stratified}{If \code{FALSE} (default), draw size-\code{n} subsets at
+random from the full data. If \code{TRUE}, draw equal counts from each
+treatment arm (balanced resampling). Both keep treatment and endpoints
+intact.}
 
 \item{treat}{character value of treatment variable name}
 
@@ -45,13 +50,21 @@ subscreenfunnel(
 
 \item{nkernel}{integer value for number of kernel used}
 
+\item{loess_span}{LOESS span for smoothing funnel bounds (default 0.5).}
+
+\item{skip_validation}{Skip pre-flight parameter checks (default FALSE).}
+
 \item{...}{further parameters which where outdated used for notes and errors.}
 }
 \value{
-an object of type SubScreenResult of the form
+\code{H} with \code{funnel_quantiles} (raw), \code{funnel_smoothed},
+  and \code{funnel_bounds}.
 }
 \description{
-Calculation of funnel shape for the subgroups explorer
+Builds reference funnel bounds under a homogeneous treatment-effect
+assumption by drawing random size-\code{n} subsets (keeping outcome and
+treatment pairs intact), computing endpoint quantiles at each support
+point, and smoothing the resulting bounds with LOESS.
 }
 \keyword{analysis}
 \keyword{subgroup}

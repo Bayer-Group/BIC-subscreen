@@ -1,3 +1,7 @@
+# subscreen 4.2.0
+
+* Update `subscreenfunnel`: random size-n subsets + LOESS smoothing; returns `funnel_bounds`; default `stratified = FALSE`
+
 # subscreen 4.1.5
 
 * Add air formatter

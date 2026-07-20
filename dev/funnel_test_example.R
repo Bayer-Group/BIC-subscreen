@@ -135,8 +135,22 @@ results_no_funnel <- subscreencalc(
   par_functions = c("coxph", "Surv") # required when nkernel > 1
 )
 
-#### Old funnel (legacy funnel) ----
-results <- subscreenfunnel(
+# #### Old funnel (legacy funnel) ----
+# results <- subscreenfunnel_old(
+#   data = pbcdat,
+#   H = results_no_funnel,
+#   eval_function = hazardratio,
+#   min_start = 15,
+#   n_support_points = 25,
+#   nperm = 1000,
+#   nkernel = 1L,
+#   alpha = c(0.1, 0.01, 0.001),
+#   treat = "trt",
+#   endpoints = c("event.pfs", "timepfs", "event.os", "timeos")
+# )
+
+#### New funnel (default: stratified = FALSE)----
+results_new <- subscreenfunnel(
   data = pbcdat,
   H = results_no_funnel,
   eval_function = hazardratio,
@@ -146,15 +160,46 @@ results <- subscreenfunnel(
   nkernel = 1L,
   alpha = c(0.1, 0.01, 0.001),
   treat = "trt",
+  endpoints = c("event.pfs", "timepfs", "event.os", "timeos"),
+  loess_span = 0.5
+)
+
+#### NEW funnel (optional: stratified = TRUE, balanced arms) ----
+results_new_strat <- subscreenfunnel(
+  data = pbcdat,
+  H = results_no_funnel,
+  eval_function = hazardratio,
+  min_start = 15,
+  n_support_points = 25,
+  nperm = 1000,
+  nkernel = 1L,
+  alpha = c(0.1, 0.01, 0.001),
+  stratified = TRUE,
+  treat = "trt",
   endpoints = c("event.pfs", "timepfs", "event.os", "timeos")
 )
 
-### Old funnel (legacy funnel)
-run_app(
-  scresults = results,
-  add_funnel_at_start = TRUE,
-  reference_line_at_start = TRUE,
-  reference_value = 1,
-  yaxis_type = "lin"
-)
-
+# ### Old funnel (legacy funnel)
+# run_app(
+#   scresults = results,
+#   add_funnel_at_start = TRUE,
+#   reference_line_at_start = TRUE,
+#   reference_value = 1,
+#   yaxis_type = "lin"
+# )
+# ### New funnel (not stratified)
+# run_app(
+#   scresults = results_new,
+#   add_funnel_at_start = TRUE,
+#   reference_line_at_start = TRUE,
+#   reference_value = 1,
+#   yaxis_type = "lin"
+# )
+# ### New funnel (stratified)
+# run_app(
+#   scresults = results_new_strat,
+#   add_funnel_at_start = TRUE,
+#   reference_line_at_start = TRUE,
+#   reference_value = 1,
+#   yaxis_type = "lin"
+# )

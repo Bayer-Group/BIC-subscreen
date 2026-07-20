@@ -324,25 +324,49 @@ mod_graph_server <- function(
         }
 
         if (add_funnel()) {
-          quantiles <- results()$funnel_quantiles
-          #lower line
-          approx_lower_fun <- stats::approxfun(
-            quantiles[
-              quantiles[, "alpha"] == ((as.numeric(alpha_funnel())) / 2),
-            ][, "n"],
-            quantiles[
-              quantiles[, "alpha"] == ((as.numeric(alpha_funnel())) / 2),
-            ][, y()]
-          )
-          #upper
-          approx_higher_fun <- stats::approxfun(
-            quantiles[
-              quantiles[, "alpha"] == 1 - ((as.numeric(alpha_funnel())) / 2),
-            ][, "n"],
-            quantiles[
-              quantiles[, "alpha"] == 1 - ((as.numeric(alpha_funnel())) / 2),
-            ][, y()]
-          )
+          funnel_bounds <- results()$funnel_bounds
+          lower_col <- paste0(y(), "_lower_smooth")
+          upper_col <- paste0(y(), "_upper_smooth")
+
+          if (
+            !is.null(funnel_bounds) &&
+              lower_col %in% names(funnel_bounds) &&
+              upper_col %in% names(funnel_bounds)
+          ) {
+            bounds <- funnel_bounds[
+              funnel_bounds[, "alpha"] == as.numeric(alpha_funnel()),
+              ,
+              drop = FALSE
+            ]
+            approx_lower_fun <- stats::approxfun(
+              bounds[, "n"],
+              bounds[[lower_col]]
+            )
+            approx_higher_fun <- stats::approxfun(
+              bounds[, "n"],
+              bounds[[upper_col]]
+            )
+          } else {
+            quantiles <- results()$funnel_quantiles
+            #lower line
+            approx_lower_fun <- stats::approxfun(
+              quantiles[
+                quantiles[, "alpha"] == ((as.numeric(alpha_funnel())) / 2),
+              ][, "n"],
+              quantiles[
+                quantiles[, "alpha"] == ((as.numeric(alpha_funnel())) / 2),
+              ][, y()]
+            )
+            #upper
+            approx_higher_fun <- stats::approxfun(
+              quantiles[
+                quantiles[, "alpha"] == 1 - ((as.numeric(alpha_funnel())) / 2),
+              ][, "n"],
+              quantiles[
+                quantiles[, "alpha"] == 1 - ((as.numeric(alpha_funnel())) / 2),
+              ][, y()]
+            )
+          }
 
           data <- data %>%
             dplyr::mutate(
